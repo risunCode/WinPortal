@@ -1,5 +1,5 @@
 # Windows_Reinstall_Kit
-bahan install ulang
+install ulang helper
 
 ### Browser Extension
 > Most Important

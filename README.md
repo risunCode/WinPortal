@@ -1,5 +1,5 @@
-# Windows_Reinstall_Kit
-install ulang helper
+$risunturu
+ 
 
 ### Browser Extension
 > AAA
@@ -12,3 +12,6 @@ install ulang helper
 - [Absolute Enable Right Click & Copy](https://chromewebstore.google.com/detail/absolute-enable-right-cli/jdocbkpgdakpekjlhemmfcncgdjeiika)
 - [Enable Right Click & Copy](https://chromewebstore.google.com/detail/enable-right-click-copy/khpdiolbjggapokjloppdibgapcfkojd)
 - [Nonstop Youtube](https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm)
+
+- [Douyin Extension](https://chromewebstore.google.com/detail/douyin-for-desktop/iponikghooaamlcbcffeedaamigfjmbg?pli=1)
+- [Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj?pli=1)

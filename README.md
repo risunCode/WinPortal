@@ -14,4 +14,5 @@ $risunturu
 - [Nonstop Youtube](https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm)
 
 - [Douyin Extension](https://chromewebstore.google.com/detail/douyin-for-desktop/iponikghooaamlcbcffeedaamigfjmbg?pli=1)
+- [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn)
 - [Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj?pli=1)

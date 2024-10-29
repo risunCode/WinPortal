@@ -17,3 +17,5 @@ $risunturu
 - [Douyin Extension](https://chromewebstore.google.com/detail/douyin-for-desktop/iponikghooaamlcbcffeedaamigfjmbg?pli=1)
 - [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn)
 - [Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj?pli=1)
+- [Bass Boost: HD Audio](https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli?hl=en)
+- [Youtube Enhancer](https://chromewebstore.google.com/detail/enhancer-for-youtube/ponfpcnoihfmfllpaingbgckeeldkhle?hl=en)

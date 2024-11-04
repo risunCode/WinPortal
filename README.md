@@ -1,6 +1,7 @@
 # RisunTuru
 
-## Windows Kit
+## Windows 
+- [Telegram Portable](https://telegram.org/dl/desktop/win64_portable)
 - [MS Store](https://github.com/fernvenue/microsoft-store)
 - [Ghost Toolkit](https://github.com/risunCode/Ghost-Toolbox-Universal)
 

@@ -1,6 +1,10 @@
 # RisunTuru
 
-## Windows 
+## Download Fresh Install Kit
+Download Disini
+- https://github.com/risunCode/Windowski/releases/download/RISUNPRO/Risun_Fresh_Install_Tweak.zip
+
+### Windows 
 - [VisualCppRedist AIO by abbodi1406](https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip)
 - [Telegram Portable](https://telegram.org/dl/desktop/win64_portable)
 - [MS Store](https://github.com/fernvenue/microsoft-store)

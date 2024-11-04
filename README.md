@@ -1,6 +1,7 @@
 # RisunTuru
 
 ## Windows 
+- [VisualCppRedist AIO by abbodi1406](https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip)
 - [Telegram Portable](https://telegram.org/dl/desktop/win64_portable)
 - [MS Store](https://github.com/fernvenue/microsoft-store)
 - [Ghost Toolkit](https://github.com/risunCode/Ghost-Toolbox-Universal)

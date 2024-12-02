@@ -27,3 +27,6 @@ Download Disini
 - [Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj?pli=1)
 - [Bass Boost: HD Audio](https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli?hl=en)
 - [Youtube Enhancer](https://chromewebstore.google.com/detail/enhancer-for-youtube/ponfpcnoihfmfllpaingbgckeeldkhle?hl=en)
+
+## Wintool
+- [Winget (Download Depedencies)](https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-us&gl=ID)

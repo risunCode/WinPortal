@@ -28,5 +28,9 @@ Download Disini
 - [Bass Boost: HD Audio](https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli?hl=en)
 - [Youtube Enhancer](https://chromewebstore.google.com/detail/enhancer-for-youtube/ponfpcnoihfmfllpaingbgckeeldkhle?hl=en)
 
+## Misc
+- [Popup blocker strict](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg)
+- [Popup blocker strict2](https://chromewebstore.google.com/detail/popupoff-popup-and-overla/ifnkdbpmgkdbfklnbfidaackdenlmhgh)
+
 ## Wintool
 - [Winget (Download Depedencies)](https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-us&gl=ID)

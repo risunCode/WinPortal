@@ -8,6 +8,7 @@
 ## 📥 Download Fresh Install Kit  
 🔗 soon
 ## Activate Windows & Office Permanently using hook or TsForge
+- run powershell as admin and paste below
 ```js
 irm https://get.activated.win | iex
 ```

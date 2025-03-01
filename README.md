@@ -2,7 +2,7 @@
 > Brought to you by: RisunTuru
 > - https://t.me/hiddentokio
 > - https://t.me/risuntrash
-> - Terakhir diedit pada 4 October 2024
+> - Terakhir diedit pada 1 Maret 2025
 
 
 ## 📥 Download Fresh Install Kit  
@@ -13,12 +13,6 @@
 ```js
 irm https://get.activated.win | iex
 ```
-
-# SmartPhone ========
-## Driver Mediatek or Snapdragon for Aftersales/Service needs
-- soon
-
-# PC Windows ------
 ## 🖥 Essential Software PC
 | Software | Link |
 |----------|------|

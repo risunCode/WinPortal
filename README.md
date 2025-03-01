@@ -14,7 +14,12 @@
 irm https://get.activated.win | iex
 ```
 
-## 🖥 Essential Software  
+# SmartPhone ========
+## Driver Mediatek or Snapdragon for Aftersales/Service needs
+- soon
+
+# PC Windows ------
+## 🖥 Essential Software PC
 | Software | Link |
 |----------|------|
 | Visual C++ Redistributable AIO | [🔗 Download](https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip) |

@@ -1,9 +1,16 @@
-# Brougt to you by RisunTuru
+> [!IMPORTANT]
+> Brought to you by: RisunTuru
+> - https://t.me/hiddentokio
+> - https://t.me/risuntrash
+> - Terakhir diedit pada 4 October 2024
 
-# Risunturu Fresh Install Kit 🚀  
 
 ## 📥 Download Fresh Install Kit  
-🔗 [Risun Fresh Install Tweak](https://github.com/risunCode/Windowski/releases/download/RISUNPRO/Risun_Fresh_Install_Tweak.zip)  
+🔗 soon
+## Activate Windows & Office Permanently using hook or TsForge
+```js
+irm https://get.activated.win | iex
+```
 
 ## 🖥 Essential Software  
 | Software | Link |

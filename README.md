@@ -9,6 +9,7 @@
 🔗 soon
 ## Activate Windows & Office Permanently using hook or TsForge
 - run powershell as admin and paste below
+- script by [massgrave](https://massgrave.dev/)
 ```js
 irm https://get.activated.win | iex
 ```

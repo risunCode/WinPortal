@@ -1,7 +1,5 @@
 > [!IMPORTANT]
 > Brought to you by: RisunTuru
-> - https://t.me/hiddentokio
-> - https://t.me/risuntrash
 > - Terakhir diedit pada 1 Maret 2025
 
 

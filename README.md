@@ -2,9 +2,6 @@
 > Brought to you by: RisunTuru
 > - Terakhir diedit pada 1 Maret 2025
 
-
-## 📥 Download Fresh Install Kit  
-🔗 soon
 ## Activate Windows & Office Permanently using hook or TsForge
 - run powershell as admin and paste below
 - script by [massgrave](https://massgrave.dev/)

@@ -30,9 +30,4 @@ irm https://get.activated.win | iex
 | 🔹 **Adblock & Security** | [uBlock Origin](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=en), [Strict Popup Blocker](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg) |
 | 🔹 **Douyin Tools** | [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn), [Simple Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj?pli=1) |
 
-## 🛠 Windows Tools  
-| Tool | Link |
-|------|------|
-| Winget Dependencies | [🔗 Download](https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-us&gl=ID) |
-
 ---

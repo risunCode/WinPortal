@@ -20,6 +20,7 @@ irm https://get.activated.win | iex
 | Category | Extensions |
 |----------|------------|
 | 🔹 **Utilities** | [Clear Cache](https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?hl=en), [Cookies Manager](https://chromewebstore.google.com/detail/cookie-editor/iphcomljdfghbkdcfndaijbokpgddeno) |
+| 🔹 **Utilities 2** | [Absolute Enable Right Click & Copy](https://chromewebstore.google.com/detail/absolute-enable-right-cli/jdocbkpgdakpekjlhemmfcncgdjeiika) |
 | 🔹 **Download & Media** | [IDM Integration](https://chromewebstore.google.com/detail/idm-integration-module/ngpampappnmepgilojfohadhhmbhlaek), [Nonstop YouTube](https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm) |
 | 🔹 **Adblock & Security** | [uBlock Origin](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=en), [Strict Popup Blocker](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg) |
 | 🔹 **Douyin Tools** | [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn), [Simple Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj?pli=1) |

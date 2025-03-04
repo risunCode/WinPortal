@@ -13,8 +13,8 @@ irm https://get.activated.win | iex
 |----------|------|
 | Visual C++ Redistributable AIO | [🔗 Download](https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip) |
 | Telegram Portable | [🔗 Download](https://telegram.org/dl/desktop/win64_portable) |
-| MS Store Installer | [🔗 Download](https://github.com/fernvenue/microsoft-store) |
-| Ghost Toolkit | [🔗 Download](https://github.com/risunCode/Ghost-Toolbox-Universal) |
+| MS Store Installer | [🔗 [Download](https://github.com/fernvenue/microsoft-store/releases/download/v1.0.0.0/MicrosoftStore.exe) |
+| Ghost Toolkit | [🔗 Download](https://github.com/risunCode/Ghost-Toolbox-Universal/releases/download/Toolbox/Ghost.Toolbox-RisunUpdatedWork.zip) |
 
 ## 🌐 Browser Extensions  
 | Category | Extensions |

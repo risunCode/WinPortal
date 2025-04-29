@@ -2,12 +2,35 @@
 > Brought to you by: RisunTuru
 > - Terakhir diedit pada 29 April 2025
 
-## Windows PowerShell Tools
-| Tool | Description | Command (copy/paste ready) |
-|------|-------------|----------------------------|
-| **Windows & Office Activator** | Permanently activate Windows & Office using hook or TsForge<br>*Script by [massgrave](https://massgrave.dev/)* | `irm https://get.activated.win \| iex` |
-| **WinUtils** | Useful Windows toolkit by ChrisTitusTech | `irm "https://christitus.com/win" \| iex` |
-| **Winhance** | Windows enhancer & debloat tools by Memory | `irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" \| iex` |
+🚀 Windows Power Tools
+<table>
+<tr>
+<th align="center">🔧 Tool</th>
+<th align="center">📝 Description</th>
+<th align="center">💻 Command</th>
+</tr>
+<tr>
+<td><b>Windows & Office Activator</b></td>
+<td>Permanently activate Windows & Office using hook or TsForge<br><i>Script by <a href="https://massgrave.dev/">massgrave</a></i></td>
+<td>
+powershellirm https://get.activated.win | iex
+</td>
+</tr>
+<tr>
+<td><b>WinUtils</b></td>
+<td>Useful Windows toolkit by ChrisTitusTech</td>
+<td>
+powershellirm "https://christitus.com/win" | iex
+</td>
+</tr>
+<tr>
+<td><b>Winhance</b></td>
+<td>Windows enhancer & debloat tools by Memory</td>
+<td>
+powershellirm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
+</td>
+</tr>
+</table>
 
 ## 🖥 Essential Software PC
 | Software | Link |

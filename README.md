@@ -1,14 +1,13 @@
 > [!IMPORTANT]
 > Brought to you by: RisunTuru
-> - Terakhir diedit pada 25 April 2025
+> - Terakhir diedit pada 29 April 2025
 
 ## Windows PowerShell Tools
-
 | Tool | Description | Command (copy/paste ready) |
 |------|-------------|----------------------------|
-| **Windows & Office Activator** | Permanently activate Windows & Office using hook or TsForge<br>*Script by [massgrave](https://massgrave.dev/)* | ```irm https://get.activated.win | iex``` |
-| **WinUtils** | Useful Windows toolkit by ChrisTitusTech | ```irm "https://christitus.com/win" | iex``` |
-| **Winhance** | Windows enhancer & debloat tools by Memory | ```irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex``` |
+| **Windows & Office Activator** | Permanently activate Windows & Office using hook or TsForge<br>*Script by [massgrave](https://massgrave.dev/)* | `irm https://get.activated.win \| iex` |
+| **WinUtils** | Useful Windows toolkit by ChrisTitusTech | `irm "https://christitus.com/win" \| iex` |
+| **Winhance** | Windows enhancer & debloat tools by Memory | `irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" \| iex` |
 
 ## 🖥 Essential Software PC
 | Software | Link |

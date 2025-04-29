@@ -2,22 +2,13 @@
 > Brought to you by: RisunTuru
 > - Terakhir diedit pada 25 April 2025
 
-## Activate Windows & Office Permanently using hook or TsForge
-- run powershell as admin and paste below
-- script by [massgrave](https://massgrave.dev/)
-```js
-irm https://get.activated.win | iex
-```
+## Windows PowerShell Tools
 
-## Usefull toolkit from ChrisTitusTech (winutils)
-```js
-irm "https://christitus.com/win" | iex
-```
-
-## Some Windows enhancer & Debloat tools (winhance By memory)
-```js
-irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
-```
+| Tool | Description | Command (copy/paste ready) |
+|------|-------------|----------------------------|
+| **Windows & Office Activator** | Permanently activate Windows & Office using hook or TsForge<br>*Script by [massgrave](https://massgrave.dev/)* | ```irm https://get.activated.win | iex``` |
+| **WinUtils** | Useful Windows toolkit by ChrisTitusTech | ```irm "https://christitus.com/win" | iex``` |
+| **Winhance** | Windows enhancer & debloat tools by Memory | ```irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex``` |
 
 ## 🖥 Essential Software PC
 | Software | Link |

@@ -3,34 +3,21 @@
 > - Terakhir diedit pada 29 April 2025
 
 🚀 Windows Power Tools
-<table>
-<tr>
-<th align="center">🔧 Tool</th>
-<th align="center">📝 Description</th>
-<th align="center">💻 Command</th>
-</tr>
-<tr>
-<td><b>Windows & Office Activator</b></td>
-<td>Permanently activate Windows & Office using hook or TsForge<br><i>Script by <a href="https://massgrave.dev/">massgrave</a></i></td>
-<td>
-powershellirm https://get.activated.win | iex
-</td>
-</tr>
-<tr>
-<td><b>WinUtils</b></td>
-<td>Useful Windows toolkit by ChrisTitusTech</td>
-<td>
-powershellirm "https://christitus.com/win" | iex
-</td>
-</tr>
-<tr>
-<td><b>Winhance</b></td>
-<td>Windows enhancer & debloat tools by Memory</td>
-<td>
-powershellirm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
-</td>
-</tr>
-</table>
+**Windows & Office Activator:**
+```
+irm https://get.activated.win | iex
+```
+
+**WinUtils by ChrisTitusTech:**
+```
+irm "https://christitus.com/win" | iex
+```
+
+**Winhance by Memory:**
+```
+irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
+```
+
 
 ## 🖥 Essential Software PC
 | Software | Link |

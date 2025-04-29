@@ -31,9 +31,12 @@ irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
 ## 🌐 Browser Extensions  
 | Category | Extensions |
 |----------|------------|
-| 🔹 ** Basic Utilities** | [Clear Cache](https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?hl=en), [Cookie Backup and Restore](https://chromewebstore.google.com/detail/cookie-backup-and-restore/cndobhdcpmpilkebeebeecgminfhkpcj?hl=en), [Cookies Manager](https://chromewebstore.google.com/detail/cookie-editor/iphcomljdfghbkdcfndaijbokpgddeno) |
+| 🔹 **iLoveCookies** | [Cookie Backup and Restore](https://chromewebstore.google.com/detail/cookie-backup-and-restore/cndobhdcpmpilkebeebeecgminfhkpcj?hl=en), [Cookie Editor](https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm), [Cookies Manager](https://chromewebstore.google.com/detail/cookie-editor/iphcomljdfghbkdcfndaijbokpgddeno) |
 | 🔹 **Cheat utils for web** | [Absolute Enable Right Click & Copy](https://chromewebstore.google.com/detail/absolute-enable-right-cli/jdocbkpgdakpekjlhemmfcncgdjeiika), [Enable RightClick Copy Alternative](https://chromewebstore.google.com/detail/enable-right-click-copy/khpdiolbjggapokjloppdibgapcfkojd) |
 | 🔹 **Download & Media** | [IDM Integration](https://chromewebstore.google.com/detail/idm-integration-module/ngpampappnmepgilojfohadhhmbhlaek), [Nonstop YouTube](https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm), [Bass Boost: HD Audio](https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli), [Enhancer for YouTube](https://chromewebstore.google.com/detail/Enhancer%20for%20YouTube%E2%84%A2/ponfpcnoihfmfllpaingbgckeeldkhle) |
-| 🔹 **Adblock & Security** | [uBlock Origin](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=en), [Strict Popup Blocker](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg) |
+| 🔹 **Adblock & Security** | [uBlock Origin](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=en), [Strict Popup Blocker](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg), [Clear Cache](https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?hl=en) |
 | 🔹 **Douyin Tools** | [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn), [Simple Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj?pli=1) |
+
+
+
 ---

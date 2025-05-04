@@ -18,6 +18,12 @@ irm "https://christitus.com/win" | iex
 irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
 ```
 
+# Bypass OOBE Win 11 24H2+
+hit shift+f10
+and type this shit: `start ms-cxh:localonly`
+![image](https://github.com/user-attachments/assets/f9a9b7fc-86d0-4e2c-bfd8-c9518aa05bb6)
+
+
 ## Windows tools, DLC boot, and sone prograns
 https://mirror.unilak.ac.id/files/ISO/
 

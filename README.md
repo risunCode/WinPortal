@@ -1,6 +1,5 @@
 > [!IMPORTANT]
 > Brought to you by: RisunTuru
-> - Terakhir diedit pada 29 April 2025
 
 🚀 Windows Power Tools
 **Windows & Office Activator:**

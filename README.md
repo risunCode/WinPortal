@@ -30,6 +30,7 @@ https://mirror.unilak.ac.id/files/ISO/
 ## 🖥 Essential Software PC
 | Software | Link |
 |----------|------|
+HOT: PCmanager from Windows: [Click to see](https://pcmanager.microsoft.com/en-us)
 | Visual C++ Redistributable AIO | [🔗 Download](https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip) |
 | Telegram Portable | [🔗 Download](https://telegram.org/dl/desktop/win64_portable) |
 | Ayugram The fork of Telegram for PC | [🔗 Download](https://github.com/AyuGram/AyuGramDesktop/releases) |

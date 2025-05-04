@@ -2,7 +2,7 @@
 > [!IMPORTANT]
 > **Brought to you by:** [RisunTuru](https://github.com/risunCode)
 
-# 🗃️ Archive
+# 🗃️ Arsip catatan web.
 🔗 [Windows Portal - Software Ehem](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
 
 ---
@@ -22,8 +22,6 @@ Saat berada di OOBE (Out-of-Box Experience), tekan `Shift + F10`, lalu jalankan 
 ```cmd
 start ms-cxh:localonly
 ```
-![OOBE Bypass](https://github.com/user-attachments/assets/f9a9b7fc-86d0-4e2c-bfd8-c9518aa05bb6)
-
 ---
 
 ## 🛠️ Windows Tools, DLC Boot & Program Penting

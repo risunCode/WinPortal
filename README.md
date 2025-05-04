@@ -11,14 +11,21 @@ This Page is now launched: [CLICK HERE!](https://risuncode.github.io/winportal.g
 
 ---
 
-## ⚡ Windows Power Tools
+🚀 Windows Power Tools
+**Windows & Office Activator:**
+```
+irm https://get.activated.win | iex
+```
 
-| Tool | Command |
-|------|---------|
-| **Windows & Office Activator** | `irm https://get.activated.win | iex` |
-| **WinUtils by ChrisTitusTech** | `irm "https://christitus.com/win" | iex` |
-| **Winhance by Memory**         | `irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex` |
+**WinUtils by ChrisTitusTech: a.ka CTT Tools**
+```
+irm "https://christitus.com/win" | iex
+```
 
+**Winhance by Memory:**
+```
+irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
+```
 ---
 
 ## 🚫 Bypass OOBE (Windows 11 24H2+)

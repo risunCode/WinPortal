@@ -4,315 +4,468 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Windows Portal by RisunTuru</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.5/sweetalert2.min.css" />
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0078d7;
+      --primary-dark: #0057b8;
+      --secondary: #00b294;
+      --light: #f7f9fb;
+      --dark: #333;
+      --border: #ddd;
+      --hover: #e8f0fe;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+    
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .github-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .github-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    h1, h2, h3 {
+      color: var(--primary-dark);
+    }
+    
+    h2 {
+      margin: 1.5rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px var(--shadow);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    th, td {
+      border: 1px solid var(--border);
+      padding: 1rem;
+      text-align: left;
+    }
+    
+    th {
+      background-color: var(--hover);
+      font-weight: 600;
+    }
+    
+    tr:hover {
+      background-color: rgba(232, 240, 254, 0.4);
+    }
+    
+    code {
+      background: #eee;
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      display: inline-block;
+      font-family: 'Consolas', 'Monaco', monospace;
+      border-left: 3px solid var(--secondary);
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+      margin: 0.5rem 0;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px var(--shadow);
+    }
+    
+    button.copy-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    button.copy-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .command-block {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .code-container {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    hr {
+      margin: 2rem 0;
+      border: none;
+      height: 1px;
+      background: var(--border);
+    }
+    
+    .extension-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .extension-group {
+      margin-bottom: 0.5rem;
+    }
+    
+    .extension-link {
+      display: inline-block;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: white;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    
+    .extension-link:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    
+    .footer {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .command-block {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      code {
+        width: 100%;
+      }
+      
+      .code-container {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div id="loading-screen">
-    <div class="loader">
-      <div class="windows-logo">
-        <div class="window window-1"></div>
-        <div class="window window-2"></div>
-        <div class="window window-3"></div>
-        <div class="window window-4"></div>
+  <header>
+    <div class="container">
+      <h1>🪟 Windows Portal</h1>
+      <p>A collection of essential tools, tips, and resources for Windows users</p>
+      <a href="https://github.com/risunCode/Windows-Portal" class="github-link">
+        <i class="fa-brands fa-github"></i> View on GitHub
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <blockquote class="card">
+      <strong>IMPORTANT:</strong> Brought to you by <a href="https://github.com/risunCode">RisunTuru</a>
+    </blockquote>
+
+    <div class="card">
+      <h2><i class="fa-solid fa-bolt"></i> Windows Power Tools</h2>
+      <div class="command-block">
+        <div class="code-container">
+          <code id="cmd1">irm https://get.activated.win | iex</code>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('cmd1')">
+          <i class="fa-regular fa-copy"></i> Copy
+        </button>
       </div>
-      <p>Loading Portal...</p>
+      
+      <div class="command-block">
+        <div class="code-container">
+          <code id="cmd2">irm "https://christitus.com/win" | iex</code>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('cmd2')">
+          <i class="fa-regular fa-copy"></i> Copy
+        </button>
+      </div>
+      
+      <div class="command-block">
+        <div class="code-container">
+          <code id="cmd3">irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex</code>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('cmd3')">
+          <i class="fa-regular fa-copy"></i> Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fa-solid fa-ban"></i> Bypass OOBE (Windows 11 24H2+)</h2>
+      <p>Tekan <code>Shift + F10</code> lalu jalankan perintah berikut:</p>
+      <div class="command-block">
+        <div class="code-container">
+          <code id="cmd4">start ms-cxh:localonly</code>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('cmd4')">
+          <i class="fa-regular fa-copy"></i> Copy
+        </button>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2><i class="fa-solid fa-screwdriver-wrench"></i> Windows Tools & DLC Boot</h2>
+      <p><i class="fa-solid fa-globe"></i> <a href="https://mirror.unilak.ac.id/files/ISO/" target="_blank">Mirror UNILAK ISO Repository</a></p>
+    </div>
+
+    <div class="card">
+      <h2><i class="fa-solid fa-laptop"></i> Essential Software for PC</h2>
+      <table>
+        <tr>
+          <th>Software</th>
+          <th>Link</th>
+        </tr>
+        <tr>
+          <td><i class="fa-brands fa-microsoft"></i> PC Manager by Microsoft</td>
+          <td><a href="https://pcmanager.microsoft.com/en-us" target="_blank">🔗 Official Site</a></td>
+        </tr>
+        <tr>
+          <td><i class="fa-solid fa-code"></i> Visual C++ Redistributable AIO</td>
+          <td><a href="https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip" target="_blank">🔗 Download</a></td>
+        </tr>
+        <tr>
+          <td><i class="fa-brands fa-telegram"></i> Telegram Portable</td>
+          <td><a href="https://telegram.org/dl/desktop/win64_portable" target="_blank">🔗 Download</a></td>
+        </tr>
+        <tr>
+          <td><i class="fa-brands fa-telegram"></i> Ayugram (Telegram Fork)</td>
+          <td><a href="https://github.com/AyuGram/AyuGramDesktop/releases" target="_blank">🔗 Download</a></td>
+        </tr>
+        <tr>
+          <td><i class="fa-solid fa-store"></i> Microsoft Store Installer</td>
+          <td><a href="https://github.com/fernvenue/microsoft-store/releases/download/v1.0.0.0/MicrosoftStore.exe" target="_blank">🔗 Download</a></td>
+        </tr>
+        <tr>
+          <td><i class="fa-solid fa-toolbox"></i> Ghost Toolkit (Risun Updated)</td>
+          <td><a href="https://github.com/risunCode/Ghost-Toolbox-Universal/releases/download/Toolbox/Ghost.Toolbox-RisunUpdatedWork.zip" target="_blank">🔗 Download</a></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><i class="fa-solid fa-globe"></i> Browser Extensions</h2>
+      
+      <div class="extension-card">
+        <h3>🍪 Cookie Tools</h3>
+        <div class="extension-group">
+          <a href="https://chromewebstore.google.com/detail/cookie-backup-and-restore/cndobhdcpmpilkebeebeecgminfhkpcj" target="_blank" class="extension-link">Cookie Backup and Restore</a>
+          <a href="https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm" target="_blank" class="extension-link">Cookie Editor</a>
+          <a href="https://chromewebstore.google.com/detail/cookie-editor/iphcomljdfghbkdcfndaijbokpgddeno" target="_blank" class="extension-link">Cookies Manager</a>
+        </div>
+        
+        <h3>🛠️ Web Cheat Utilities</h3>
+        <div class="extension-group">
+          <a href="https://chromewebstore.google.com/detail/absolute-enable-right-cli/jdocbkpgdakpekjlhemmfcncgdjeiika" target="_blank" class="extension-link">Absolute Enable Right Click & Copy</a>
+          <a href="https://chromewebstore.google.com/detail/enable-right-click-copy/khpdiolbjggapokjloppdibgapcfkojd" target="_blank" class="extension-link">Enable RightClick Copy Alt</a>
+        </div>
+        
+        <h3>⬇️ Download & Media</h3>
+        <div class="extension-group">
+          <a href="https://chromewebstore.google.com/detail/idm-integration-module/ngpampappnmepgilojfohadhhmbhlaek" target="_blank" class="extension-link">IDM Integration</a>
+          <a href="https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm" target="_blank" class="extension-link">Nonstop YouTube</a>
+          <a href="https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli" target="_blank" class="extension-link">Bass Boost: HD Audio</a>
+          <a href="https://chromewebstore.google.com/detail/Enhancer%20for%20YouTube%E2%84%A2/ponfpcnoihfmfllpaingbgckeeldkhle" target="_blank" class="extension-link">Enhancer for YouTube</a>
+        </div>
+        
+        <h3>🛡️ Adblock & Security</h3>
+        <div class="extension-group">
+          <a href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh" target="_blank" class="extension-link">uBlock Origin Lite</a>
+          <a href="https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg" target="_blank" class="extension-link">Strict Popup Blocker</a>
+          <a href="https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn" target="_blank" class="extension-link">Clear Cache</a>
+        </div>
+        
+        <h3>📱 Douyin Downloaders</h3>
+        <div class="extension-group">
+          <a href="https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn" target="_blank" class="extension-link">BestDouyin Downloader</a>
+          <a href="https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj" target="_blank" class="extension-link">Simple Douyin Downloader</a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <div id="main-content" class="hidden">
-    <nav class="navbar">
-      <div class="container">
-        <div class="logo">
-          <i class="fa-brands fa-windows"></i>
-          <span>Windows Portal</span>
-        </div>
-        <div class="nav-links">
-          <a href="#power-tools" class="nav-link">Power Tools</a>
-          <a href="#oobe" class="nav-link">Bypass OOBE</a>
-          <a href="#essential" class="nav-link">Essential Software</a>
-          <a href="#extensions" class="nav-link">Extensions</a>
-        </div>
-        <button class="theme-toggle" id="theme-toggle">
-          <i class="fas fa-moon"></i>
-        </button>
-      </div>
-    </nav>
+  <footer class="footer">
+    <div class="container">
+      <p>Windows Portal by <a href="https://github.com/risunCode">RisunTuru</a> | Last Updated May 2025</p>
+    </div>
+  </footer>
 
-    <header class="hero">
-      <div class="container">
-        <div class="hero-content animate__animated animate__fadeIn">
-          <h1>🗃️ Windows Portal</h1>
-          <p>Kumpulan tools, utilitas, dan software penting untuk sistem Windows</p>
-          <div class="badges">
-            <span class="badge"><i class="fas fa-code-branch"></i> v1.2</span>
-            <a href="https://github.com/risunCode" class="badge"><i class="fab fa-github"></i> RisunTuru</a>
-            <span class="badge"><i class="fas fa-bookmark"></i> Arsip Catatan Web</span>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <main class="container">
-      <section id="power-tools" class="card animate__animated animate__fadeInUp">
-        <div class="card-header">
-          <h2><i class="fas fa-bolt"></i> Windows Power Tools</h2>
-        </div>
-        <div class="card-body">
-          <div class="command-block">
-            <div class="command">
-              <code id="cmd1">irm https://get.activated.win | iex</code>
-            </div>
-            <button class="copy-btn" data-cmd="cmd1">
-              <i class="fas fa-copy"></i> Copy
-            </button>
-          </div>
-          
-          <div class="command-block">
-            <div class="command">
-              <code id="cmd2">irm "https://christitus.com/win" | iex</code>
-            </div>
-            <button class="copy-btn" data-cmd="cmd2">
-              <i class="fas fa-copy"></i> Copy
-            </button>
-          </div>
-          
-          <div class="command-block">
-            <div class="command">
-              <code id="cmd3">irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex</code>
-            </div>
-            <button class="copy-btn" data-cmd="cmd3">
-              <i class="fas fa-copy"></i> Copy
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section id="oobe" class="card animate__animated animate__fadeInUp" data-wow-delay="0.2s">
-        <div class="card-header">
-          <h2><i class="fas fa-ban"></i> Bypass OOBE (Windows 11 24H2+)</h2>
-        </div>
-        <div class="card-body">
-          <p>Tekan <kbd>Shift + F10</kbd> lalu jalankan perintah berikut:</p>
-          <div class="command-block">
-            <div class="command">
-              <code id="cmd4">start ms-cxh:localonly</code>
-            </div>
-            <button class="copy-btn" data-cmd="cmd4">
-              <i class="fas fa-copy"></i> Copy
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section class="card animate__animated animate__fadeInUp" data-wow-delay="0.3s">
-        <div class="card-header">
-          <h2><i class="fas fa-tools"></i> Windows Tools & ISO</h2>
-        </div>
-        <div class="card-body">
-          <div class="featured-link">
-            <i class="fas fa-globe"></i>
-            <a href="https://mirror.unilak.ac.id/files/ISO/" target="_blank">Mirror UNILAK ISO Repository</a>
-            <span class="badge">Official Mirror</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="essential" class="card animate__animated animate__fadeInUp" data-wow-delay="0.4s">
-        <div class="card-header">
-          <h2><i class="fas fa-laptop"></i> Essential Software</h2>
-        </div>
-        <div class="card-body">
-          <div class="software-grid">
-            <div class="software-item">
-              <div class="software-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="software-info">
-                <h3>PC Manager by Microsoft</h3>
-                <p>Official Microsoft utility for PC maintenance and security</p>
-                <a href="https://pcmanager.microsoft.com/en-us" class="btn" target="_blank">
-                  <i class="fas fa-download"></i> Download
-                </a>
-              </div>
-            </div>
-
-            <div class="software-item">
-              <div class="software-icon">
-                <i class="fas fa-code"></i>
-              </div>
-              <div class="software-info">
-                <h3>Visual C++ Redistributable AIO</h3>
-                <p>All-in-one package for Visual C++ Redistributables</p>
-                <a href="https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip" class="btn" target="_blank">
-                  <i class="fas fa-download"></i> Download
-                </a>
-              </div>
-            </div>
-
-            <div class="software-item">
-              <div class="software-icon">
-                <i class="fab fa-telegram"></i>
-              </div>
-              <div class="software-info">
-                <h3>Telegram Portable</h3>
-                <p>Portable version of the popular messaging app</p>
-                <a href="https://telegram.org/dl/desktop/win64_portable" class="btn" target="_blank">
-                  <i class="fas fa-download"></i> Download
-                </a>
-              </div>
-            </div>
-
-            <div class="software-item">
-              <div class="software-icon">
-                <i class="fab fa-telegram-plane"></i>
-              </div>
-              <div class="software-info">
-                <h3>Ayugram (Telegram Fork)</h3>
-                <p>Enhanced fork of Telegram Desktop with additional features</p>
-                <a href="https://github.com/AyuGram/AyuGramDesktop/releases" class="btn" target="_blank">
-                  <i class="fas fa-download"></i> Download
-                </a>
-              </div>
-            </div>
-
-            <div class="software-item">
-              <div class="software-icon">
-                <i class="fas fa-store"></i>
-              </div>
-              <div class="software-info">
-                <h3>Microsoft Store Installer</h3>
-                <p>Installer for Microsoft Store on Windows</p>
-                <a href="https://github.com/fernvenue/microsoft-store/releases/download/v1.0.0.0/MicrosoftStore.exe" class="btn" target="_blank">
-                  <i class="fas fa-download"></i> Download
-                </a>
-              </div>
-            </div>
-
-            <div class="software-item">
-              <div class="software-icon">
-                <i class="fas fa-ghost"></i>
-              </div>
-              <div class="software-info">
-                <h3>Ghost Toolkit (Risun Updated)</h3>
-                <p>Updated version of Ghost Toolbox with additional features</p>
-                <a href="https://github.com/risunCode/Ghost-Toolbox-Universal/releases/download/Toolbox/Ghost.Toolbox-RisunUpdatedWork.zip" class="btn" target="_blank">
-                  <i class="fas fa-download"></i> Download
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="extensions" class="card animate__animated animate__fadeInUp" data-wow-delay="0.5s">
-        <div class="card-header">
-          <h2><i class="fas fa-puzzle-piece"></i> Browser Extensions</h2>
-        </div>
-        <div class="card-body">
-          <div class="extensions-category">
-            <h3><i class="fas fa-cookie"></i> Cookie Tools</h3>
-            <div class="extensions-list">
-              <a href="https://chromewebstore.google.com/detail/cookie-backup-and-restore/cndobhdcpmpilkebeebeecgminfhkpcj" target="_blank" class="extension-badge">
-                Cookie Backup and Restore
-              </a>
-              <a href="https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm" target="_blank" class="extension-badge">
-                Cookie Editor
-              </a>
-              <a href="https://chromewebstore.google.com/detail/cookie-editor/iphcomljdfghbkdcfndaijbokpgddeno" target="_blank" class="extension-badge">
-                Cookies Manager
-              </a>
-            </div>
-          </div>
-
-          <div class="extensions-category">
-            <h3><i class="fas fa-wrench"></i> Web Cheat Utilities</h3>
-            <div class="extensions-list">
-              <a href="https://chromewebstore.google.com/detail/absolute-enable-right-cli/jdocbkpgdakpekjlhemmfcncgdjeiika" target="_blank" class="extension-badge">
-                Absolute Enable Right Click & Copy
-              </a>
-              <a href="https://chromewebstore.google.com/detail/enable-right-click-copy/khpdiolbjggapokjloppdibgapcfkojd" target="_blank" class="extension-badge">
-                Enable RightClick Copy Alt
-              </a>
-            </div>
-          </div>
-
-          <div class="extensions-category">
-            <h3><i class="fas fa-download"></i> Download & Media</h3>
-            <div class="extensions-list">
-              <a href="https://chromewebstore.google.com/detail/idm-integration-module/ngpampappnmepgilojfohadhhmbhlaek" target="_blank" class="extension-badge">
-                IDM Integration
-              </a>
-              <a href="https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm" target="_blank" class="extension-badge">
-                Nonstop YouTube
-              </a>
-              <a href="https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli" target="_blank" class="extension-badge">
-                Bass Boost: HD Audio
-              </a>
-              <a href="https://chromewebstore.google.com/detail/Enhancer%20for%20YouTube%E2%84%A2/ponfpcnoihfmfllpaingbgckeeldkhle" target="_blank" class="extension-badge">
-                Enhancer for YouTube
-              </a>
-            </div>
-          </div>
-
-          <div class="extensions-category">
-            <h3><i class="fas fa-shield-alt"></i> Adblock & Security</h3>
-            <div class="extensions-list">
-              <a href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh" target="_blank" class="extension-badge">
-                uBlock Origin Lite
-              </a>
-              <a href="https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg" target="_blank" class="extension-badge">
-                Strict Popup Blocker
-              </a>
-              <a href="https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn" target="_blank" class="extension-badge">
-                Clear Cache
-              </a>
-            </div>
-          </div>
-
-          <div class="extensions-category">
-            <h3><i class="fas fa-video"></i> Douyin Downloaders</h3>
-            <div class="extensions-list">
-              <a href="https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn" target="_blank" class="extension-badge">
-                BestDouyin Downloader
-              </a>
-              <a href="https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj" target="_blank" class="extension-badge">
-                Simple Douyin Downloader
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-branding">
-            <div class="logo">
-              <i class="fa-brands fa-windows"></i>
-              <span>Windows Portal</span>
-            </div>
-            <p>Brought to you by <a href="https://github.com/risunCode" target="_blank">RisunTuru</a></p>
-          </div>
-          <div class="footer-links">
-            <a href="https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem" target="_blank">
-              <i class="fab fa-github"></i> GitHub Repository
-            </a>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2025 Windows Portal by RisunTuru. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.5/sweetalert2.all.min.js"></script>
-  <script src="script.js"></script>
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.js"></script>
+  
+  <script>
+    function copyToClipboard(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          Swal.fire({
+            title: 'Copied!',
+            text: 'Command copied to clipboard',
+            icon: 'success',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            customClass: {
+              popup: 'colored-toast'
+            }
+          });
+        })
+        .catch(err => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to copy: ' + err,
+            icon: 'error',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+        });
+    }
+    
+    // Add animation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 100 * index);
+      });
+    });
+  </script>
+  
+  <style>
+    /* SweetAlert customization */
+    .colored-toast.swal2-icon-success {
+      background-color: #a5dc86 !important;
+    }
+    
+    .swal2-popup.swal2-toast {
+      padding: 0.625em 1em;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .swal2-title {
+      color: white !important;
+    }
+    
+    .swal2-timer-progress-bar {
+      background: rgba(255, 255, 255, 0.5);
+    }
+  </style>
 </body>
 </html>

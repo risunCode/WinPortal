@@ -40,6 +40,10 @@ start ms-cxh:localonly
 
 ---
 
+
+## Software for MacOS
+[Microsoft Office](https://github.com/alsyundawy/Microsoft-Office-For-MacOS)
+
 ## 🖥️ Essential Software for PC
 
 | Software | Link |

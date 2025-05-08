@@ -3,7 +3,7 @@
 > **Brought to you by:** [RisunTuru](https://github.com/risunCode)
 
 # NEW!
-This Page is now launched: [CLICK HERE!](https://risuncode.github.io/winportal.github.io/)
+This Page is now launched: [CLICK HERE!](https://risuncode.github.io/WinPortal)
 
 ---
 ## 🗃️ Arsip catatan web.

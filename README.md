@@ -1,5 +1,7 @@
 ![image](https://github.com/user-attachments/assets/986baf78-9444-4b7c-a789-e95f2fe13546)
 # NEW! Webpage is now Launched: [CLICK HERE!](https://risuncode.github.io/WinPortal)
+## 🗃️ Arsip Catatan Web
+🔗 [Windows Portal - Software Ehem](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
 
 ## 🍎 Essential Software for macOS
 
@@ -33,12 +35,6 @@
 | **⬇️ Download & Media** | [IDM Integration](https://chromewebstore.google.com/detail/idm-integration-module/ngpampappnmepgilojfohadhhmbhlaek), [Nonstop YouTube](https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm), [Bass Boost: HD Audio](https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli), [Enhancer for YouTube](https://chromewebstore.google.com/detail/Enhancer%20for%20YouTube%E2%84%A2/ponfpcnoihfmfllpaingbgckeeldkhle) |
 | **🛡 Adblock & Security** | [uBlock Origin Lite](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh), [Strict Popup Blocker](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg), [Clear Cache](https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn) |
 | **📥 Douyin Downloaders** | [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn), [Simple Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj) |
-
----
-
-## 🗃️ Arsip Catatan Web
-
-🔗 [Windows Portal - Software Ehem](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
 
 ---
 

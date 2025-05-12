@@ -1,47 +1,22 @@
 ![image](https://github.com/user-attachments/assets/986baf78-9444-4b7c-a789-e95f2fe13546)
+# NEW! Webpage is now Launched: [CLICK HERE!](https://risuncode.github.io/WinPortal)
 
+## 🍎 Essential Software for macOS
 
-# NEW!
-This Page is now launched: [CLICK HERE!](https://risuncode.github.io/WinPortal)
+| Software                             | Link                                                                 |
+|--------------------------------------|----------------------------------------------------------------------|
+| **Microsoft Office + Activator**                 | [🔗 Click to visit](https://github.com/alsyundawy/Microsoft-Office-For-MacOS) |
+| **Homebrew (Package Manager)**       | [🔗 Click to visit](https://brew.sh)                                 |
+| **Rectangle (Window Manager)**       | [🔗 Click to visit](https://rectangleapp.com)                         |
+| **iTerm2 (Terminal Emulator)**       | [🔗 Click to visit](https://iterm2.com)                               |
+| **The Unarchiver (Archive Utility)**| [🔗 Click to visit](https://theunarchiver.com)                        |
 
----
-## 🗃️ Arsip catatan web.
-🔗 [Windows Portal - Software Ehem](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
+## 🖥️ Essential Software for Windows PC
 
----
+| Software                    | Link                                                             |
+|----------------------------|------------------------------------------------------------------|
+| **PC Manager by Microsoft**| [🔗 Click to visit](https://pcmanager.microsoft.com/en-us)       |
 
-🚀 Windows Power Tools
-**Windows & Office Activator:**
-```
-irm https://get.activated.win | iex
-```
-
-**WinUtils by ChrisTitusTech: a.ka CTT Tools**
-```
-irm "https://christitus.com/win" | iex
-```
-
-**Winhance by Memory:**
-```
-irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
-```
----
-
-## 🚫 Bypass OOBE (Windows 11 24H2+)
-Saat berada di OOBE (Out-of-Box Experience), tekan `Shift + F10`, lalu jalankan perintah berikut:
-```cmd
-start ms-cxh:localonly
-```
----
-
-## 🛠️ Windows Tools, DLC Boot & Program Penting
-🌐 [Mirror UNILAK ISO Repo](https://mirror.unilak.ac.id/files/ISO/)
-
----
-
-
-## Software for MacOS
-[Microsoft Office](https://github.com/alsyundawy/Microsoft-Office-For-MacOS)
 
 ## 🖥️ Essential Software for PC
 

@@ -48,13 +48,16 @@ start ms-cxh:localonly
 ---
 
 ## 📶 Bypass TTL Hotspot (Windows)
-
-Gunakan pengaturan TTL (Time To Live) berikut untuk mengakali pembatasan tethering dari provider,
-baik saat **menggunakan hotspot dari mana saja**, **menjadikan laptop sebagai repeater**, maupun **mengembalikan pengaturan TTL ke default**.
+Gunakan pengaturan TTL untuk mengakali pembatasan tethering dari provider.
 
 ### 🔗 Jalankan Pakai Powershell admin/Console [Win + X]
 ```bash
 irm https://raw.githubusercontent.com/risunCode/WinPortal/main/BypassTTL_win65.ps1 | iex
+```
+
+### 🔗 Atur ke default (Windows)
+```
+irm https://raw.githubusercontent.com/risunCode/WinPortal/main/BypassTTL_default.ps1 | iex
 ```
 
 ---

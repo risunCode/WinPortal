@@ -1,6 +1,5 @@
+![image](https://github.com/user-attachments/assets/986baf78-9444-4b7c-a789-e95f2fe13546)
 
-> [!IMPORTANT]
-> **Brought to you by:** [RisunTuru](https://github.com/risunCode)
 
 # NEW!
 This Page is now launched: [CLICK HERE!](https://risuncode.github.io/WinPortal)

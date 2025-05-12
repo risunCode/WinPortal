@@ -34,7 +34,7 @@
 | **WinUtils (ChrisTitusTech)**  | `irm "https://christitus.com/win" \| iex`                              |
 | **Winhance (by Memory)**       | `irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" \| iex` |
 
-> 💡 *Copy-paste perintah ke PowerShell dengan hak admin.*
+> 💡 *Copy-paste perintah ke PowerShell dengan hak admin, key: Win+X*
 
 ---
 

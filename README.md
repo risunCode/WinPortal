@@ -11,13 +11,6 @@
 | **iTerm2 (Terminal Emulator)**       | [🔗 Click to visit](https://iterm2.com)                               |
 | **The Unarchiver (Archive Utility)**| [🔗 Click to visit](https://theunarchiver.com)                        |
 
-## 🖥️ Essential Software for Windows PC
-
-| Software                    | Link                                                             |
-|----------------------------|------------------------------------------------------------------|
-| **PC Manager by Microsoft**| [🔗 Click to visit](https://pcmanager.microsoft.com/en-us)       |
-
-
 ## 🖥️ Essential Software for PC
 
 | Software | Link |

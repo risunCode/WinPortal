@@ -35,3 +35,30 @@
 | **📥 Douyin Downloaders** | [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn), [Simple Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj) |
 
 ---
+
+## 🗃️ Arsip Catatan Web
+
+🔗 [Windows Portal - Software Ehem](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
+
+---
+
+## 🚀 Windows Power Tools
+
+| Tool Name                       | Command                                                                 |
+|--------------------------------|-------------------------------------------------------------------------|
+| **Windows & Office Activator** | `irm https://get.activated.win \| iex`                                 |
+| **WinUtils (ChrisTitusTech)**  | `irm "https://christitus.com/win" \| iex`                              |
+| **Winhance (by Memory)**       | `irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" \| iex` |
+
+> 💡 *Copy-paste perintah ke PowerShell dengan hak admin.*
+
+---
+
+## 🚫 Bypass OOBE (Windows 11 24H2+)
+
+Saat berada di layar OOBE (Out-of-Box Experience), tekan `Shift + F10`, lalu jalankan perintah berikut:
+
+```cmd
+start ms-cxh:localonly
+```
+---

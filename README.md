@@ -24,7 +24,6 @@
 | **Microsoft Store Installer** | [🔗 Download](https://github.com/fernvenue/microsoft-store/releases/download/v1.0.0.0/MicrosoftStore.exe) |
 | **Ghost Toolkit (Risun Updated)** | [🔗 Download](https://github.com/risunCode/Ghost-Toolbox-Universal/releases/download/Toolbox/Ghost.Toolbox-RisunUpdatedWork.zip) |
 
----
 
 ## 🚀 Windows Power Tools
 

@@ -166,9 +166,14 @@ Request-Administrator
 do {
     Show-Menu
     
+    Write-Host "Tekan tombol angka untuk memilih opsi: " -NoNewline -ForegroundColor White
+    
     do {
-        $choice = Read-Host "Tekan tombol angka untuk memilih opsi (1/2/3)"
-    } while ($choice -notmatch '^[123]$')
+        $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+        $choice = $key.Character
+    } while ($choice -notmatch '^[123])
+    
+    Write-Host $choice -ForegroundColor Green
     
     switch ($choice) {
         '1' { Set-TTLTo65 }

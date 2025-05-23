@@ -50,15 +50,15 @@ start ms-cxh:localonly
 ## 📶 Bypass TTL Hotspot (Windows)
 Gunakan pengaturan TTL untuk mengakali pembatasan tethering dari provider.
 
-### 🔗 Jalankan Pakai Powershell admin/Console [Win + X]
-```bash
-irm https://raw.githubusercontent.com/risunCode/WinPortal/main/BypassTTL_win65.ps1 | iex
-```
+### 🔗 Jalankan Pakai CMD Admin
+`netsh int ipv4 set glob defaultcurhoplimit=64`
+`netsh int ipv6 set glob defaultcurhoplimit=64`
 
 ### 🔗 Atur ke default (Windows)
-```
-irm https://raw.githubusercontent.com/risunCode/WinPortal/main/BypassTTL_default.ps1 | iex
-```
+`netsh int ipv4 set glob defaultcurhoplimit=128`
+`netsh int ipv6 set glob defaultcurhoplimit=128`
+
+ScriptTTL: [Download](https://github.com/risunCode/WinPortal/releases/download/Script/Bypass-tethering-windows.bat)
 
 ---
 ## 🌐 Browser Extensions

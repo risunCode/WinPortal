@@ -1,154 +1,178 @@
-#requires -RunAsAdministrator
+# TTL Hop Limit Manager - PowerShell Version
+# Requires Administrator privileges
 
-# --- Pengaturan Awal Konsol ---
-$Host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::Yellow # Kuning Cerah
-$Host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::Black
-$Host.UI.RawUI.WindowTitle = "Pengaturan TTL Hop Limit"
-
-# Mengatur ukuran jendela konsol (sesuaikan jika perlu)
-try {
-    $WindowSize = $Host.UI.RawUI.WindowSize
-    $WindowSize.Width = 80
-    $WindowSize.Height = 30
-    $Host.UI.RawUI.WindowSize = $WindowSize
-
-    # Pastikan buffer size cukup
-    $BufferSize = $Host.UI.RawUI.BufferSize
-    if ($BufferSize.Width -lt $WindowSize.Width) { $BufferSize.Width = $WindowSize.Width }
-    if ($BufferSize.Height -lt $WindowSize.Height) { $BufferSize.Height = $WindowSize.Height + 50 } # Beri sedikit ruang buffer
-    $Host.UI.RawUI.BufferSize = $BufferSize
-}
-catch {
-    Write-Warning "Tidak dapat mengatur ukuran jendela konsol: $($_.Exception.Message)"
+# Set console properties
+if ($Host.UI.RawUI) {
+    $Host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size(80, 30)
+    $Host.UI.RawUI.BackgroundColor = "Black"
+    $Host.UI.RawUI.ForegroundColor = "Yellow"
+    Clear-Host
 }
 
-Clear-Host
-Write-Host "=========================================================="
-Write-Host "       BERHASIL MENDAPATKAN HAK ADMINISTRATOR"
-Write-Host "=========================================================="
-Write-Host ""
-Write-Host "Skrip berjalan dengan hak administrator."
-Start-Sleep -Seconds 2
+function Test-Administrator {
+    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object Security.Principal.WindowsPrincipal($currentUser)
+    return $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
 
-# --- Fungsi-Fungsi ---
-
-function Get-CurrentTTLs {
-    $output = [PSCustomObject]@{
-        IPv4TTL = "N/A"
-        IPv6TTL = "N/A"
+function Request-Administrator {
+    if (-not (Test-Administrator)) {
+        Write-Host "==========================================================" -ForegroundColor Yellow
+        Write-Host "                MEMERLUKAN HAK ADMINISTRATOR" -ForegroundColor Yellow
+        Write-Host "==========================================================" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "  Skrip ini perlu dijalankan dengan hak administrator" -ForegroundColor White
+        Write-Host "  untuk mengubah pengaturan jaringan dan menampilkan" -ForegroundColor White
+        Write-Host "  status TTL saat ini dengan benar." -ForegroundColor White
+        Write-Host ""
+        Write-Host "  Mencoba meminta elevasi otomatis..." -ForegroundColor White
+        Write-Host "  Jika dialog UAC muncul, silakan klik 'Yes'." -ForegroundColor White
+        Write-Host ""
+        Write-Host "==========================================================" -ForegroundColor Yellow
+        
+        Start-Sleep -Seconds 2
+        
+        # Restart script with administrator privileges
+        $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Path)`""
+        Start-Process PowerShell -Verb RunAs -ArgumentList $arguments
+        exit
     }
-    try {
-        $ipv4Settings = Get-NetIPGlobalSetting -AddressFamily IPv4 -ErrorAction SilentlyContinue
-        if ($ipv4Settings) {
-            $output.IPv4TTL = $ipv4Settings.DefaultHopLimit
-        } else {
-            # Write-Warning "Get-NetIPGlobalSetting untuk IPv4 tidak mengembalikan data."
-        }
+    
+    Clear-Host
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host "        BERHASIL MENDAPATKAN HAK ADMINISTRATOR" -ForegroundColor Yellow
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Skrip berjalan dengan hak administrator" -ForegroundColor Green
+    Start-Sleep -Seconds 2
+}
 
-        $ipv6Settings = Get-NetIPGlobalSetting -AddressFamily IPv6 -ErrorAction SilentlyContinue
-        if ($ipv6Settings) {
-            $output.IPv6TTL = $ipv6Settings.DefaultHopLimit
-        } else {
-            # Write-Warning "Get-NetIPGlobalSetting untuk IPv6 tidak mengembalikan data."
+function Get-CurrentTTL {
+    $currentTTLIPv4 = "N/A"
+    $currentTTLIPv6 = "N/A"
+    
+    try {
+        # Get IPv4 TTL
+        $ipv4Output = netsh int ipv4 show global | Where-Object { $_ -match "Default Hop Limit" }
+        if ($ipv4Output) {
+            $currentTTLIPv4 = ($ipv4Output -split ":")[1].Trim()
+        }
+        if ([string]::IsNullOrEmpty($currentTTLIPv4)) {
+            $currentTTLIPv4 = "Tidak ditemukan"
+        }
+        
+        # Get IPv6 TTL
+        $ipv6Output = netsh int ipv6 show global | Where-Object { $_ -match "Default Hop Limit" }
+        if ($ipv6Output) {
+            $currentTTLIPv6 = ($ipv6Output -split ":")[1].Trim()
+        }
+        if ([string]::IsNullOrEmpty($currentTTLIPv6)) {
+            $currentTTLIPv6 = "Tidak ditemukan"
         }
     }
     catch {
-        Write-Warning "Terjadi kesalahan saat mengambil TTL: $($_.Exception.Message)"
+        $currentTTLIPv4 = "Error"
+        $currentTTLIPv6 = "Error"
     }
-    return $output
-}
-
-function Set-HopLimit {
-    param(
-        [Parameter(Mandatory=$true)]
-        [int]$Limit,
-        [string]$MessageSuffix = ""
-    )
-    try {
-        Set-NetIPGlobalSetting -AddressFamily IPv4 -DefaultHopLimit $Limit -ErrorAction Stop
-        Set-NetIPGlobalSetting -AddressFamily IPv6 -DefaultHopLimit $Limit -ErrorAction Stop
-        Write-Host "TTL Hop Limit berhasil diatur ke $Limit$MessageSuffix." # Pesan tanpa warna spesifik, akan jadi kuning
-        return $true
-    }
-    catch {
-        Write-Error "Gagal mengatur TTL Hop Limit: $($_.Exception.Message)"
-        return $false
+    
+    return @{
+        IPv4 = $currentTTLIPv4
+        IPv6 = $currentTTLIPv6
     }
 }
 
 function Show-Menu {
-    param(
-        [PSCustomObject]$CurrentTTLs
-    )
+    $ttlInfo = Get-CurrentTTL
+    
     Clear-Host
-    Write-Host "=========================================================="
-    Write-Host "               PENGATURAN TTL HOP LIMIT"
-    Write-Host "=========================================================="
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host "                PENGATURAN TTL HOP LIMIT" -ForegroundColor Yellow
+    Write-Host "==========================================================" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host " TTL Hop Limit Saat Ini:"
-    Write-Host "   IPv4 : $($CurrentTTLs.IPv4TTL)"
-    Write-Host "   IPv6 : $($CurrentTTLs.IPv6TTL)"
+    Write-Host "  TTL Hop Limit Saat Ini:" -ForegroundColor White
+    Write-Host "    IPv4 : $($ttlInfo.IPv4)" -ForegroundColor Cyan
+    Write-Host "    IPv6 : $($ttlInfo.IPv6)" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "----------------------------------------------------------"
-    Write-Host " Pilih salah satu opsi di bawah ini:"
+    Write-Host "----------------------------------------------------------" -ForegroundColor Gray
+    Write-Host "  Pilih salah satu opsi di bawah ini:" -ForegroundColor White
     Write-Host ""
-    Write-Host "   [1] Set TTL Hop Limit ke 65 (Bypass Tethering)"
-    Write-Host "   [2] Set TTL Hop Limit ke Default Windows (128)"
-    Write-Host "   [3] Batal / Keluar"
+    Write-Host "    [1] Set TTL Hop Limit ke 65 (Bypass Tethering)" -ForegroundColor Green
+    Write-Host "    [2] Set TTL Hop Limit ke Default Windows (128)" -ForegroundColor Yellow
+    Write-Host "    [3] Batal / Keluar" -ForegroundColor Red
     Write-Host ""
-    Write-Host "=========================================================="
-    Write-Host "Tekan tombol angka untuk memilih opsi: " -NoNewline
-
-    # Menunggu input tombol tanpa perlu Enter
-    $options = [System.Management.Automation.Host.ReadKeyOptions]::NoEcho -bor [System.Management.Automation.Host.ReadKeyOptions]::IncludeKeyDown
-    $keyInfo = $Host.UI.ReadKey($options)
-    return $keyInfo.Character
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host ""
 }
 
-# --- Loop Utama Skrip ---
-do {
-    $ttls = Get-CurrentTTLs
-    $choice = Show-Menu -CurrentTTLs $ttls
-
-    switch ($choice) {
-        '1' {
-            Clear-Host
-            Write-Host "=========================================================="
-            Write-Host "        MENGATUR TTL HOP LIMIT KE 65..."
-            Write-Host "=========================================================="
-            Write-Host ""
-            Set-HopLimit -Limit 65 -MessageSuffix " (Bypass Tethering)"
-            Write-Host ""
-            Write-Host "Kembali ke menu utama..."
-            Start-Sleep -Seconds 3
-        }
-        '2' {
-            Clear-Host
-            Write-Host "=========================================================="
-            Write-Host "        MENGATUR TTL HOP LIMIT KE DEFAULT (128)..."
-            Write-Host "=========================================================="
-            Write-Host ""
-            Set-HopLimit -Limit 128 -MessageSuffix " (Default Windows)"
-            Write-Host ""
-            Write-Host "Kembali ke menu utama..."
-            Start-Sleep -Seconds 3
-        }
-        '3' {
-            Clear-Host
-            Write-Host "=========================================================="
-            Write-Host "                  KELUAR DARI SKRIP"
-            Write-Host "=========================================================="
-            Write-Host ""
-            Write-Host "Terima kasih telah menggunakan skrip ini, konsol akan ditutup dalam 3 detik."
-            Start-Sleep -Seconds 3
-            # Menghentikan loop dan keluar dari skrip
-            return 
-        }
-        default {
-            Write-Host # Baris baru setelah input yang tidak valid
-            Write-Host "Input tidak dikenal ('$($choice)'), kembali ke menu secara otomatis." -ForegroundColor Red
-            Start-Sleep -Seconds 2
-        }
+function Set-TTLTo65 {
+    Clear-Host
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host "         MENGATUR TTL HOP LIMIT KE 65..." -ForegroundColor Yellow
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host ""
+    
+    try {
+        netsh int ipv4 set glob defaultcurhoplimit=65
+        netsh int ipv6 set glob defaultcurhoplimit=65
+        Write-Host ""
+        Write-Host "TTL Hop Limit berhasil diatur ke 65 (Bypass Tethering)." -ForegroundColor Green
     }
-} while ($true) # Loop akan berjalan terus sampai opsi '3' dipilih
+    catch {
+        Write-Host "Error: Gagal mengatur TTL ke 65." -ForegroundColor Red
+        Write-Host "Detail: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    
+    Write-Host "Kembali ke menu utama..." -ForegroundColor White
+    Start-Sleep -Seconds 3
+}
 
+function Set-TTLToDefault {
+    Clear-Host
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host "         MENGATUR TTL HOP LIMIT KE DEFAULT (128)..." -ForegroundColor Yellow
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host ""
+    
+    try {
+        netsh int ipv4 set glob defaultcurhoplimit=128
+        netsh int ipv6 set glob defaultcurhoplimit=128
+        Write-Host ""
+        Write-Host "TTL Hop Limit berhasil diatur ke 128 (Default Windows)." -ForegroundColor Green
+    }
+    catch {
+        Write-Host "Error: Gagal mengatur TTL ke 128." -ForegroundColor Red
+        Write-Host "Detail: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    
+    Write-Host "Kembali ke menu utama..." -ForegroundColor White
+    Start-Sleep -Seconds 3
+}
+
+function Exit-Script {
+    Clear-Host
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host "                   KELUAR DARI SKRIP" -ForegroundColor Yellow
+    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Terima kasih telah menggunakan skrip ini, konsol akan ditutup dalam 3 detik." -ForegroundColor White
+    Start-Sleep -Seconds 3
+    exit
+}
+
+# Main execution
+Request-Administrator
+
+# Main menu loop
+do {
+    Show-Menu
+    
+    do {
+        $choice = Read-Host "Tekan tombol angka untuk memilih opsi (1/2/3)"
+    } while ($choice -notmatch '^[123]$')
+    
+    switch ($choice) {
+        '1' { Set-TTLTo65 }
+        '2' { Set-TTLToDefault }
+        '3' { Exit-Script }
+    }
+} while ($true)

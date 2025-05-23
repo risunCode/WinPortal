@@ -51,12 +51,12 @@ start ms-cxh:localonly
 Gunakan pengaturan TTL untuk mengakali pembatasan tethering dari provider.
 
 ### 🔗 Jalankan Pakai CMD Admin
-`netsh int ipv4 set glob defaultcurhoplimit=64`
-`netsh int ipv6 set glob defaultcurhoplimit=64`
+- `netsh int ipv4 set glob defaultcurhoplimit=64`
+- `netsh int ipv6 set glob defaultcurhoplimit=64`
 
 ### 🔗 Atur ke default (Windows)
-`netsh int ipv4 set glob defaultcurhoplimit=128`
-`netsh int ipv6 set glob defaultcurhoplimit=128`
+- `netsh int ipv4 set glob defaultcurhoplimit=128`
+- `netsh int ipv6 set glob defaultcurhoplimit=128`
 
 ScriptTTL: [Download](https://github.com/risunCode/WinPortal/releases/download/Script/Bypass-tethering-windows.bat)
 

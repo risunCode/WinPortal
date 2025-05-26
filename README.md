@@ -62,7 +62,7 @@ Gunakan pengaturan TTL untuk mengakali pembatasan tethering dari provider.
 
 - ScriptTTL, no download required. (Run use Windows Powershell Admin, WIN+X)
 ```
-irm "https://github.com/risunCode/WinPortal/raw/main/BypassTTL.ps1" | iex
+irm "https://github.com/risunCode/WinPortal/raw/main/WindowsTimeToLive_changer.ps1" | iex
 ```
 
 ---

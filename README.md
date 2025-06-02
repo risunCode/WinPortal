@@ -57,11 +57,10 @@ Gunakan pengaturan TTL untuk mengakali pembatasan tethering dari provider.
 - `netsh int ipv4 set glob defaultcurhoplimit=128`
 - `netsh int ipv6 set glob defaultcurhoplimit=128`
 
-# ScriptTTL: [Download](https://github.com/risunCode/WinPortal/releases/download/Script/Bypass-tethering-windows.bat)
-
-- ScriptTTL, no download required. (Run use Windows Powershell Admin, WIN+X)
+# ScriptTTL: Update, Now is Windows Script Launcher!
 ```
-irm "https://github.com/risunCode/WinPortal/raw/main/WindowsTimeToLive_changer.ps1" | iex
+run it using Windows Powershell Admin WIN+X, or normal Powershell is fine
+irm "https://github.com/risunCode/WinPortal/raw/main/winScript/aioOnlineLauncher.ps1" | iex
 ```
 
 ---

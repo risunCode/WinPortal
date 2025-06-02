@@ -30,6 +30,7 @@ function Show-MainMenu {
     Show-Header
     Write-Host "   Selamat datang di Windows Script Launcher!" -ForegroundColor Green
     Write-Host "   Pilih tools yang ingin Anda jalankan:" -ForegroundColor White
+    Write-Host "   Script Last update: 2 June 2025 at 14pm" -ForegroundColor White
     Write-Host ""
     Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
     Write-Host ""

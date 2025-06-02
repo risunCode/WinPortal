@@ -395,7 +395,8 @@ function Invoke-NetworkTools {
                     Write-Host "  📡 Using curl for speed test..." -ForegroundColor Yellow
                 }
                 catch {
-                    Write-Host "  📡 Using WebClient for speed test..." -ForegroundColor Yellow
+                    Write-Host "  📡 Initialize WebClient for speed test..." -ForegroundColor Yellow
+                    Write-Host "  📡 Speedtest begin, please wait!" -ForegroundColor Yellow
                 }
             }
             
@@ -433,7 +434,8 @@ function Invoke-NetworkTools {
                 $speedMbps = [math]::Round(($speedMBps * 8), 2)
                 
                 Write-Host ""
-                Write-Host "  ✅ Complete! Speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
+                Write-Host "  NOTE: THIS SPEEDTEST MAY BE NOT ACCURATE" -ForegroundColor Green
+                Write-Host "  ✅ Complete! Average Speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
                 Write-Host "  📊 Duration: $([math]::Round($duration, 2))s | Size: $fileSizeMB MB" -ForegroundColor White
                 
                 # Rating

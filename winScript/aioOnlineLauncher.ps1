@@ -7,7 +7,7 @@ param(
 )
 
 # Set console properties
-$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.1 - PowerShell Edition"
+$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.2 - PowerShell Edition"
 if ($Host.UI.RawUI.BufferSize) {
     try {
         $Host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(92, 3000)
@@ -30,7 +30,7 @@ function Show-MainMenu {
     Show-Header
     Write-Host "   Selamat datang di Windows Script Launcher!" -ForegroundColor Green
     Write-Host "   Pilih tools yang ingin Anda jalankan:" -ForegroundColor White
-    Write-Host "   Script Last update: 2 June 2025 at 14pm" -ForegroundColor White
+    Write-Host "   Script Last update: 2 June 2025 at 14.46pm" -ForegroundColor White
     Write-Host ""
     Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
     Write-Host ""

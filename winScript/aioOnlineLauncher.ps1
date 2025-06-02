@@ -376,18 +376,42 @@ function Invoke-NetworkTools {
             ipconfig /all
         }
         "4" {
-            Write-Host "Basic Speed Test (downloading test file)..." -ForegroundColor Yellow
+            Write-Host "Basic Speed Test (downloading 10MB test file)..." -ForegroundColor Yellow
             try {
+                # Use a reliable 10MB test file
+                $testUrl = "https://cachefly.cachefly.net/100mb.test"
+                $testFile = "$env:TEMP\speedtest_100mb.tmp"
+                $fileSizeMB = 101
+                
+                Write-Host "  Downloading test file..." -ForegroundColor Yellow
                 $start = Get-Date
-                Invoke-WebRequest -Uri "https://cachefly.cachefly.net/100mb.test" -OutFile "$env:TEMP\speedtest.tmp" -ErrorAction Stop
+                
+                # Download with progress if possible
+                $webClient = New-Object System.Net.WebClient
+                $webClient.DownloadFile($testUrl, $testFile)
+                $webClient.Dispose()
+                
                 $end = Get-Date
                 $duration = ($end - $start).TotalSeconds
-                $speed = [math]::Round((1 / $duration), 2)
-                Write-Host "Download speed: approximately $speed Mbps" -ForegroundColor Green
-                Remove-Item "$env:TEMP\speedtest.tmp" -ErrorAction SilentlyContinue
+                
+                # Calculate speed: (File size in MB) / (Duration in seconds) = MB/s
+                # Then convert to Mbps: MB/s * 8 = Mbps
+                $speedMBps = [math]::Round(($fileSizeMB / $duration), 2)
+                $speedMbps = [math]::Round(($speedMBps * 8), 2)
+                
+                Write-Host "  ✓ Test completed!" -ForegroundColor Green
+                Write-Host "  📊 File size: $fileSizeMB MB" -ForegroundColor White
+                Write-Host "  ⏱️  Duration: $([math]::Round($duration, 2)) seconds" -ForegroundColor White
+                Write-Host "  🚀 Download speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
+                
+                # Clean up
+                Remove-Item $testFile -ErrorAction SilentlyContinue
             }
             catch {
-                Write-Host "Speed test failed: $($_.Exception.Message)" -ForegroundColor Red
+                Write-Host "  ❌ Speed test failed: $($_.Exception.Message)" -ForegroundColor Red
+                Write-Host "  💡 Tip: Check your internet connection" -ForegroundColor Yellow
+                # Clean up on error
+                Remove-Item "$env:TEMP\speedtest_100mb.tmp" -ErrorAction SilentlyContinue
             }
         }
         "5" { return }

@@ -39,7 +39,9 @@
 irm "https://github.com/risunCode/WinPortal/raw/main/winScript/aioOnlineLauncher.ps1" | iex
 ```
 
-## Preview scriptLauncher.bat (offline)
+---
+
+## [Offline] Preview scriptLauncher.bat (offline)
 ### Download Offline version 
 - [download disini](https://github.com/risunCode/WinPortal/releases/download/Script/winScript.rar)
 - Extract di C D E terserah, lalu buat shortcut ScriptLauncher ke desktop biar mudah!

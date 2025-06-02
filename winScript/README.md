@@ -1,6 +1,6 @@
 # 🚀 Windows Script Launcher - PowerShell Edition v1.2
 
-🛠️ **Windows Script Launcher** adalah *tool* PowerShell serbaguna yang dirancang untuk mempermudah perawatan dan manajemen sistem Windows Anda. Dengan antarmuka berbasis teks yang intuitif, kini Anda bisa mengoptimalkan PC hanya dengan beberapa ketukan! Versi 1.2 ini hadir dengan fitur tes kecepatan internet yang lebih akurat dan *smooth*.
+🛠️ **Windows Script Launcher** adalah *tool* PowerShell serbaguna yang dirancang untuk mempermudah perawatan dan manajemen sistem Windows Anda. Dengan antarmuka berbasis teks yang intuitif, kini Anda bisa mengoptimalkan PC hanya dengan beberapa ketukan! Versi 1.2 ini hadir dengan fitur tes kecepatan internet dan info ram yang tidak akurat 🤣, emang gak akurat sori awokaowkwa, sisanya aman
 
 ---
 

@@ -1,5 +1,5 @@
 # Windows Script Launcher - PowerShell Edition
-# Version 1.0 - Converted for remote execution
+# Version 1.1 - Enhanced with safety confirmations
 # Usage: irm <url-to-this-script> | iex
 
 param(
@@ -7,7 +7,7 @@ param(
 )
 
 # Set console properties
-$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.0 - PowerShell Edition"
+$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.1 - PowerShell Edition"
 if ($Host.UI.RawUI.BufferSize) {
     try {
         $Host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(92, 3000)
@@ -33,68 +33,185 @@ function Show-MainMenu {
     Write-Host ""
     Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "   [1] Cache Cleaner          - Bersihkan file temporary dan cache sistem" -ForegroundColor White
-    Write-Host "   [2] Power Manager          - Kelola shutdown, restart, dan power options" -ForegroundColor White
-    Write-Host "   [3] System Information     - Tampilkan informasi sistem lengkap" -ForegroundColor White
+    Write-Host "   [1] System Cleaner         - Bersihkan file temporary dan cache sistem" -ForegroundColor White
+    Write-Host "   [2] Recycle Bin Manager    - Kelola dan kosongkan recycle bin" -ForegroundColor White
+    Write-Host "   [3] Power Manager          - Kelola shutdown, restart, dan power options" -ForegroundColor White
+    Write-Host "   [4] System Information     - Tampilkan informasi sistem lengkap" -ForegroundColor White
     Write-Host ""
     Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "   [4] Network Tools          - Tools jaringan dan konektivitas" -ForegroundColor White
-    Write-Host "   [5] Disk Cleanup           - Pembersihan disk otomatis" -ForegroundColor White
-    Write-Host "   [6] Keluar                 - Tutup aplikasi" -ForegroundColor White
+    Write-Host "   [5] Network Tools          - Tools jaringan dan konektivitas" -ForegroundColor White
+    Write-Host "   [6] Disk Cleanup           - Pembersihan disk otomatis" -ForegroundColor White
+    Write-Host "   [7] Keluar                 - Tutup aplikasi" -ForegroundColor White
     Write-Host ""
     Write-Host "=====================================================================================" -ForegroundColor Cyan
     Write-Host ""
 }
 
-function Invoke-CacheCleaner {
+function Invoke-SystemCleaner {
     Show-Header
-    Write-Host "                               MENJALANKAN CACHE CLEANER" -ForegroundColor Yellow
+    Write-Host "                               SYSTEM CLEANER" -ForegroundColor Yellow
     Write-Host "=====================================================================================" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "  Memulai pembersihan cache dan file temporary..." -ForegroundColor Green
+    Write-Host "  ⚠️  PERINGATAN: Ini akan menghapus file temporary dan cache sistem!" -ForegroundColor Red
+    Write-Host "  File yang akan dihapus:" -ForegroundColor Yellow
+    Write-Host "    • Windows Temp files" -ForegroundColor White
+    Write-Host "    • Prefetch files" -ForegroundColor White
+    Write-Host "    • Browser cache (Chrome, Edge, Firefox)" -ForegroundColor White
+    Write-Host "    • DNS cache" -ForegroundColor White
+    Write-Host "    • Windows Update cache" -ForegroundColor White
     Write-Host ""
     Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
     
+    $confirm = Read-Host "Yakin ingin melanjutkan pembersihan sistem? (y/n)"
+    if ($confirm -ne "y") {
+        Write-Host "  Pembersihan dibatalkan." -ForegroundColor Yellow
+        Start-Sleep 2
+        return
+    }
+    
+    Write-Host ""
+    Write-Host "  Memulai pembersihan sistem..." -ForegroundColor Green
+    Write-Host ""
+    
     try {
         # Clear Windows temporary files
-        Write-Host "  [1/6] Membersihkan Windows Temp..." -ForegroundColor Yellow
-        Get-ChildItem -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+        Write-Host "  [1/5] Membersihkan Windows Temp..." -ForegroundColor Yellow
+        $tempDeleted = 0
+        Get-ChildItem -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue | ForEach-Object {
+            try {
+                Remove-Item $_.FullName -Force -Recurse -ErrorAction SilentlyContinue
+                $tempDeleted++
+            } catch {}
+        }
+        Write-Host "    ✓ $tempDeleted file(s) dihapus dari Windows Temp" -ForegroundColor Green
         
         # Clear Windows prefetch
-        Write-Host "  [2/6] Membersihkan Prefetch..." -ForegroundColor Yellow
+        Write-Host "  [2/5] Membersihkan Prefetch..." -ForegroundColor Yellow
+        $prefetchCount = (Get-ChildItem -Path "$env:SystemRoot\Prefetch" -Filter "*.pf" -ErrorAction SilentlyContinue).Count
         Get-ChildItem -Path "$env:SystemRoot\Prefetch" -Filter "*.pf" -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+        Write-Host "    ✓ $prefetchCount prefetch file(s) dihapus" -ForegroundColor Green
         
         # Clear browser caches
-        Write-Host "  [3/6] Membersihkan Browser Cache..." -ForegroundColor Yellow
+        Write-Host "  [3/5] Membersihkan Browser Cache..." -ForegroundColor Yellow
         $browserPaths = @(
             "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Cache*",
             "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\Cache*",
             "$env:APPDATA\Mozilla\Firefox\Profiles\*\cache2"
         )
+        $browserCleaned = 0
         foreach ($path in $browserPaths) {
-            Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+            Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue | ForEach-Object {
+                try {
+                    Remove-Item $_.FullName -Force -Recurse -ErrorAction SilentlyContinue
+                    $browserCleaned++
+                } catch {}
+            }
         }
-        
-        # Clear recycle bin
-        Write-Host "  [4/6] Mengosongkan Recycle Bin..." -ForegroundColor Yellow
-        Clear-RecycleBin -Force -ErrorAction SilentlyContinue
+        Write-Host "    ✓ $browserCleaned browser cache file(s) dihapus" -ForegroundColor Green
         
         # Clear DNS cache
-        Write-Host "  [5/6] Membersihkan DNS Cache..." -ForegroundColor Yellow
+        Write-Host "  [4/5] Membersihkan DNS Cache..." -ForegroundColor Yellow
         ipconfig /flushdns | Out-Null
+        Write-Host "    ✓ DNS cache berhasil dibersihkan" -ForegroundColor Green
         
         # Clear Windows Update cache
-        Write-Host "  [6/6] Membersihkan Windows Update Cache..." -ForegroundColor Yellow
+        Write-Host "  [5/5] Membersihkan Windows Update Cache..." -ForegroundColor Yellow
         Stop-Service -Name wuauserv -Force -ErrorAction SilentlyContinue
+        $wuCacheCount = (Get-ChildItem -Path "$env:SystemRoot\SoftwareDistribution\Download" -Recurse -Force -ErrorAction SilentlyContinue).Count
         Get-ChildItem -Path "$env:SystemRoot\SoftwareDistribution\Download" -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
         Start-Service -Name wuauserv -ErrorAction SilentlyContinue
+        Write-Host "    ✓ $wuCacheCount Windows Update cache file(s) dihapus" -ForegroundColor Green
         
         Write-Host ""
-        Write-Host "  ✓ Cache Cleaner berhasil dijalankan!" -ForegroundColor Green
+        Write-Host "  🎉 System Cleaner berhasil dijalankan!" -ForegroundColor Green
     }
     catch {
         Write-Host "  ⚠ Terjadi error saat membersihkan: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    
+    Write-Host ""
+    Write-Host "  Tekan Enter untuk kembali ke menu utama..." -ForegroundColor Yellow
+    Read-Host
+}
+
+function Invoke-RecycleBinManager {
+    Show-Header
+    Write-Host "                              RECYCLE BIN MANAGER" -ForegroundColor Yellow
+    Write-Host "=====================================================================================" -ForegroundColor Cyan
+    Write-Host ""
+    
+    # Check recycle bin status
+    try {
+        $recycleBin = Get-ChildItem -Path 'C:\$Recycle.Bin' -Force -Recurse -ErrorAction SilentlyContinue
+        $itemCount = $recycleBin.Count
+        $totalSize = ($recycleBin | Measure-Object -Property Length -Sum).Sum
+        $sizeGB = [math]::Round($totalSize / 1GB, 2)
+        $sizeMB = [math]::Round($totalSize / 1MB, 2)
+        
+        Write-Host "  Status Recycle Bin:" -ForegroundColor Cyan
+        Write-Host "    📁 Jumlah item: $itemCount" -ForegroundColor White
+        if ($sizeGB -gt 0) {
+            Write-Host "    💾 Ukuran total: $sizeGB GB ($sizeMB MB)" -ForegroundColor White
+        } else {
+            Write-Host "    💾 Ukuran total: $sizeMB MB" -ForegroundColor White
+        }
+        Write-Host ""
+        
+        if ($itemCount -eq 0) {
+            Write-Host "  ✅ Recycle Bin sudah kosong!" -ForegroundColor Green
+        } else {
+            Write-Host "  Pilih aksi:" -ForegroundColor White
+            Write-Host "    [1] Kosongkan Recycle Bin" -ForegroundColor White
+            Write-Host "    [2] Lihat isi Recycle Bin" -ForegroundColor White
+            Write-Host "    [3] Kembali ke menu utama" -ForegroundColor White
+            Write-Host ""
+            
+            $choice = Read-Host "Pilih opsi (1-3)"
+            
+            switch ($choice) {
+                "1" {
+                    Write-Host ""
+                    Write-Host "  ⚠️  PERINGATAN: Ini akan menghapus SEMUA file di Recycle Bin!" -ForegroundColor Red
+                    Write-Host "  File yang dihapus TIDAK DAPAT dipulihkan!" -ForegroundColor Red
+                    Write-Host ""
+                    $confirm = Read-Host "Yakin ingin mengosongkan Recycle Bin? (y/n)"
+                    
+                    if ($confirm -eq "y") {
+                        Write-Host "  Mengosongkan Recycle Bin..." -ForegroundColor Yellow
+                        try {
+                            Clear-RecycleBin -Force -ErrorAction Stop
+                            Write-Host "  🎉 Recycle Bin berhasil dikosongkan!" -ForegroundColor Green
+                            Write-Host "  💾 Berhasil menghemat $sizeMB MB ruang disk" -ForegroundColor Green
+                        }
+                        catch {
+                            Write-Host "  ⚠ Error: $($_.Exception.Message)" -ForegroundColor Red
+                        }
+                    } else {
+                        Write-Host "  Pengosongan Recycle Bin dibatalkan." -ForegroundColor Yellow
+                    }
+                }
+                "2" {
+                    Write-Host ""
+                    Write-Host "  Isi Recycle Bin (10 item teratas):" -ForegroundColor Cyan
+                    $recycleBin | Select-Object -First 10 | ForEach-Object {
+                        $size = [math]::Round($_.Length / 1MB, 2)
+                        Write-Host "    📄 $($_.Name) - $size MB" -ForegroundColor White
+                    }
+                    if ($itemCount -gt 10) {
+                        Write-Host "    ... dan $($itemCount - 10) item lainnya" -ForegroundColor Gray
+                    }
+                }
+                "3" { return }
+                default { 
+                    Write-Host "  Pilihan tidak valid!" -ForegroundColor Red
+                    Start-Sleep 2
+                }
+            }
+        }
+    }
+    catch {
+        Write-Host "  ⚠ Error mengakses Recycle Bin: $($_.Exception.Message)" -ForegroundColor Red
     }
     
     Write-Host ""
@@ -122,36 +239,56 @@ function Invoke-PowerManager {
     
     switch ($choice) {
         "1" { 
+            Write-Host ""
+            Write-Host "  ⚠️  PERINGATAN: Komputer akan dimatikan!" -ForegroundColor Red
             $confirm = Read-Host "Yakin ingin shutdown? (y/n)"
             if ($confirm -eq "y") { 
-                Write-Host "Shutting down..." -ForegroundColor Red
+                Write-Host "  Shutting down dalam 5 detik..." -ForegroundColor Red
+                Start-Sleep 2
                 Stop-Computer -Force 
+            } else {
+                Write-Host "  Shutdown dibatalkan." -ForegroundColor Yellow
             }
         }
         "2" { 
+            Write-Host ""
+            Write-Host "  ⚠️  PERINGATAN: Komputer akan direstart!" -ForegroundColor Red
             $confirm = Read-Host "Yakin ingin restart? (y/n)"
             if ($confirm -eq "y") { 
-                Write-Host "Restarting..." -ForegroundColor Yellow
+                Write-Host "  Restarting dalam 5 detik..." -ForegroundColor Yellow
+                Start-Sleep 2
                 Restart-Computer -Force 
+            } else {
+                Write-Host "  Restart dibatalkan." -ForegroundColor Yellow
             }
         }
         "3" { 
-            Write-Host "Entering sleep mode..." -ForegroundColor Blue
+            Write-Host "  Entering sleep mode..." -ForegroundColor Blue
             rundll32.exe powrprof.dll,SetSuspendState 0,1,0 
         }
         "4" { 
-            Write-Host "Entering hibernate mode..." -ForegroundColor Blue
+            Write-Host "  Entering hibernate mode..." -ForegroundColor Blue
             rundll32.exe powrprof.dll,SetSuspendState Hibernate 
         }
         "5" { 
+            Write-Host ""
+            Write-Host "  ⚠️  PERINGATAN: Anda akan logout dari user saat ini!" -ForegroundColor Red
             $confirm = Read-Host "Yakin ingin log off? (y/n)"
             if ($confirm -eq "y") { 
-                Write-Host "Logging off..." -ForegroundColor Yellow
+                Write-Host "  Logging off..." -ForegroundColor Yellow
                 logoff 
+            } else {
+                Write-Host "  Log off dibatalkan." -ForegroundColor Yellow
             }
         }
         "6" { return }
-        default { Write-Host "Pilihan tidak valid!" -ForegroundColor Red; Start-Sleep 2 }
+        default { Write-Host "  Pilihan tidak valid!" -ForegroundColor Red; Start-Sleep 2 }
+    }
+    
+    if ($choice -ne "6") {
+        Write-Host ""
+        Write-Host "  Tekan Enter untuk kembali..." -ForegroundColor Yellow
+        Read-Host
     }
 }
 
@@ -266,6 +403,18 @@ function Invoke-DiskCleanup {
     Write-Host "                                DISK CLEANUP" -ForegroundColor Yellow
     Write-Host "=====================================================================================" -ForegroundColor Cyan
     Write-Host ""
+    Write-Host "  ⚠️  PERINGATAN: Ini akan menjalankan disk cleanup otomatis!" -ForegroundColor Red
+    Write-Host "  File temporary dan cache akan dihapus secara permanen." -ForegroundColor Yellow
+    Write-Host ""
+    
+    $confirm = Read-Host "Yakin ingin melanjutkan disk cleanup? (y/n)"
+    if ($confirm -ne "y") {
+        Write-Host "  Disk cleanup dibatalkan." -ForegroundColor Yellow
+        Start-Sleep 2
+        return
+    }
+    
+    Write-Host ""
     Write-Host "  Menjalankan pembersihan disk otomatis..." -ForegroundColor Green
     Write-Host ""
     
@@ -282,12 +431,16 @@ function Invoke-DiskCleanup {
             "$env:TEMP"
         )
         
+        $totalCleaned = 0
         foreach ($path in $tempPaths) {
             if (Test-Path $path) {
+                $fileCount = (Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue).Count
                 Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue | 
                 Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+                $totalCleaned += $fileCount
             }
         }
+        Write-Host "    ✓ $totalCleaned file(s) dihapus dari lokasi temp" -ForegroundColor Green
         
         # Analyze disk space
         Write-Host "  [3/3] Menganalisis ruang disk..." -ForegroundColor Yellow
@@ -299,7 +452,7 @@ function Invoke-DiskCleanup {
         }
         
         Write-Host ""
-        Write-Host "  ✓ Disk cleanup berhasil!" -ForegroundColor Green
+        Write-Host "  🎉 Disk cleanup berhasil!" -ForegroundColor Green
     }
     catch {
         Write-Host "  ⚠ Error during disk cleanup: $($_.Exception.Message)" -ForegroundColor Red
@@ -314,22 +467,23 @@ function Invoke-DiskCleanup {
 if ($Action -eq "menu") {
     do {
         Show-MainMenu
-        $choice = Read-Host "Pilih opsi (1-6)"
+        $choice = Read-Host "Pilih opsi (1-7)"
         
         switch ($choice) {
-            "1" { Invoke-CacheCleaner }
-            "2" { Invoke-PowerManager }
-            "3" { Show-SystemInfo }
-            "4" { Invoke-NetworkTools }
-            "5" { Invoke-DiskCleanup }
-            "6" { 
+            "1" { Invoke-SystemCleaner }
+            "2" { Invoke-RecycleBinManager }
+            "3" { Invoke-PowerManager }
+            "4" { Show-SystemInfo }
+            "5" { Invoke-NetworkTools }
+            "6" { Invoke-DiskCleanup }
+            "7" { 
                 Clear-Host
                 Write-Host "=====================================================================================" -ForegroundColor Cyan
                 Write-Host "                                   KELUAR APLIKASI" -ForegroundColor Yellow
                 Write-Host ""
                 Write-Host "  Terima kasih telah menggunakan Windows Script Launcher!" -ForegroundColor Green
                 Write-Host ""
-                Write-Host "  PowerShell Edition - Converted for remote execution" -ForegroundColor White
+                Write-Host "  PowerShell Edition v1.1 - Enhanced with safety features" -ForegroundColor White
                 Write-Host ""
                 Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
                 Write-Host ""
@@ -338,7 +492,7 @@ if ($Action -eq "menu") {
                 exit 
             }
             default { 
-                Write-Host "Pilihan tidak valid! Silakan pilih 1-6." -ForegroundColor Red
+                Write-Host "Pilihan tidak valid! Silakan pilih 1-7." -ForegroundColor Red
                 Start-Sleep 2
             }
         }
@@ -347,7 +501,8 @@ if ($Action -eq "menu") {
 
 # Allow direct function calls via parameters
 switch ($Action.ToLower()) {
-    "cache" { Invoke-CacheCleaner }
+    "system" { Invoke-SystemCleaner }
+    "recycle" { Invoke-RecycleBinManager }
     "power" { Invoke-PowerManager }
     "sysinfo" { Show-SystemInfo }
     "network" { Invoke-NetworkTools }
@@ -355,7 +510,7 @@ switch ($Action.ToLower()) {
     default { 
         if ($Action -ne "menu") {
             Write-Host "Unknown action: $Action" -ForegroundColor Red
-            Write-Host "Available actions: menu, cache, power, sysinfo, network, disk" -ForegroundColor Yellow
+            Write-Host "Available actions: menu, system, recycle, power, sysinfo, network, disk" -ForegroundColor Yellow
         }
     }
 }

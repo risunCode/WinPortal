@@ -378,7 +378,7 @@ function Invoke-NetworkTools {
             Write-Host "Basic Speed Test (downloading test file)..." -ForegroundColor Yellow
             try {
                 $start = Get-Date
-                Invoke-WebRequest -Uri "http://speedtest.ftp.otenet.gr/files/test1Mb.db" -OutFile "$env:TEMP\speedtest.tmp" -ErrorAction Stop
+                Invoke-WebRequest -Uri "https://cachefly.cachefly.net/100mb.test" -OutFile "$env:TEMP\speedtest.tmp" -ErrorAction Stop
                 $end = Get-Date
                 $duration = ($end - $start).TotalSeconds
                 $speed = [math]::Round((1 / $duration), 2)

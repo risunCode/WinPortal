@@ -1,7 +1,6 @@
 ![image](https://github.com/user-attachments/assets/986baf78-9444-4b7c-a789-e95f2fe13546)
-# NEW! Webpage is now Launched: [CLICK HERE!](https://risuncode.github.io/WinPortal)
-## 🗃️ Arsip Catatan Web [Disini, Here](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
 
+## 🗃️ Arsip Catatan Web Download Aplikasi [Disini, Here](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
 ---
 ## 🍎 Essential Software for macOS
 

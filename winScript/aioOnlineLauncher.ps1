@@ -375,54 +375,169 @@ function Invoke-NetworkTools {
             Write-Host "Network Configuration:" -ForegroundColor Yellow
             ipconfig /all
         }
-        "4" {
-            Write-Host "Basic Speed Test (downloading 10MB test file)..." -ForegroundColor Yellow
-            try {
-                # Use a reliable 10MB test file
-                $testUrl = "https://cachefly.cachefly.net/100mb.test"
-                $testFile = "$env:TEMP\speedtest_100mb.tmp"
-                $fileSizeMB = 101
-                
-                Write-Host "  Downloading test file..." -ForegroundColor Yellow
-                $start = Get-Date
-                
-                # Download with progress if possible
-                $webClient = New-Object System.Net.WebClient
-                $webClient.DownloadFile($testUrl, $testFile)
-                $webClient.Dispose()
-                
-                $end = Get-Date
-                $duration = ($end - $start).TotalSeconds
-                
-                # Calculate speed: (File size in MB) / (Duration in seconds) = MB/s
-                # Then convert to Mbps: MB/s * 8 = Mbps
-                $speedMBps = [math]::Round(($fileSizeMB / $duration), 2)
-                $speedMbps = [math]::Round(($speedMBps * 8), 2)
-                
-                Write-Host "  ✓ Test completed!" -ForegroundColor Green
-                Write-Host "  📊 File size: $fileSizeMB MB" -ForegroundColor White
-                Write-Host "  ⏱️  Duration: $([math]::Round($duration, 2)) seconds" -ForegroundColor White
-                Write-Host "  🚀 Download speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
-                
-                # Clean up
-                Remove-Item $testFile -ErrorAction SilentlyContinue
-            }
-            catch {
-                Write-Host "  ❌ Speed test failed: $($_.Exception.Message)" -ForegroundColor Red
-                Write-Host "  💡 Tip: Check your internet connection" -ForegroundColor Yellow
-                # Clean up on error
-                Remove-Item "$env:TEMP\speedtest_100mb.tmp" -ErrorAction SilentlyContinue
-            }
+ "4" {
+    Write-Host "Basic Speed Test menggunakan CacheFly..." -ForegroundColor Yellow
+    Write-Host ""
+    
+    # Pilihan ukuran file test
+    Write-Host "  Pilih ukuran file test:" -ForegroundColor Cyan
+    Write-Host "    [1] 10MB (cepat)" -ForegroundColor White
+    Write-Host "    [2] 100MB (akurat)" -ForegroundColor White
+    Write-Host "    [3] 200MB (sangat akurat)" -ForegroundColor White
+    Write-Host ""
+    
+    $sizeChoice = Read-Host "Pilih ukuran file (1-3, default: 2)"
+    if ([string]::IsNullOrEmpty($sizeChoice)) { $sizeChoice = "2" }
+    
+    # Set parameter berdasarkan pilihan
+    switch ($sizeChoice) {
+        "1" { 
+            $testUrl = "https://cachefly.cachefly.net/10mb.test"
+            $fileSizeMB = 10
+            $testFileName = "speedtest_10mb.tmp"
         }
-        "5" { return }
-        default { Write-Host "Pilihan tidak valid!" -ForegroundColor Red; Start-Sleep 2 }
+        "2" { 
+            $testUrl = "https://cachefly.cachefly.net/100mb.test"
+            $fileSizeMB = 100
+            $testFileName = "speedtest_100mb.tmp"
+        }
+        "3" { 
+            $testUrl = "https://cachefly.cachefly.net/200mb.test"
+            $fileSizeMB = 200
+            $testFileName = "speedtest_200mb.tmp"
+        }
+        default { 
+            $testUrl = "https://cachefly.cachefly.net/100mb.test"
+            $fileSizeMB = 100
+            $testFileName = "speedtest_100mb.tmp"
+        }
     }
     
+    $testFile = "$env:TEMP\$testFileName"
+    
+    try {
+        Write-Host "  📡 Connecting to CacheFly CDN..." -ForegroundColor Yellow
+        Write-Host "  📁 Downloading $fileSizeMB MB test file..." -ForegroundColor Yellow
+        Write-Host ""
+        
+        # Cleanup existing test file if any
+        if (Test-Path $testFile) {
+            Remove-Item $testFile -Force -ErrorAction SilentlyContinue
+        }
+        
+        # Test connection first
+        try {
+            $testConnection = Test-NetConnection -ComputerName "cachefly.cachefly.net" -Port 80 -InformationLevel Quiet
+            if (-not $testConnection) {
+                throw "Cannot connect to CacheFly server"
+            }
+        }
+        catch {
+            Write-Host "  ⚠️  Warning: Cannot verify connection to CacheFly" -ForegroundColor Yellow
+        }
+        
+        $start = Get-Date
+        
+        # Use System.Net.WebClient with progress tracking
+        $webClient = New-Object System.Net.WebClient
+        
+        # Add headers to mimic browser request
+        $webClient.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+        
+        # Track progress
+        $progressUpdate = {
+            param($sender, $e)
+            $percent = [math]::Round(($e.BytesReceived / $e.TotalBytesToReceive) * 100, 1)
+            $receivedMB = [math]::Round($e.BytesReceived / 1MB, 2)
+            Write-Progress -Activity "Downloading test file" -Status "$percent% Complete ($receivedMB MB of $fileSizeMB MB)" -PercentComplete $percent
+        }
+        
+        # Register progress event
+        Register-ObjectEvent -InputObject $webClient -EventName DownloadProgressChanged -Action $progressUpdate | Out-Null
+        
+        # Start download
+        $downloadTask = $webClient.DownloadFileTaskAsync($testUrl, $testFile)
+        
+        # Wait for completion with timeout (60 seconds for large files)
+        $timeout = 60000 * ($fileSizeMB / 10) # Scale timeout based on file size
+        if (-not $downloadTask.Wait($timeout)) {
+            $webClient.CancelAsync()
+            throw "Download timeout after $([math]::Round($timeout/1000, 0)) seconds"
+        }
+        
+        $end = Get-Date
+        
+        # Clean up progress tracking
+        Write-Progress -Activity "Downloading test file" -Completed
+        Get-EventSubscriber | Where-Object {$_.SourceObject -eq $webClient} | Unregister-Event
+        $webClient.Dispose()
+        
+        # Verify file was downloaded
+        if (-not (Test-Path $testFile)) {
+            throw "Test file was not downloaded successfully"
+        }
+        
+        $actualFileSize = (Get-Item $testFile).Length
+        $actualFileSizeMB = [math]::Round($actualFileSize / 1MB, 2)
+        
+        # Calculate timing and speed
+        $duration = ($end - $start).TotalSeconds
+        
+        # Calculate speeds using actual file size
+        $speedMBps = [math]::Round(($actualFileSizeMB / $duration), 2)
+        $speedMbps = [math]::Round(($speedMBps * 8), 2)
+        $speedKBps = [math]::Round(($actualFileSize / 1KB / $duration), 0)
+        
+        Write-Host ""
+        Write-Host "  ✅ Speed Test Completed!" -ForegroundColor Green
+        Write-Host "  ═══════════════════════════════════════" -ForegroundColor Cyan
+        Write-Host "  📊 Test Results:" -ForegroundColor Cyan
+        Write-Host "    • File size      : $actualFileSizeMB MB" -ForegroundColor White
+        Write-Host "    • Duration       : $([math]::Round($duration, 2)) seconds" -ForegroundColor White
+        Write-Host "    • Download speed : $speedMBps MB/s" -ForegroundColor Green
+        Write-Host "    • Download speed : $speedMbps Mbps" -ForegroundColor Green  
+        Write-Host "    • Download speed : $speedKBps KB/s" -ForegroundColor Green
+        Write-Host ""
+        
+        # Speed category
+        if ($speedMbps -gt 100) {
+            Write-Host "  🚀 Kecepatan: Sangat Cepat!" -ForegroundColor Green
+        } elseif ($speedMbps -gt 50) {
+            Write-Host "  ⚡ Kecepatan: Cepat" -ForegroundColor Yellow
+        } elseif ($speedMbps -gt 25) {
+            Write-Host "  📶 Kecepatan: Sedang" -ForegroundColor Yellow
+        } else {
+            Write-Host "  🐌 Kecepatan: Lambat" -ForegroundColor Red
+        }
+        
+        # Clean up test file
+        Remove-Item $testFile -Force -ErrorAction SilentlyContinue
+        Write-Host "  🧹 Test file cleaned up" -ForegroundColor Gray
+        
+    }
+    catch {
+        Write-Host ""
+        Write-Host "  ❌ Speed test failed!" -ForegroundColor Red
+        Write-Host "  Error: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host ""
+        Write-Host "  💡 Troubleshooting tips:" -ForegroundColor Yellow
+        Write-Host "    • Check your internet connection" -ForegroundColor White
+        Write-Host "    • Try again in a few moments" -ForegroundColor White
+        Write-Host "    • Choose a smaller file size for slow connections" -ForegroundColor White
+        
+        # Clean up on error
+        Remove-Item $testFile -Force -ErrorAction SilentlyContinue
+        Get-EventSubscriber | Where-Object {$_.SourceIdentifier -like "*WebClient*"} | Unregister-Event -ErrorAction SilentlyContinue
+    }
+        }
+        "5" { return }
+        default { Write-Host "  Pilihan tidak valid!" -ForegroundColor Red; Start-Sleep 2 }
+    }
     Write-Host ""
-    Write-Host "Tekan Enter untuk kembali..." -ForegroundColor Yellow
+    Write-Host "  Tekan Enter untuk kembali ke menu utama..." -ForegroundColor Yellow
     Read-Host
 }
-
+# Disk Cleanup Function
 function Invoke-DiskCleanup {
     Show-Header
     Write-Host "                                DISK CLEANUP" -ForegroundColor Yellow

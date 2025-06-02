@@ -6,6 +6,18 @@ param(
     [string]$Action = "menu"
 )
 
+# Check for admin privileges
+$isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $isAdmin) {
+    Write-Host "⚠️  WARNING: Some features may require administrative privileges to work properly." -ForegroundColor Yellow
+    Write-Host "    Run this script as Administrator for full functionality." -ForegroundColor Yellow
+    Write-Host ""
+    Start-Sleep 2
+}
+
+# Set error action preference
+$ErrorActionPreference = "SilentlyContinue"
+
 # Set console properties
 $Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.2 - PowerShell Edition"
 if ($Host.UI.RawUI.BufferSize) {

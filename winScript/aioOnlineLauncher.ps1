@@ -1,5 +1,5 @@
 # Windows Script Launcher - PowerShell Edition
-# Version 1.2 - Enhanced with simplified speed test
+# Version 1.3 - Enhanced with Serial Number and Fixed RAM calculation
 # Usage: irm <url-to-this-script> | iex
 
 param(
@@ -7,7 +7,7 @@ param(
 )
 
 # Set console properties
-$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.2 - PowerShell Edition"
+$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.3 - PowerShell Edition"
 if ($Host.UI.RawUI.BufferSize) {
     try {
         $Host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(92, 3000)
@@ -309,22 +309,57 @@ function Show-SystemInfo {
     Write-Host "  OS Name          : $($os.Caption)" -ForegroundColor White
     Write-Host "  OS Version       : $($os.Version)" -ForegroundColor White
     Write-Host "  Architecture     : $($os.OSArchitecture)" -ForegroundColor White
+    Write-Host "  Serial Number    : $($bios.SerialNumber)" -ForegroundColor White
     Write-Host ""
     
     Write-Host "  Hardware Information:" -ForegroundColor Cyan
     Write-Host "    Manufacturer     : $($computer.Manufacturer)" -ForegroundColor White
     Write-Host "    Model            : $($computer.Model)" -ForegroundColor White
-    Write-Host "    Total RAM        : $([math]::Round($computer.TotalPhysicalMemory / 1GB, 2)) GB" -ForegroundColor White
-    Write-Host "    Processor        : $($computer.SystemFamily)" -ForegroundColor White
+    Write-Host "    BIOS Version     : $($bios.SMBIOSBIOSVersion)" -ForegroundColor White
+    
+    # Get processor information
+    $processor = Get-WmiObject -Class Win32_Processor | Select-Object -First 1
+    Write-Host "    Processor        : $($processor.Name)" -ForegroundColor White
     Write-Host ""
     
+    # Fixed RAM calculation
     Write-Host "  Memory Information:" -ForegroundColor Cyan
-    $totalRAM = [math]::Round($computer.TotalPhysicalMemory / 1GB, 2)
-    $availRAM = [math]::Round($os.FreePhysicalMemory / 1MB / 1024, 2)
-    $usedRAM = [math]::Round($totalRAM - $availRAM, 2)
-    Write-Host "    Total RAM        : $totalRAM GB" -ForegroundColor White
-    Write-Host "    Used RAM         : $usedRAM GB" -ForegroundColor White
-    Write-Host "    Available RAM    : $availRAM GB" -ForegroundColor White
+    
+    # Get total physical memory from computer system (more accurate)
+    $totalRAMBytes = $computer.TotalPhysicalMemory
+    $totalRAMGB = [math]::Round($totalRAMBytes / 1GB, 2)
+    
+    # Get available memory from OS (in KB, convert to bytes)
+    $availRAMBytes = $os.FreePhysicalMemory * 1KB
+    $availRAMGB = [math]::Round($availRAMBytes / 1GB, 2)
+    
+    # Calculate used RAM
+    $usedRAMBytes = $totalRAMBytes - $availRAMBytes
+    $usedRAMGB = [math]::Round($usedRAMBytes / 1GB, 2)
+    
+    # Calculate usage percentage
+    $ramUsagePercent = [math]::Round(($usedRAMBytes / $totalRAMBytes) * 100, 1)
+    
+    Write-Host "    Total RAM        : $totalRAMGB GB" -ForegroundColor White
+    Write-Host "    Used RAM         : $usedRAMGB GB ($ramUsagePercent%)" -ForegroundColor White
+    Write-Host "    Available RAM    : $availRAMGB GB" -ForegroundColor White
+    
+    # Get detailed memory modules information
+    try {
+        $memoryModules = Get-WmiObject -Class Win32_PhysicalMemory -ErrorAction SilentlyContinue
+        if ($memoryModules) {
+            Write-Host "    Memory Modules   : $($memoryModules.Count) slot(s)" -ForegroundColor White
+            $memoryModules | ForEach-Object {
+                $moduleSize = [math]::Round($_.Capacity / 1GB, 0)
+                $speed = if ($_.Speed) { "$($_.Speed) MHz" } else { "Unknown" }
+                Write-Host "      - $moduleSize GB @ $speed" -ForegroundColor Gray
+            }
+        }
+    }
+    catch {
+        # Ignore if unable to get memory module details
+    }
+    
     Write-Host ""
     
     Write-Host "  Storage Information:" -ForegroundColor Cyan
@@ -337,6 +372,7 @@ function Show-SystemInfo {
     }
     
     Write-Host ""
+    Write-Host "  System Uptime    : $([math]::Round((Get-Date) - $os.ConvertToDateTime($os.LastBootUpTime)).TotalHours, 1) hours" -ForegroundColor White
     Write-Host "  Current Time     : $(Get-Date)" -ForegroundColor White
     Write-Host ""
     Write-Host "=====================================================================================" -ForegroundColor Cyan
@@ -547,7 +583,7 @@ if ($Action -eq "menu") {
                 Write-Host ""
                 Write-Host "  Terima kasih telah menggunakan Windows Script Launcher!" -ForegroundColor Green
                 Write-Host ""
-                Write-Host "  PowerShell Edition v1.2 - Enhanced with simplified speed test" -ForegroundColor White
+                Write-Host "  PowerShell Edition v1.3 - Enhanced with Serial Number and Fixed RAM" -ForegroundColor White
                 Write-Host ""
                 Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
                 Write-Host ""
@@ -555,26 +591,4 @@ if ($Action -eq "menu") {
                 Start-Sleep 3
                 exit 
             }
-            default { 
-                Write-Host "Pilihan tidak valid! Silakan pilih 1-7." -ForegroundColor Red
-                Start-Sleep 2
-            }
-        }
-    } while ($true)
-}
-
-# Allow direct function calls via parameters
-switch ($Action.ToLower()) {
-    "system" { Invoke-SystemCleaner }
-    "recycle" { Invoke-RecycleBinManager }
-    "power" { Invoke-PowerManager }
-    "sysinfo" { Show-SystemInfo }
-    "network" { Invoke-NetworkTools }
-    "disk" { Invoke-DiskCleanup }
-    default { 
-        if ($Action -ne "menu") {
-            Write-Host "Unknown action: $Action" -ForegroundColor Red
-            Write-Host "Available actions: menu, system, recycle, power, sysinfo, network, disk" -ForegroundColor Yellow
-        }
-    }
-}
+            default {

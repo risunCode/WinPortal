@@ -58,8 +58,8 @@ Gunakan pengaturan TTL untuk mengakali pembatasan tethering dari provider.
 - `netsh int ipv6 set glob defaultcurhoplimit=128`
 
 # ScriptTTL: Update, Now is Windows Script Launcher!
-```
 run it using Windows Powershell Admin WIN+X, or normal Powershell is fine
+```
 irm "https://github.com/risunCode/WinPortal/raw/main/winScript/aioOnlineLauncher.ps1" | iex
 ```
 

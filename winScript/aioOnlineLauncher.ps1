@@ -376,61 +376,56 @@ function Invoke-NetworkTools {
             ipconfig /all
         }
 "4" {
-    Write-Host "Auto Speed Test..." -ForegroundColor Yellow
+    Write-Host "Auto Speed Test with wget..." -ForegroundColor Yellow
     Write-Host ""
     
-    # Auto mode - using 100MB file for optimal balance
+    # Check if wget is available
+    try {
+        wget --version | Out-Null
+    }
+    catch {
+        Write-Host "  ❌ wget not found! Installing..." -ForegroundColor Red
+        Write-Host "  💡 Run: winget install wget" -ForegroundColor Yellow
+        return
+    }
+    
     $testUrl = "https://cachefly.cachefly.net/100mb.test"
-    $fileSizeMB = 100
-    $testFile = "$env:TEMP\speedtest_auto.tmp"
+    $testFile = "$env:TEMP\speedtest.tmp"
     
     try {
-        Write-Host "  📡 Testing connection speed..." -ForegroundColor Yellow
+        Write-Host "  📡 Testing speed..." -ForegroundColor Yellow
         
-        # Cleanup existing file
-        if (Test-Path $testFile) { Remove-Item $testFile -Force -ErrorAction SilentlyContinue }
+        # Remove existing file
+        if (Test-Path $testFile) { Remove-Item $testFile -Force }
         
         $start = Get-Date
         
-        # Simple download with WebClient
-        $webClient = New-Object System.Net.WebClient
-        $webClient.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
-        $webClient.DownloadFile($testUrl, $testFile)
+        # Download with wget (quiet mode, output file)
+        wget -q -O $testFile $testUrl
         
         $end = Get-Date
-        $webClient.Dispose()
         
-        # Calculate results
-        $actualSize = (Get-Item $testFile).Length
-        $actualSizeMB = [math]::Round($actualSize / 1MB, 2)
+        # Calculate speed
+        $fileSize = (Get-Item $testFile).Length
+        $fileSizeMB = [math]::Round($fileSize / 1MB, 2)
         $duration = ($end - $start).TotalSeconds
-        $speedMBps = [math]::Round(($actualSizeMB / $duration), 2)
+        $speedMBps = [math]::Round(($fileSizeMB / $duration), 2)
         $speedMbps = [math]::Round(($speedMBps * 8), 2)
         
-        # Show results
         Write-Host ""
-        Write-Host "  ✅ Speed Test Complete!" -ForegroundColor Green
-        Write-Host "  ═══════════════════════════" -ForegroundColor Cyan
-        Write-Host "    Duration: $([math]::Round($duration, 2))s" -ForegroundColor White
-        Write-Host "    Speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
-        Write-Host ""
+        Write-Host "  ✅ Complete! Speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
         
-        # Speed rating
-        $rating = if ($speedMbps -gt 100) { "🚀 Sangat Cepat!" } 
-                 elseif ($speedMbps -gt 50) { "⚡ Cepat" }
-                 elseif ($speedMbps -gt 25) { "📶 Sedang" }
-                 else { "🐌 Lambat" }
+        # Rating
+        if ($speedMbps -gt 100) { Write-Host "  🚀 Sangat Cepat!" -ForegroundColor Green }
+        elseif ($speedMbps -gt 50) { Write-Host "  ⚡ Cepat" -ForegroundColor Yellow }
+        elseif ($speedMbps -gt 25) { Write-Host "  📶 Sedang" -ForegroundColor Yellow }
+        else { Write-Host "  🐌 Lambat" -ForegroundColor Red }
         
-        Write-Host "  $rating" -ForegroundColor $(if ($speedMbps -gt 50) { "Green" } elseif ($speedMbps -gt 25) { "Yellow" } else { "Red" })
-        
-        # Cleanup
-        Remove-Item $testFile -Force -ErrorAction SilentlyContinue
+        Remove-Item $testFile -Force
         
     }
     catch {
-        Write-Host ""
-        Write-Host "  ❌ Speed test failed: $($_.Exception.Message)" -ForegroundColor Red
-        Write-Host "  💡 Check your internet connection and try again" -ForegroundColor Yellow
+        Write-Host "  ❌ Test failed: $($_.Exception.Message)" -ForegroundColor Red
         Remove-Item $testFile -Force -ErrorAction SilentlyContinue
     }
 }
@@ -438,8 +433,8 @@ function Invoke-NetworkTools {
 default { Write-Host "  Invalid option!" -ForegroundColor Red; Start-Sleep 2 }
 
 Write-Host ""
-Write-Host "  Press Enter to return..." -ForegroundColor Yellow
-Read-Host
+Read-Host "Press Enter to continue"
+    }
 }
 
 # Disk Cleanup Function

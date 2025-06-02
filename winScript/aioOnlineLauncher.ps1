@@ -1,5 +1,5 @@
 # Windows Script Launcher - PowerShell Edition
-# Version 1.1 - Enhanced with safety confirmations
+# Version 1.2 - Enhanced with simplified speed test
 # Usage: irm <url-to-this-script> | iex
 
 param(
@@ -7,7 +7,7 @@ param(
 )
 
 # Set console properties
-$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.1 - PowerShell Edition"
+$Host.UI.RawUI.WindowTitle = "Windows Script Launcher v1.2 - PowerShell Edition"
 if ($Host.UI.RawUI.BufferSize) {
     try {
         $Host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(92, 3000)
@@ -353,7 +353,7 @@ function Invoke-NetworkTools {
     Write-Host "  [1] Ping Test" -ForegroundColor White
     Write-Host "  [2] DNS Flush" -ForegroundColor White
     Write-Host "  [3] Network Configuration" -ForegroundColor White
-    Write-Host "  [4] Speed Test (Basic)" -ForegroundColor White
+    Write-Host "  [4] Speed Test (Auto)" -ForegroundColor White
     Write-Host "  [5] Kembali ke menu utama" -ForegroundColor White
     Write-Host ""
     
@@ -375,69 +375,91 @@ function Invoke-NetworkTools {
             Write-Host "Network Configuration:" -ForegroundColor Yellow
             ipconfig /all
         }
-"4" {
-    Write-Host "Auto Speed Test with wget..." -ForegroundColor Yellow
+        "4" {
+            Write-Host "Auto Speed Test..." -ForegroundColor Yellow
+            Write-Host ""
+            
+            # Check for wget first, fallback to curl or webclient
+            $useWget = $false
+            $useCurl = $false
+            
+            try {
+                wget --version | Out-Null
+                $useWget = $true
+                Write-Host "  📡 Using wget for speed test..." -ForegroundColor Yellow
+            }
+            catch {
+                try {
+                    curl --version | Out-Null
+                    $useCurl = $true
+                    Write-Host "  📡 Using curl for speed test..." -ForegroundColor Yellow
+                }
+                catch {
+                    Write-Host "  📡 Using WebClient for speed test..." -ForegroundColor Yellow
+                }
+            }
+            
+            $testUrl = "https://proof.ovh.net/files/100Mb.dat"
+            $testFile = "$env:TEMP\speedtest.tmp"
+            
+            try {
+                # Remove existing file
+                if (Test-Path $testFile) { Remove-Item $testFile -Force }
+                
+                $start = Get-Date
+                
+                if ($useWget) {
+                    # Use wget
+                    wget -q -O $testFile $testUrl
+                }
+                elseif ($useCurl) {
+                    # Use curl
+                    curl -s -o $testFile $testUrl
+                }
+                else {
+                    # Use WebClient
+                    $webClient = New-Object System.Net.WebClient
+                    $webClient.DownloadFile($testUrl, $testFile)
+                    $webClient.Dispose()
+                }
+                
+                $end = Get-Date
+                
+                # Calculate speed
+                $fileSize = (Get-Item $testFile).Length
+                $fileSizeMB = [math]::Round($fileSize / 1MB, 2)
+                $duration = ($end - $start).TotalSeconds
+                $speedMBps = [math]::Round(($fileSizeMB / $duration), 2)
+                $speedMbps = [math]::Round(($speedMBps * 8), 2)
+                
+                Write-Host ""
+                Write-Host "  ✅ Complete! Speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
+                Write-Host "  📊 Duration: $([math]::Round($duration, 2))s | Size: $fileSizeMB MB" -ForegroundColor White
+                
+                # Rating
+                if ($speedMbps -gt 100) { Write-Host "  🚀 Sangat Cepat!" -ForegroundColor Green }
+                elseif ($speedMbps -gt 50) { Write-Host "  ⚡ Cepat" -ForegroundColor Yellow }
+                elseif ($speedMbps -gt 25) { Write-Host "  📶 Sedang" -ForegroundColor Yellow }
+                else { Write-Host "  🐌 Lambat" -ForegroundColor Red }
+                
+                Remove-Item $testFile -Force
+                
+            }
+            catch {
+                Write-Host "  ❌ Speed test failed: $($_.Exception.Message)" -ForegroundColor Red
+                Write-Host "  💡 Check your internet connection" -ForegroundColor Yellow
+                Remove-Item $testFile -Force -ErrorAction SilentlyContinue
+            }
+        }
+        "5" { return }
+        default { Write-Host "Pilihan tidak valid!" -ForegroundColor Red; Start-Sleep 2 }
+    }
+    
     Write-Host ""
-    
-    # Check if wget is available
-    try {
-        wget --version | Out-Null
-    }
-    catch {
-        Write-Host "  ❌ wget not found! Installing..." -ForegroundColor Red
-        Write-Host "  💡 Run: winget install wget" -ForegroundColor Yellow
-        return
-    }
-    
-    $testUrl = "https://cachefly.cachefly.net/100mb.test"
-    $testFile = "$env:TEMP\speedtest.tmp"
-    
-    try {
-        Write-Host "  📡 Testing speed..." -ForegroundColor Yellow
-        
-        # Remove existing file
-        if (Test-Path $testFile) { Remove-Item $testFile -Force }
-        
-        $start = Get-Date
-        
-        # Download with wget (quiet mode, output file)
-        wget -q -O $testFile $testUrl
-        
-        $end = Get-Date
-        
-        # Calculate speed
-        $fileSize = (Get-Item $testFile).Length
-        $fileSizeMB = [math]::Round($fileSize / 1MB, 2)
-        $duration = ($end - $start).TotalSeconds
-        $speedMBps = [math]::Round(($fileSizeMB / $duration), 2)
-        $speedMbps = [math]::Round(($speedMBps * 8), 2)
-        
-        Write-Host ""
-        Write-Host "  ✅ Complete! Speed: $speedMBps MB/s ($speedMbps Mbps)" -ForegroundColor Green
-        
-        # Rating
-        if ($speedMbps -gt 100) { Write-Host "  🚀 Sangat Cepat!" -ForegroundColor Green }
-        elseif ($speedMbps -gt 50) { Write-Host "  ⚡ Cepat" -ForegroundColor Yellow }
-        elseif ($speedMbps -gt 25) { Write-Host "  📶 Sedang" -ForegroundColor Yellow }
-        else { Write-Host "  🐌 Lambat" -ForegroundColor Red }
-        
-        Remove-Item $testFile -Force
-        
-    }
-    catch {
-        Write-Host "  ❌ Test failed: $($_.Exception.Message)" -ForegroundColor Red
-        Remove-Item $testFile -Force -ErrorAction SilentlyContinue
-    }
-}
-"5" { return }
-default { Write-Host "  Invalid option!" -ForegroundColor Red; Start-Sleep 2 }
-
-Write-Host ""
-Read-Host "Press Enter to continue"
-    }
+    Write-Host "Tekan Enter untuk kembali..." -ForegroundColor Yellow
+    Read-Host
 }
 
-# Disk Cleanup Function
 function Invoke-DiskCleanup {
     Show-Header
     Write-Host "                                DISK CLEANUP" -ForegroundColor Yellow
@@ -523,7 +545,7 @@ if ($Action -eq "menu") {
                 Write-Host ""
                 Write-Host "  Terima kasih telah menggunakan Windows Script Launcher!" -ForegroundColor Green
                 Write-Host ""
-                Write-Host "  PowerShell Edition v1.1 - Enhanced with safety features" -ForegroundColor White
+                Write-Host "  PowerShell Edition v1.2 - Enhanced with simplified speed test" -ForegroundColor White
                 Write-Host ""
                 Write-Host "---------------------------------------------------------------------------------" -ForegroundColor Cyan
                 Write-Host ""

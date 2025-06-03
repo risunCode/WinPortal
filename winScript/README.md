@@ -9,11 +9,7 @@
 * **System Cleaner** 🧹
     * Hapus *file temporary*, *cache browser*, *prefetch*, *cache DNS*, & *Windows Update cache*.
     * **Bersihkan PC Anda dari sampah digital dan tingkatkan performa!**
-
 * **Recycle Bin Manager** 🗑️
-    * Lihat status dan kosongkan *Recycle Bin* dalam sekejap.
-    * **Kendalikan sampah Anda dan bebaskan ruang disk dengan mudah.**
-
 * **Power Manager** 🔌
     * Opsi *shutdown*, *restart*, *sleep*, *hibernate*, & *log off* instan.
     * **Manajemen daya yang cepat tanpa klik sana-sini.**

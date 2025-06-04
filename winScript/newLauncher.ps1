@@ -57,7 +57,6 @@ function Show-Header {
     Write-Host "─────────────────────────────────────────────────────────────────────────────────────────────────" -ForegroundColor DarkCyan
     Write-Host ""
 }
-
 function Invoke-CacheCleaner {
     param (
         [Parameter(Mandatory=$true)][string]$ToolName,
@@ -69,9 +68,9 @@ function Invoke-CacheCleaner {
     Write-Host "🔧 Memulai $DisplayName..." -ForegroundColor Magenta
     Write-Host "─────────────────────────────────────────────────────────────────────────────────────────────────" -ForegroundColor DarkGray
 
-    # Gunakan folder Downloads user untuk Cache Cleaner
-    $downloadsPath = [Environment]::GetFolderPath("UserProfile") + "\Documents"
-    $toolPath = Join-Path -Path $downloadsPath -ChildPath $ToolName
+    # Menggunakan folder Documents user untuk Cache Cleaner
+    $documentsPath = [Environment]::GetFolderPath("MyDocuments")
+    $toolPath = Join-Path -Path $documentsPath -ChildPath $ToolName
 
     if (-Not (Test-Path $toolPath)) {
         Write-Host "📥 Mengunduh $DisplayName ke folder Documents..." -ForegroundColor Cyan
@@ -92,7 +91,7 @@ function Invoke-CacheCleaner {
         Write-Host "▶️  Menjalankan $DisplayName..." -ForegroundColor Green
         Start-Process "cmd.exe" -ArgumentList "/c `"$toolPath`"" -Wait
         Write-Host "✅ $DisplayName selesai dijalankan!" -ForegroundColor Green
-        Write-Host "💾 File disimpan permanen di folder Downloads untuk penggunaan selanjutnya" -ForegroundColor Cyan
+        Write-Host "💾 File disimpan permanen di folder Documents untuk penggunaan selanjutnya" -ForegroundColor Cyan
     } catch {
         Write-Host "❌ Gagal menjalankan $DisplayName." -ForegroundColor Red
         Write-Host "🔧 Coba jalankan sebagai Administrator" -ForegroundColor Yellow

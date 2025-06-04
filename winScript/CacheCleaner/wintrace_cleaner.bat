@@ -4,17 +4,15 @@ setlocal enabledelayedexpansion
 :: Set window size (width=80, height=50)
 :: DISABLED. mode con: cols=80 lines=50
 
-:: ==================================================
-:: EXCLUDE LIST - Files/Folders to NOT delete
-:: ==================================================
-set "exclude_files=wintrace_cleaner.bat;cleaner.bat;system_cleaner.bat;cleanup.bat"
-set "exclude_extensions=.bat"
-set "exclude_folders=Scripts;Tools;Backup;Important"
-:: set "exclude_extensions=.bat;.cmd;.exe;.msi;.reg"
+:: Create protected folder in temp
+set "protected_folder=%TEMP%\CleanupGit"
+if not exist "%protected_folder%" (
+    mkdir "%protected_folder%"
+    echo Protected folder created: %protected_folder%
+)
 
-:: Get current script name and location for self-protection
-set "current_script=%~nx0"
-set "current_path=%~dp0"
+:: Copy current script to protected folder for safety
+copy "%~f0" "%protected_folder%\%~nx0" >nul 2>&1
 
 :: 1. UAC Bypass Check
 net session >nul 2>&1
@@ -30,10 +28,7 @@ echo ===============================================
 echo           Windows System Cleanup
 echo ===============================================
 echo.
-echo PROTECTED FILES: %exclude_files%
-echo PROTECTED EXTENSIONS: %exclude_extensions%
-echo PROTECTED FOLDERS: %exclude_folders%
-echo CURRENT SCRIPT: %current_script% (PROTECTED)
+echo PROTECTED FOLDER: %protected_folder%
 echo.
 echo Select cleanup mode:
 echo 1. Standard cleanup (recommended)
@@ -55,129 +50,60 @@ if "%choice%"=="1" (
 
 echo.
 
-:: Create log file with timestamp (using PowerShell as fallback)
+:: Create log file with timestamp in protected folder
 for /f "tokens=1-6 delims=/: " %%a in ('echo %date% %time%') do (
     set "datestamp=%%c%%a%%b_%%d%%e%%f"
 )
 set "datestamp=%datestamp: =0%"
 set "datestamp=%datestamp:,=%"
-set "logfile=%~dp0cleanup_log_%datestamp%.txt"
+set "logfile=%protected_folder%\cleanup_log_%datestamp%.txt"
 
 echo =============================================== > "%logfile%"
 echo           Windows System Cleanup Log >> "%logfile%"
 echo           Date: %date% %time% >> "%logfile%"
 echo =============================================== >> "%logfile%"
-echo PROTECTED FILES: %exclude_files% >> "%logfile%"
-echo PROTECTED EXTENSIONS: %exclude_extensions% >> "%logfile%"
-echo PROTECTED FOLDERS: %exclude_folders% >> "%logfile%"
-echo CURRENT SCRIPT: %current_script% (PROTECTED) >> "%logfile%"
+echo PROTECTED FOLDER: %protected_folder% >> "%logfile%"
 echo. >> "%logfile%"
-
-:: ==================================================
-:: SAFE DELETE FUNCTION
-:: ==================================================
-:SafeDelete
-setlocal
-set "target_path=%~1"
-set "file_name=%~nx1"
-set "should_delete=1"
-
-:: Check if it's the current script
-if /i "%file_name%"=="%current_script%" (
-    echo PROTECTED: Skipping current script %file_name% >> "%logfile%"
-    set "should_delete=0"
-    goto :SafeDeleteEnd
-)
-
-:: Check exclude files
-for %%e in (%exclude_files%) do (
-    if /i "%file_name%"=="%%e" (
-        echo PROTECTED: Skipping excluded file %file_name% >> "%logfile%"
-        set "should_delete=0"
-        goto :SafeDeleteEnd
-    )
-)
-
-:: Check exclude extensions
-for %%e in (%exclude_extensions%) do (
-    if /i "%~x1"=="%%e" (
-        echo PROTECTED: Skipping file with excluded extension %file_name% >> "%logfile%"
-        set "should_delete=0"
-        goto :SafeDeleteEnd
-    )
-)
-
-:: Check exclude folders (for folder names in path)
-for %%e in (%exclude_folders%) do (
-    echo %target_path% | findstr /i "%%e" >nul
-    if !errorlevel! equ 0 (
-        echo PROTECTED: Skipping file in excluded folder %file_name% >> "%logfile%"
-        set "should_delete=0"
-        goto :SafeDeleteEnd
-    )
-)
-
-:SafeDeleteEnd
-endlocal & set "should_delete=%should_delete%"
-goto :eof
-
-:: ==================================================
-:: SAFE FOLDER DELETE FUNCTION
-:: ==================================================
-:SafeDeleteFolder
-setlocal
-set "folder_path=%~1"
-set "folder_name=%~nx1"
-set "should_delete=1"
-
-:: Check exclude folders
-for %%e in (%exclude_folders%) do (
-    if /i "%folder_name%"=="%%e" (
-        echo PROTECTED: Skipping excluded folder %folder_name% >> "%logfile%"
-        set "should_delete=0"
-        goto :SafeDeleteFolderEnd
-    )
-)
-
-:SafeDeleteFolderEnd
-endlocal & set "should_delete=%should_delete%"
-goto :eof
 
 ECHO.
 ECHO Deleting User temp files...
 echo Cleaning User temp files... >> "%logfile%"
 if exist "%TEMP%" (
     for /f "delims=" %%f in ('dir /b "%TEMP%\*.*" 2^>nul') do (
-        call :SafeDelete "%TEMP%\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted file: %TEMP%\%%f >> "%logfile%"
-            del /q /f "%TEMP%\%%f" 2>nul
-        )
+        echo Deleted file: %TEMP%\%%f >> "%logfile%"
     )
     for /f "delims=" %%d in ('dir /b /ad "%TEMP%\*" 2^>nul') do (
-        call :SafeDeleteFolder "%TEMP%\%%d"
-        if !should_delete! equ 1 (
+        if /i not "%%d"=="CleanupGit" (
             echo Deleted folder: %TEMP%\%%d >> "%logfile%"
-            rmdir /s /q "%TEMP%\%%d" 2>nul
+        ) else (
+            echo PROTECTED: Skipped folder %TEMP%\%%d >> "%logfile%"
         )
+    )
+)
+DEL /S /Q /F "%TEMP%\*.*" 2>nul
+FOR /D %%p IN ("%TEMP%\*") DO (
+    if /i not "%%~nxp"=="CleanupGit" (
+        RMDIR /S /Q "%%p" 2>nul
     )
 )
 
 echo Cleaning TMP files... >> "%logfile%"
 if exist "%TMP%" (
     for /f "delims=" %%f in ('dir /b "%TMP%\*.*" 2^>nul') do (
-        call :SafeDelete "%TMP%\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted file: %TMP%\%%f >> "%logfile%"
-            del /q /f "%TMP%\%%f" 2>nul
-        )
+        echo Deleted file: %TMP%\%%f >> "%logfile%"
     )
     for /f "delims=" %%d in ('dir /b /ad "%TMP%\*" 2^>nul') do (
-        call :SafeDeleteFolder "%TMP%\%%d"
-        if !should_delete! equ 1 (
+        if /i not "%%d"=="CleanupGit" (
             echo Deleted folder: %TMP%\%%d >> "%logfile%"
-            rmdir /s /q "%TMP%\%%d" 2>nul
+        ) else (
+            echo PROTECTED: Skipped folder %TMP%\%%d >> "%logfile%"
         )
+    )
+)
+DEL /S /Q /F "%TMP%\*.*" 2>nul
+FOR /D %%p IN ("%TMP%\*") DO (
+    if /i not "%%~nxp"=="CleanupGit" (
+        RMDIR /S /Q "%%p" 2>nul
     )
 )
 
@@ -185,79 +111,55 @@ ECHO Deleting Local temp files...
 echo Cleaning Local temp files... >> "%logfile%"
 if exist "%USERPROFILE%\Local Settings\Temp" (
     for /f "delims=" %%f in ('dir /b "%USERPROFILE%\Local Settings\Temp\*.*" 2^>nul') do (
-        call :SafeDelete "%USERPROFILE%\Local Settings\Temp\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted file: %USERPROFILE%\Local Settings\Temp\%%f >> "%logfile%"
-            del /q /f "%USERPROFILE%\Local Settings\Temp\%%f" 2>nul
-        )
+        echo Deleted file: %USERPROFILE%\Local Settings\Temp\%%f >> "%logfile%"
     )
     for /f "delims=" %%d in ('dir /b /ad "%USERPROFILE%\Local Settings\Temp\*" 2^>nul') do (
-        call :SafeDeleteFolder "%USERPROFILE%\Local Settings\Temp\%%d"
-        if !should_delete! equ 1 (
-            echo Deleted folder: %USERPROFILE%\Local Settings\Temp\%%d >> "%logfile%"
-            rmdir /s /q "%USERPROFILE%\Local Settings\Temp\%%d" 2>nul
-        )
+        echo Deleted folder: %USERPROFILE%\Local Settings\Temp\%%d >> "%logfile%"
     )
 )
+DEL /S /Q /F "%USERPROFILE%\Local Settings\Temp\*.*" 2>nul
+FOR /D %%p IN ("%USERPROFILE%\Local Settings\Temp\*") DO RMDIR /S /Q "%%p" 2>nul
 
 echo Cleaning LocalAppData temp files... >> "%logfile%"
 if exist "%LOCALAPPDATA%\Temp" (
     for /f "delims=" %%f in ('dir /b "%LOCALAPPDATA%\Temp\*.*" 2^>nul') do (
-        call :SafeDelete "%LOCALAPPDATA%\Temp\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted file: %LOCALAPPDATA%\Temp\%%f >> "%logfile%"
-            del /q /f "%LOCALAPPDATA%\Temp\%%f" 2>nul
-        )
+        echo Deleted file: %LOCALAPPDATA%\Temp\%%f >> "%logfile%"
     )
     for /f "delims=" %%d in ('dir /b /ad "%LOCALAPPDATA%\Temp\*" 2^>nul') do (
-        call :SafeDeleteFolder "%LOCALAPPDATA%\Temp\%%d"
-        if !should_delete! equ 1 (
-            echo Deleted folder: %LOCALAPPDATA%\Temp\%%d >> "%logfile%"
-            rmdir /s /q "%LOCALAPPDATA%\Temp\%%d" 2>nul
-        )
+        echo Deleted folder: %LOCALAPPDATA%\Temp\%%d >> "%logfile%"
     )
 )
+DEL /S /Q /F "%LOCALAPPDATA%\Temp\*.*" 2>nul
+FOR /D %%p IN ("%LOCALAPPDATA%\Temp\*") DO RMDIR /S /Q "%%p" 2>nul
 
 ECHO Deleting Windows temp files...
 echo Cleaning Windows temp files... >> "%logfile%"
 if exist "%WINDIR%\temp" (
     for /f "delims=" %%f in ('dir /b "%WINDIR%\temp\*.*" 2^>nul') do (
-        call :SafeDelete "%WINDIR%\temp\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted file: %WINDIR%\temp\%%f >> "%logfile%"
-            del /q /f "%WINDIR%\temp\%%f" 2>nul
-        )
+        echo Deleted file: %WINDIR%\temp\%%f >> "%logfile%"
     )
     for /f "delims=" %%d in ('dir /b /ad "%WINDIR%\Temp\*" 2^>nul') do (
-        call :SafeDeleteFolder "%WINDIR%\Temp\%%d"
-        if !should_delete! equ 1 (
-            echo Deleted folder: %WINDIR%\Temp\%%d >> "%logfile%"
-            rmdir /s /q "%WINDIR%\Temp\%%d" 2>nul
-        )
+        echo Deleted folder: %WINDIR%\Temp\%%d >> "%logfile%"
     )
 )
+DEL /S /Q /F "%WINDIR%\temp\*.*" 2>nul
+FOR /D %%p IN ("%WINDIR%\Temp\*") DO RMDIR /S /Q "%%p" 2>nul
 
 ECHO Cleaning Prefetch files...
 echo Cleaning Prefetch files... >> "%logfile%"
 if exist "%WINDIR%\Prefetch" (
     for /f "delims=" %%f in ('dir /b "%WINDIR%\Prefetch\*.*" 2^>nul') do (
-        call :SafeDelete "%WINDIR%\Prefetch\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted file: %WINDIR%\Prefetch\%%f >> "%logfile%"
-            del /q /f "%WINDIR%\Prefetch\%%f" 2>nul
-        )
+        echo Deleted file: %WINDIR%\Prefetch\%%f >> "%logfile%"
     )
 )
+DEL /S /Q /F "%WINDIR%\Prefetch\*.*" 2>nul
 
 ECHO Cleaning Recent files...
 echo Cleaning Recent files... >> "%logfile%"
-for /f "delims=" %%f in ('dir /b "%USERPROFILE%\Recent\*.*" 2^>nul') do (
-    call :SafeDelete "%USERPROFILE%\Recent\%%f"
-    if !should_delete! equ 1 (
-        echo Deleted file: %USERPROFILE%\Recent\%%f >> "%logfile%"
-        del /q /f "%USERPROFILE%\Recent\%%f" 2>nul
-    )
+for %%f in ("%USERPROFILE%\Recent\*.*") do (
+    if exist "%%f" echo Deleted file: %%f >> "%logfile%"
 )
+DEL /S /Q /F "%USERPROFILE%\Recent\*.*" 2>nul
 
 :: Only clean Recycle Bin in deep mode
 if "%cleanup_mode%"=="deep" (
@@ -289,64 +191,38 @@ if "%cleanup_mode%"=="deep" (
 ECHO Cleaning Browser caches...
 echo Cleaning Browser caches... >> "%logfile%"
 
-:: Chrome (Safe cleaning - only cache, not important files)
+:: Chrome
 echo Cleaning Chrome cache... >> "%logfile%"
-if exist "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache" (
-    for /f "delims=" %%f in ('dir /b "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\*.*" 2^>nul') do (
-        call :SafeDelete "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted Chrome file: %LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\%%f >> "%logfile%"
-            del /q /f "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\%%f" 2>nul
-        )
-    )
-    for /f "delims=" %%d in ('dir /b /ad "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\*" 2^>nul') do (
-        call :SafeDeleteFolder "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\%%d"
-        if !should_delete! equ 1 (
-            echo Deleted Chrome folder: %LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\%%d >> "%logfile%"
-            rmdir /s /q "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\%%d" 2>nul
-        )
-    )
+for %%f in ("%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\*.*") do (
+    if exist "%%f" echo Deleted Chrome file: %%f >> "%logfile%"
 )
+for /d %%d in ("%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\*") do (
+    if exist "%%d" echo Deleted Chrome folder: %%d >> "%logfile%"
+)
+DEL /S /Q /F "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\*.*" 2>nul
+FOR /D %%p IN ("%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\*") DO RMDIR /S /Q "%%p" 2>nul
 
-:: Firefox (Safe cleaning - only cache)
+:: Firefox
 echo Cleaning Firefox cache... >> "%logfile%"
-for /d %%p in ("%LOCALAPPDATA%\Mozilla\Firefox\Profiles\*") do (
-    if exist "%%p\cache2" (
-        for /f "delims=" %%f in ('dir /b "%%p\cache2\*.*" 2^>nul') do (
-            call :SafeDelete "%%p\cache2\%%f"
-            if !should_delete! equ 1 (
-                echo Deleted Firefox file: %%p\cache2\%%f >> "%logfile%"
-                del /q /f "%%p\cache2\%%f" 2>nul
-            )
-        )
-        for /f "delims=" %%d in ('dir /b /ad "%%p\cache2\*" 2^>nul') do (
-            call :SafeDeleteFolder "%%p\cache2\%%d"
-            if !should_delete! equ 1 (
-                echo Deleted Firefox folder: %%p\cache2\%%d >> "%logfile%"
-                rmdir /s /q "%%p\cache2\%%d" 2>nul
-            )
-        )
-    )
+for %%f in ("%LOCALAPPDATA%\Mozilla\Firefox\Profiles\*\cache2\*.*") do (
+    if exist "%%f" echo Deleted Firefox file: %%f >> "%logfile%"
 )
+for /d %%d in ("%LOCALAPPDATA%\Mozilla\Firefox\Profiles\*\cache2\*") do (
+    if exist "%%d" echo Deleted Firefox folder: %%d >> "%logfile%"
+)
+DEL /S /Q /F "%LOCALAPPDATA%\Mozilla\Firefox\Profiles\*\cache2\*.*" 2>nul
+FOR /D %%p IN ("%LOCALAPPDATA%\Mozilla\Firefox\Profiles\*\cache2\*") DO RMDIR /S /Q "%%p" 2>nul
 
-:: Edge (Safe cleaning - only cache)
+:: Edge
 echo Cleaning Edge cache... >> "%logfile%"
-if exist "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache" (
-    for /f "delims=" %%f in ('dir /b "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\*.*" 2^>nul') do (
-        call :SafeDelete "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\%%f"
-        if !should_delete! equ 1 (
-            echo Deleted Edge file: %LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\%%f >> "%logfile%"
-            del /q /f "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\%%f" 2>nul
-        )
-    )
-    for /f "delims=" %%d in ('dir /b /ad "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\*" 2^>nul') do (
-        call :SafeDeleteFolder "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\%%d"
-        if !should_delete! equ 1 (
-            echo Deleted Edge folder: %LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\%%d >> "%logfile%"
-            rmdir /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\%%d" 2>nul
-        )
-    )
+for %%f in ("%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\*.*") do (
+    if exist "%%f" echo Deleted Edge file: %%f >> "%logfile%"
 )
+for /d %%d in ("%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\*") do (
+    if exist "%%d" echo Deleted Edge folder: %%d >> "%logfile%"
+)
+DEL /S /Q /F "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\*.*" 2>nul
+FOR /D %%p IN ("%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache\*") DO RMDIR /S /Q "%%p" 2>nul
 
 echo.
 echo ------------------------------------------------------- >> "%logfile%"
@@ -378,12 +254,7 @@ if "%cleanup_mode%"=="deep" (
 )
 echo - Browser caches (Chrome, Firefox, Edge)
 echo.
-echo PROTECTION SUMMARY:
-echo - Current script protected: %current_script%
-echo - Protected files: %exclude_files%
-echo - Protected extensions: %exclude_extensions%
-echo - Protected folders: %exclude_folders%
-echo.
+echo PROTECTED FOLDER: %protected_folder%
 echo Cleanup mode: %cleanup_mode%
 echo Log file created: %logfile%
 echo.

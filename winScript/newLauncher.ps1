@@ -70,11 +70,11 @@ function Invoke-CacheCleaner {
     Write-Host "─────────────────────────────────────────────────────────────────────────────────────────────────" -ForegroundColor DarkGray
 
     # Gunakan folder Downloads user untuk Cache Cleaner
-    $downloadsPath = [Environment]::GetFolderPath("UserProfile") + "\Downloads"
+    $downloadsPath = [Environment]::GetFolderPath("UserProfile") + "\Documents"
     $toolPath = Join-Path -Path $downloadsPath -ChildPath $ToolName
 
     if (-Not (Test-Path $toolPath)) {
-        Write-Host "📥 Mengunduh $DisplayName ke folder Downloads..." -ForegroundColor Cyan
+        Write-Host "📥 Mengunduh $DisplayName ke folder Documents..." -ForegroundColor Cyan
         try {
             Invoke-WebRequest -Uri $DownloadUrl -OutFile $toolPath -UseBasicParsing
             Write-Host "✅ Download berhasil disimpan di: $toolPath" -ForegroundColor Green
@@ -84,7 +84,7 @@ function Invoke-CacheCleaner {
             return
         }
     } else {
-        Write-Host "📁 File $DisplayName sudah tersedia di Downloads..." -ForegroundColor Yellow
+        Write-Host "📁 File $DisplayName sudah tersedia di Documents..." -ForegroundColor Yellow
         Write-Host "📍 Lokasi: $toolPath" -ForegroundColor DarkGray
     }
 

@@ -1,8 +1,8 @@
-# Windows Script Launcher - Enhanced Edition
+# Windows Script Launcher - Clean Edition
 # Author: risunCode
-# Versi: 2025-06-04 Enhanced
+# Versi: 2025-06-04 Clean
 
-$Host.UI.RawUI.WindowTitle = "Windows Script Launcher - Enhanced Edition"
+$Host.UI.RawUI.WindowTitle = "Windows Script Launcher - Clean Edition"
 try {
     $Host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(100, 3000)
     $Host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size(100, 35)
@@ -32,20 +32,13 @@ function Get-WelcomeMessage {
     }
 }
 
-function Show-AnimatedText {
-    param([string]$Text, [string]$Color = "White", [int]$DelayMs = 0)
-    
-    Write-Host $Text -ForegroundColor $Color
-}
-
 function Show-Header {
     Clear-Host
     $welcome = Get-WelcomeMessage
     
-    # Header langsung tampil
     Write-Host "═════════════════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Cyan
     Write-Host "                              🚀 WINDOWS SCRIPT LAUNCHER 🚀" -ForegroundColor Yellow
-    Write-Host "                                 PowerShell Enhanced Edition" -ForegroundColor Yellow
+    Write-Host "                                 PowerShell Clean Edition" -ForegroundColor Yellow
     Write-Host "═════════════════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Cyan
     Write-Host ""
     
@@ -65,13 +58,6 @@ function Show-Header {
     Write-Host ""
 }
 
-function Show-LoadingAnimation {
-    param([string]$Message = "Loading")
-    
-    Write-Host "  $Message " -NoNewline -ForegroundColor Yellow
-    Write-Host "✓" -ForegroundColor Green
-}
-
 function Invoke-BatchTool {
     param (
         [Parameter(Mandatory=$true)][string]$ToolName,
@@ -87,7 +73,6 @@ function Invoke-BatchTool {
 
     if (-Not (Test-Path $tempPath)) {
         Write-Host "📥 Mengunduh $DisplayName..." -ForegroundColor Cyan
-        Show-LoadingAnimation "Downloading"
         try {
             Invoke-WebRequest -Uri $DownloadUrl -OutFile $tempPath -UseBasicParsing
             Write-Host "✅ Download berhasil!" -ForegroundColor Green
@@ -102,7 +87,6 @@ function Invoke-BatchTool {
 
     try {
         Write-Host "▶️  Menjalankan $DisplayName..." -ForegroundColor Green
-        Show-LoadingAnimation "Starting"
         Start-Process "cmd.exe" -ArgumentList "/c `"$tempPath`"" -Wait
         Write-Host "✅ $DisplayName selesai dijalankan!" -ForegroundColor Green
     } catch {
@@ -132,9 +116,6 @@ function Show-Menu {
     Write-Host "   📶 [4] Wi-Fi Backup/Restore Manager" -ForegroundColor Yellow
     Write-Host "       └─ Backup dan restore profil Wi-Fi" -ForegroundColor DarkGray
     Write-Host ""
-    Write-Host "   🔄 [5] Refresh Menu" -ForegroundColor Green
-    Write-Host "       └─ Memperbarui tampilan dan waktu" -ForegroundColor DarkGray
-    Write-Host ""
     Write-Host "   🚪 [0] Keluar" -ForegroundColor Red
     Write-Host ""
     Write-Host "─────────────────────────────────────────────────────────────────────────────────────────────────" -ForegroundColor DarkCyan
@@ -147,35 +128,25 @@ function Show-ExitMessage {
     Write-Host "                              Sampai jumpa di lain waktu!" -ForegroundColor Yellow
     Write-Host "═════════════════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Cyan
     Write-Host ""
+    Start-Sleep -Seconds 2
 }
-
-# Welcome splash screen
-Clear-Host
-Write-Host ""
-Write-Host "🎉 Memuat Windows Script Launcher..." -ForegroundColor Magenta
-Write-Host "  Initializing ✓" -ForegroundColor Green
 
 do {
     Show-Menu
-    $choice = Read-Host -Prompt "   💡 Masukkan pilihan (0-5)"
+    $choice = Read-Host -Prompt "   💡 Masukkan pilihan (0-4)"
 
     switch ($choice) {
         "1" {
             Invoke-BatchTool -ToolName "wintrace_cleaner.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/CacheCleaner/wintrace_cleaner.bat" -DisplayName "Cache Cleaner"
         }
         "2" {
-            Invoke-BatchTool -ToolName "NewShutdown.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/PowerManager/NewShutdown.bat" -DisplayName "Shutdown Timer"
+            Invoke-BatchTool -ToolName "NewShutdown.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/PowerManager/NewShutdown.bat" -DisplayName "Advanced Power menu with Timer and Logging"
         }
         "3" {
             Invoke-BatchTool -ToolName "BypassTethering-Throttling.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/WindowsTTLChanger/BypassTethering-Throttling.bat" -DisplayName "Bypass Tethering Throttling"
         }
         "4" {
-            Invoke-BatchTool -ToolName "WinWifiManager.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/WindowsWifiBackupRestore/WinWifiManager.bat" -DisplayName "Wi-Fi Manager"
-        }
-        "5" {
-            Write-Host "🔄 Memperbarui menu..." -ForegroundColor Cyan
-            Write-Host "  Refreshing ✓" -ForegroundColor Green
-            continue
+            Invoke-BatchTool -ToolName "WinWifiManager.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/WindowsWifiBackupRestore/WinWifiManager.bat" -DisplayName "Wi-Fi Manager Backup and Restore"
         }
         "0" {
             Show-ExitMessage
@@ -183,11 +154,11 @@ do {
         default {
             Write-Host ""
             Write-Host "❌ Pilihan tidak valid!" -ForegroundColor Red
-            Write-Host "💡 Silakan pilih angka dari 0 sampai 5." -ForegroundColor Yellow
+            Write-Host "💡 Silakan pilih angka dari 0 sampai 4." -ForegroundColor Yellow
         }
     }
 
-    if ($choice -ne "0" -and $choice -ne "5") {
+    if ($choice -ne "0") {
         Write-Host ""
         Write-Host "─────────────────────────────────────────────────────────────────────────────────────────────────" -ForegroundColor DarkCyan
         Write-Host "🔙 Tekan [ENTER] untuk kembali ke menu utama..." -ForegroundColor DarkGray

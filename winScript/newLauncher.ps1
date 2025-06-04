@@ -33,23 +33,19 @@ function Get-WelcomeMessage {
 }
 
 function Show-AnimatedText {
-    param([string]$Text, [string]$Color = "White", [int]$DelayMs = 30)
+    param([string]$Text, [string]$Color = "White", [int]$DelayMs = 0)
     
-    foreach ($char in $Text.ToCharArray()) {
-        Write-Host $char -NoNewline -ForegroundColor $Color
-        Start-Sleep -Milliseconds $DelayMs
-    }
-    Write-Host ""
+    Write-Host $Text -ForegroundColor $Color
 }
 
 function Show-Header {
     Clear-Host
     $welcome = Get-WelcomeMessage
     
-    # Animated header
+    # Header langsung tampil
     Write-Host "═════════════════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Cyan
-    Show-AnimatedText "                              🚀 WINDOWS SCRIPT LAUNCHER 🚀" "Yellow" 25
-    Show-AnimatedText "                                 PowerShell Enhanced Edition" "Yellow" 20
+    Write-Host "                              🚀 WINDOWS SCRIPT LAUNCHER 🚀" -ForegroundColor Yellow
+    Write-Host "                                 PowerShell Enhanced Edition" -ForegroundColor Yellow
     Write-Host "═════════════════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Cyan
     Write-Host ""
     
@@ -72,17 +68,7 @@ function Show-Header {
 function Show-LoadingAnimation {
     param([string]$Message = "Loading")
     
-    $spinner = @('|', '/', '-', '\')
-    $counter = 0
-    
     Write-Host "  $Message " -NoNewline -ForegroundColor Yellow
-    
-    for ($i = 0; $i -lt 20; $i++) {
-        Write-Host $spinner[$counter % 4] -NoNewline -ForegroundColor Cyan
-        Start-Sleep -Milliseconds 100
-        Write-Host "`b" -NoNewline
-        $counter++
-    }
     Write-Host "✓" -ForegroundColor Green
 }
 
@@ -157,19 +143,17 @@ function Show-Menu {
 function Show-ExitMessage {
     Write-Host ""
     Write-Host "═════════════════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Cyan
-    Show-AnimatedText "                                    👋 Terima Kasih!" "Green" 40
-    Show-AnimatedText "                              Sampai jumpa di lain waktu!" "Yellow" 35
+    Write-Host "                                    👋 Terima Kasih!" -ForegroundColor Green
+    Write-Host "                              Sampai jumpa di lain waktu!" -ForegroundColor Yellow
     Write-Host "═════════════════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Cyan
     Write-Host ""
-    Start-Sleep -Seconds 2
 }
 
 # Welcome splash screen
 Clear-Host
 Write-Host ""
 Write-Host "🎉 Memuat Windows Script Launcher..." -ForegroundColor Magenta
-Show-LoadingAnimation "Initializing"
-Start-Sleep -Seconds 1
+Write-Host "  Initializing ✓" -ForegroundColor Green
 
 do {
     Show-Menu
@@ -190,7 +174,7 @@ do {
         }
         "5" {
             Write-Host "🔄 Memperbarui menu..." -ForegroundColor Cyan
-            Show-LoadingAnimation "Refreshing"
+            Write-Host "  Refreshing ✓" -ForegroundColor Green
             continue
         }
         "0" {

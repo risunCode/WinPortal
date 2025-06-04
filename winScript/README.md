@@ -3,7 +3,7 @@
 
 ## New Online Launcher!
 ```js
-irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newOnlineLauncher.ps1" | iex
+irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newLauncher.ps1" | iex
 
 ```
 

@@ -8,7 +8,7 @@ setlocal enabledelayedexpansion
 :: EXCLUDE LIST - Files/Folders to NOT delete
 :: ==================================================
 set "exclude_files=wintrace_cleaner.bat;cleaner.bat;system_cleaner.bat;cleanup.bat"
-set "exclude_extensions=null"
+set "exclude_extensions=.bat"
 set "exclude_folders=Scripts;Tools;Backup;Important"
 :: set "exclude_extensions=.bat;.cmd;.exe;.msi;.reg"
 

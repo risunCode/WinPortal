@@ -58,6 +58,47 @@ function Show-Header {
     Write-Host ""
 }
 
+function Invoke-CacheCleaner {
+    param (
+        [Parameter(Mandatory=$true)][string]$ToolName,
+        [Parameter(Mandatory=$true)][string]$DownloadUrl,
+        [Parameter(Mandatory=$true)][string]$DisplayName
+    )
+
+    Write-Host ""
+    Write-Host "🔧 Memulai $DisplayName..." -ForegroundColor Magenta
+    Write-Host "─────────────────────────────────────────────────────────────────────────────────────────────────" -ForegroundColor DarkGray
+
+    # Gunakan folder Downloads user untuk Cache Cleaner
+    $downloadsPath = [Environment]::GetFolderPath("UserProfile") + "\Downloads"
+    $toolPath = Join-Path -Path $downloadsPath -ChildPath $ToolName
+
+    if (-Not (Test-Path $toolPath)) {
+        Write-Host "📥 Mengunduh $DisplayName ke folder Downloads..." -ForegroundColor Cyan
+        try {
+            Invoke-WebRequest -Uri $DownloadUrl -OutFile $toolPath -UseBasicParsing
+            Write-Host "✅ Download berhasil disimpan di: $toolPath" -ForegroundColor Green
+        } catch {
+            Write-Host "❌ Gagal mengunduh $DisplayName dari $DownloadUrl" -ForegroundColor Red
+            Write-Host "🔍 Periksa koneksi internet Anda" -ForegroundColor Yellow
+            return
+        }
+    } else {
+        Write-Host "📁 File $DisplayName sudah tersedia di Downloads..." -ForegroundColor Yellow
+        Write-Host "📍 Lokasi: $toolPath" -ForegroundColor DarkGray
+    }
+
+    try {
+        Write-Host "▶️  Menjalankan $DisplayName..." -ForegroundColor Green
+        Start-Process "cmd.exe" -ArgumentList "/c `"$toolPath`"" -Wait
+        Write-Host "✅ $DisplayName selesai dijalankan!" -ForegroundColor Green
+        Write-Host "💾 File disimpan permanen di folder Downloads untuk penggunaan selanjutnya" -ForegroundColor Cyan
+    } catch {
+        Write-Host "❌ Gagal menjalankan $DisplayName." -ForegroundColor Red
+        Write-Host "🔧 Coba jalankan sebagai Administrator" -ForegroundColor Yellow
+    }
+}
+
 function Invoke-BatchTool {
     param (
         [Parameter(Mandatory=$true)][string]$ToolName,
@@ -137,7 +178,7 @@ do {
 
     switch ($choice) {
         "1" {
-            Invoke-BatchTool -ToolName "wintrace_cleaner.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/CacheCleaner/wintrace_cleaner.bat" -DisplayName "Cache Cleaner"
+            Invoke-CacheCleaner -ToolName "wintrace_cleaner.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/CacheCleaner/wintrace_cleaner.bat" -DisplayName "Cache Cleaner"
         }
         "2" {
             Invoke-BatchTool -ToolName "NewShutdown.bat" -DownloadUrl "https://github.com/risunCode/WinPortal/raw/main/winScript/PowerManager/NewShutdown.bat" -DisplayName "Advanced Power menu with Timer and Logging"

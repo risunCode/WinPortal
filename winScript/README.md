@@ -12,6 +12,7 @@ irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newLauncher.ps1" 
 irm "https://github.com/risunCode/WinPortal/raw/main/winScript/aioOnlineLauncher.ps1" | iex
 ```
 
+Hotpot ttl is coming from https://github.com/muhamaddarulhadi/Hotspot
 ---
 
 ## [Offline] Preview scriptLauncher.bat (offline)

@@ -68,3 +68,13 @@
 </details>
 
 ---
+
+<div align="center">
+
+**Made with ❤️ by [RisunCode](https://github.com/risunCode)**
+
+⭐ **Star this repository if it helped you!**
+
+*Last updated: June 2025*
+
+</div>

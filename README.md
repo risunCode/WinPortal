@@ -17,20 +17,21 @@
 ---
 
 ## 🚀 Quick Start
+### [winScript by risunCode](https://github.com/risunCode/WinPortal/tree/main/winScript)
 
-### For Windows Users
+### Windows Script Launcher (All in One winScript by risunCode)
 Run PowerShell as Administrator (`Win + X`) and execute:
 ```powershell
-# Launch Windows Portal Script
-irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newOnlineLauncher.ps1" | iex
+irm "https://github.com/risunCode/WinPortal/raw/main/winScript/aioOnlineLauncher.ps1" | iex
 ```
 
-### For macOS Users
-Start with Homebrew (if not installed):
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+### Windows Script Launcher (All in One winScript by risunCode)
+- NEW VERSION
+```powershell
+irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newLauncher.ps1" | iex
+
 ```
- 
+
 
 ## ⚡ Windows Power Tools
 

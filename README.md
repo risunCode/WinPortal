@@ -63,11 +63,11 @@ irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
 ### 🚫 Bypass Windows 11 OOBE (24H2+)
 When stuck at the Out-of-Box Experience screen:
 1. Press `Shift + F10` to open Command Prompt
-2. Run: `start ms-cxh:localonly`
-
-### 📶 TTL Hotspot Bypass
+2. Run:
+ ```
+start ms-cxh:localonly
+ ```
  
-
 ---
 
 ## 🖥️ Essential Software for PC

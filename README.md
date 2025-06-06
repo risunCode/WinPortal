@@ -1,10 +1,9 @@
 # 🪟 Windows Portal
 *Your Ultimate Software Collection & System Optimization Hub*
-
+https://github.com/user-attachments/assets/986baf78-9444-4b7c-a789-e95f2fe13546
 <div align="center">
 
 ![Windows Portal](https://img.shields.io/badge/Windows-Portal-0078D4?style=for-the-badge&logo=windows&logoColor=white)
-![macOS Support](https://img.shields.io/badge/macOS-Supported-000000?style=for-the-badge&logo=apple&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![Maintenance](https://img.shields.io/badge/Maintained-Yes-brightgreen?style=for-the-badge)
 

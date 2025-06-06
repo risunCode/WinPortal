@@ -18,6 +18,7 @@
 
 ## 🚀 Quick Start
 ### [winScript by risunCode](https://github.com/risunCode/WinPortal/tree/main/winScript)
+- System Cleaner, Pc Information, and some tool*
 
 ### Windows Script Launcher (All in One winScript by risunCode)
 Run PowerShell as Administrator (`Win + X`) and execute:

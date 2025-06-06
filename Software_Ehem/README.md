@@ -53,19 +53,21 @@
 ---
 
 ## 🧰 Tools & Utilities
-
+<details>
+  
 | Nama                    | Link                                                                 |
 |-------------------------|----------------------------------------------------------------------|
 | Windows Update Blocker | [sordum.org](https://www.sordum.org/9470/windows-update-blocker-v1-8/) |
 | GetIntoPC              | [getintopc.com](https://getintopc.com/)                              |
-
+</details>
 ---
 
 ## ❌ Tidak Direkomendasikan
-
+<details>
+  
 | Kategori               | Link                                                                 |
 |------------------------|----------------------------------------------------------------------|
 | Untrusted Uploaders    | [Telegraph](https://telegra.ph/Untrusted-uploaders-04-05)            |
 | Untrusted Sites        | [Telegraph](https://telegra.ph/Untrusted-sites-04-05)                |
-
+</details>
 ---

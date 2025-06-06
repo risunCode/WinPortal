@@ -22,7 +22,6 @@
 > **Tool included:** System Cleaner, Pc Information, and some tool*
 
 ### Windows Script Launcher (All in One winScript by risunCode)
-Run PowerShell as Administrator (`Win + X`) and execute:
 ```powershell
 irm "https://github.com/risunCode/WinPortal/raw/main/winScript/aioOnlineLauncher.ps1" | iex
 ```
@@ -31,7 +30,6 @@ irm "https://github.com/risunCode/WinPortal/raw/main/winScript/aioOnlineLauncher
 - NEW VERSION
 ```powershell
 irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newLauncher.ps1" | iex
-
 ```
 
 

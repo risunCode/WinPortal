@@ -18,7 +18,7 @@
 
 ## 🚀 Quick Start
 ### [winScript by risunCode](https://github.com/risunCode/WinPortal/tree/main/winScript)
-> 💡 **Pro Tip:** Use Powershell Admin (Shortcut Windows + X)
+- 💡 **Pro Tip:** Use Powershell Admin (Shortcut Windows + X)
 > **Tool included:** System Cleaner, Pc Information, and some tool*
 
 ### Windows Script Launcher (All in One winScript by risunCode)

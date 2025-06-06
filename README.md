@@ -1,77 +1,193 @@
-![image](https://github.com/user-attachments/assets/986baf78-9444-4b7c-a789-e95f2fe13546)
+# 🪟 Windows Portal
+*Your Ultimate Software Collection & System Optimization Hub*
 
-## 🗃️ Arsip Catatan Web Download Aplikasi [Disini, Here](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem)
----
-## 🍎 Essential Software for macOS
+<div align="center">
 
-| Software                             | Link                                                                 |
-|--------------------------------------|----------------------------------------------------------------------|
-| **Microsoft Office + Activator**                 | [🔗 Click to visit](https://github.com/alsyundawy/Microsoft-Office-For-MacOS) |
-| **Homebrew (Package Manager)**       | [🔗 Click to visit](https://brew.sh)                                 |
-| **Rectangle (Window Manager)**       | [🔗 Click to visit](https://rectangleapp.com)                         |
-| **iTerm2 (Terminal Emulator)**       | [🔗 Click to visit](https://iterm2.com)                               |
-| **The Unarchiver (Archive Utility)**| [🔗 Click to visit](https://theunarchiver.com)                        |
+![Windows Portal](https://img.shields.io/badge/Windows-Portal-0078D4?style=for-the-badge&logo=windows&logoColor=white)
+![macOS Support](https://img.shields.io/badge/macOS-Supported-000000?style=for-the-badge&logo=apple&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Maintenance](https://img.shields.io/badge/Maintained-Yes-brightgreen?style=for-the-badge)
 
-## 🖥️ Essential Software for PC
+*A curated collection of essential software, system tweaks, and power tools for Windows and macOS*
 
-| Software | Link |
-|---------|------|
-| **PC Manager by Microsoft** | [🔗 Click to see](https://pcmanager.microsoft.com/en-us) |
-| **Visual C++ Redistributable AIO** | [🔗 Download](https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip) |
-| **Telegram Portable** | [🔗 Download](https://telegram.org/dl/desktop/win64_portable) |
-| **Ayugram (Telegram Fork)** | [🔗 Download](https://github.com/AyuGram/AyuGramDesktop/releases) |
-| **Microsoft Store Installer** | [🔗 Download](https://github.com/fernvenue/microsoft-store/releases/download/v1.0.0.0/MicrosoftStore.exe) |
-| **Ghost Toolkit (Risun Updated)** | [🔗 Download](https://github.com/risunCode/Ghost-Toolbox-Universal/releases/download/Toolbox/Ghost.Toolbox-RisunUpdatedWork.zip) |
+[📥 Download Archive](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem) • [🚀 Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
 
-
-## 🚀 Windows Power Tools
-
-| Tool Name                       | Command                                                                 |
-|--------------------------------|-------------------------------------------------------------------------|
-| **Windows & Office Activator** | `irm https://get.activated.win \| iex`                                 |
-| **WinUtils (ChrisTitusTech)**  | `irm "https://christitus.com/win" \| iex`                              |
-| **Winhance (by Memory)**       | `irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" \| iex` |
-
-> 💡 *Copy-paste perintah ke PowerShell dengan hak admin, key: Win+X*
+</div>
 
 ---
+  
 
-## 🚫 Bypass OOBE (Windows 11 24H2+)
+## 🚀 Quick Start
 
-Saat berada di layar OOBE (Out-of-Box Experience), tekan `Shift + F10`, lalu jalankan perintah berikut:
-
-```cmd
-start ms-cxh:localonly
-```
-
----
-
-## 📶 Bypass TTL Hotspot (Windows)
-Gunakan pengaturan TTL untuk mengakali pembatasan tethering dari provider.
-
-### 🔗 Jalankan Pakai CMD Admin
-- `netsh int ipv4 set glob defaultcurhoplimit=65`
-- `netsh int ipv6 set glob defaultcurhoplimit=65`
-
-### 🔗 Atur ke default (Windows)
-- `netsh int ipv4 set glob defaultcurhoplimit=128`
-- `netsh int ipv6 set glob defaultcurhoplimit=128`
-
-# ScriptTTL: Update, Now is Windows Script Launcher!
-run it using Windows Powershell Admin WIN+X, or normal Powershell is fine, but some feature may not work
-```
+### For Windows Users
+Run PowerShell as Administrator (`Win + X`) and execute:
+```powershell
+# Launch Windows Portal Script
 irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newOnlineLauncher.ps1" | iex
 ```
 
----
-## 🌐 Browser Extensions
-
-| Category | Extensions |
-|---------|------------|
-| **🍪 Cookie Tools** | [Cookie Backup and Restore](https://chromewebstore.google.com/detail/cookie-backup-and-restore/cndobhdcpmpilkebeebeecgminfhkpcj), [Cookie Editor](https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm), [Cookies Manager](https://chromewebstore.google.com/detail/cookie-editor/iphcomljdfghbkdcfndaijbokpgddeno) |
-| **🛠 Web Cheat Utilities** | [Absolute Enable Right Click & Copy](https://chromewebstore.google.com/detail/absolute-enable-right-cli/jdocbkpgdakpekjlhemmfcncgdjeiika), [Enable RightClick Copy Alt](https://chromewebstore.google.com/detail/enable-right-click-copy/khpdiolbjggapokjloppdibgapcfkojd) |
-| **⬇️ Download & Media** | [IDM Integration](https://chromewebstore.google.com/detail/idm-integration-module/ngpampappnmepgilojfohadhhmbhlaek), [Nonstop YouTube](https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjigheleehipgeidionm), [Bass Boost: HD Audio](https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli), [Enhancer for YouTube](https://chromewebstore.google.com/detail/Enhancer%20for%20YouTube%E2%84%A2/ponfpcnoihfmfllpaingbgckeeldkhle) |
-| **🛡 Adblock & Security** | [uBlock Origin Lite](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh), [Strict Popup Blocker](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg), [Clear Cache](https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn) |
-| **📥 Douyin Downloaders** | [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn), [Simple Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj) |
+### For macOS Users
+Start with Homebrew (if not installed):
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 ---
+
+## 🖥️ Essential Software for PC
+
+<table>
+<tr>
+<th>Category</th>
+<th>Software</th>
+<th>Description</th>
+<th>Link</th>
+</tr>
+<tr>
+<td>🏠 <strong>System</strong></td>
+<td>PC Manager by Microsoft</td>
+<td>Official system optimization tool</td>
+<td><a href="https://pcmanager.microsoft.com/en-us">🔗 Download</a></td>
+</tr>
+<tr>
+<td rowspan="2">⚙️ <strong>Runtime</strong></td>
+<td>Visual C++ Redistributable AIO</td>
+<td>All-in-one runtime package</td>
+<td><a href="https://github.com/abbodi1406/vcredist/releases/download/v0.84.0/VisualCppRedist_AIO_x86_x64_84.zip">🔗 Download</a></td>
+</tr>
+<tr>
+<td>Microsoft Store Installer</td>
+<td>Restore Microsoft Store functionality</td>
+<td><a href="https://github.com/fernvenue/microsoft-store/releases/download/v1.0.0.0/MicrosoftStore.exe">🔗 Download</a></td>
+</tr>
+<tr>
+<td rowspan="2">💬 <strong>Communication</strong></td>
+<td>Telegram Portable</td>
+<td>Portable messaging client</td>
+<td><a href="https://telegram.org/dl/desktop/win64_portable">🔗 Download</a></td>
+</tr>
+<tr>
+<td>Ayugram</td>
+<td>Enhanced Telegram fork</td>
+<td><a href="https://github.com/AyuGram/AyuGramDesktop/releases">🔗 Download</a></td>
+</tr>
+<tr>
+<td>🛠️ <strong>Tools</strong></td>
+<td>Ghost Toolkit (Risun Updated)</td>
+<td>Comprehensive system toolkit</td>
+<td><a href="https://github.com/risunCode/Ghost-Toolbox-Universal/releases/download/Toolbox/Ghost.Toolbox-RisunUpdatedWork.zip">🔗 Download</a></td>
+</tr>
+</table>
+
+---
+
+## ⚡ Windows Power Tools
+
+Transform your Windows experience with these one-command power tools:
+
+### 🔓 System Activators
+```powershell
+# Windows & Office Activator
+irm https://get.activated.win | iex
+```
+
+### 🏃‍♂️ System Optimizers
+```powershell
+# WinUtils by ChrisTitusTech
+irm "https://christitus.com/win" | iex
+
+# Winhance by Memory
+irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
+```
+
+> 💡 **Pro Tip:** Always run PowerShell as Administrator (`Win + X` → Windows PowerShell (Admin))
+
+---
+
+## 🔧 System Tweaks & Bypasses
+
+### 🚫 Bypass Windows 11 OOBE (24H2+)
+When stuck at the Out-of-Box Experience screen:
+1. Press `Shift + F10` to open Command Prompt
+2. Run: `start ms-cxh:localonly`
+
+### 📶 TTL Hotspot Bypass
+Circumvent carrier tethering restrictions:
+
+**Enable TTL Bypass:**
+```cmd
+netsh int ipv4 set glob defaultcurhoplimit=65
+netsh int ipv6 set glob defaultcurhoplimit=65
+```
+
+**Restore Default Settings:**
+```cmd
+netsh int ipv4 set glob defaultcurhoplimit=128
+netsh int ipv6 set glob defaultcurhoplimit=128
+```
+
+---
+
+## 🌐 Browser Extensions Collection
+
+### 🍪 Cookie Management
+- [Cookie Backup and Restore](https://chromewebstore.google.com/detail/cookie-backup-and-restore/cndobhdcpmpilkebeebeecgminfhkpcj) - Backup and restore cookies effortlessly
+- [Cookie Editor](https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm) - Advanced cookie editing capabilities
+- [Cookies Manager](https://chromewebstore.google.com/detail/cookie-editor/iphcomljdfghbkdcfndaijbokpgddeno) - Complete cookie management suite
+
+### 🛠️ Web Utilities
+- [Absolute Enable Right Click & Copy](https://chromewebstore.google.com/detail/absolute-enable-right-cli/jdocbkpgdakpekjlhemmfcncgdjeiika) - Bypass right-click restrictions
+- [Enable RightClick Copy Alt](https://chromewebstore.google.com/detail/enable-right-click-copy/khpdiolbjggapokjloppdibgapcfkojd) - Alternative right-click enabler
+
+### ⬇️ Download & Media Enhancement
+- [IDM Integration](https://chromewebstore.google.com/detail/idm-integration-module/ngpampappnmepgilojfohadhhmbhlaek) - Seamless IDM integration
+- [Nonstop YouTube](https://chromewebstore.google.com/detail/nonstop-youtube/opgenniblhhdkjrigheleehipgeidionm) - Continuous YouTube playback
+- [Bass Boost: HD Audio](https://chromewebstore.google.com/detail/bass-boost-hd-audio/mghabdfikjldejcdcmclcmpcmknjahli) - Enhanced audio experience
+- [Enhancer for YouTube™](https://chromewebstore.google.com/detail/Enhancer%20for%20YouTube%E2%84%A2/ponfpcnoihfmfllpaingbgckeeldkhle) - Ultimate YouTube enhancement
+
+### 🛡️ Security & Adblock
+- [uBlock Origin Lite](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh) - Efficient ad blocking
+- [Strict Popup Blocker](https://chromewebstore.google.com/detail/popup-blocker-strict/aefkmifgmaafnojlojpnekbpbmjiiogg) - Advanced popup protection
+- [Clear Cache](https://chromewebstore.google.com/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn) - One-click cache clearing
+
+### 📥 Specialized Downloaders
+- [BestDouyin Downloader](https://chromewebstore.google.com/detail/douyin-video-downloader/knbeilbpfnelpbeoofhnkfbfcldpfehn) - Professional Douyin downloader
+- [Simple Douyin Downloader](https://chromewebstore.google.com/detail/simple-douyin-downloader/hpdbhmoofegmpcggbhofpkpppkcncnmj) - Lightweight alternative
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Here's how you can help:
+
+1. 🍴 **Fork** the repository
+2. 🌿 **Create** a feature branch
+3. ✨ **Add** your improvements
+4. 📝 **Document** your changes
+5. 🚀 **Submit** a pull request
+
+---
+
+## 📞 Support & Community
+
+- 🐛 **Issues:** [Report bugs here](https://github.com/risunCode/Windows-Portal/issues)
+- 💬 **Discussions:** [Join community discussions](https://github.com/risunCode/Windows-Portal/discussions)
+- 📧 **Contact:** [Email maintainer](mailto:risun@example.com)
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [RisunCode](https://github.com/risunCode)**
+
+⭐ **Star this repository if it helped you!**
+
+*Last updated: June 2025*
+
+</div>

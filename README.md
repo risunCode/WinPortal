@@ -8,11 +8,12 @@
 
 *A curated collection of essential software, system tweaks, and power tools for Your Compiyutaah :3*
 
-[📥 Download Archive](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem) • [🚀 Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
+[🚀 Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
 
 </div>
 
 ---
+### [📥 Arsip Web Software tani](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem) •
 
 ## 🚀 Quick Start
 

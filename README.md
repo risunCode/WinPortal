@@ -18,7 +18,8 @@
 
 ## 🚀 Quick Start
 ### [winScript by risunCode](https://github.com/risunCode/WinPortal/tree/main/winScript)
-- System Cleaner, Pc Information, and some tool*
+> 💡 **Pro Tip:** Use Powershell Admin (Shortcut Windows + X)
+> **Tool included:** System Cleaner, Pc Information, and some tool*
 
 ### Windows Script Launcher (All in One winScript by risunCode)
 Run PowerShell as Administrator (`Win + X`) and execute:
@@ -34,7 +35,7 @@ irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newLauncher.ps1" 
 ```
 
 
-## ⚡ Windows Power Tools
+## ⚡ Windows Power Tools 
 
 Transform your Windows experience with these one-command power tools:
 

@@ -56,6 +56,8 @@
 | GetIntoPC              | [getintopc.com](https://getintopc.com/)                              |
 </details>
 
+---
+
 ## ❌ Tidak Direkomendasikan
 <details>
   
@@ -64,3 +66,5 @@
 | Untrusted Uploaders    | [Telegraph](https://telegra.ph/Untrusted-uploaders-04-05)            |
 | Untrusted Sites        | [Telegraph](https://telegra.ph/Untrusted-sites-04-05)                |
 </details>
+
+---

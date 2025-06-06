@@ -1,5 +1,4 @@
 # 🪟 Windows Portal
-*Your Ultimate Software Collection & System Optimization Hub*
 ![image](https://github.com/user-attachments/assets/986baf78-9444-4b7c-a789-e95f2fe13546)
 <div align="center">
 
@@ -7,14 +6,13 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![Maintenance](https://img.shields.io/badge/Maintained-Yes-brightgreen?style=for-the-badge)
 
-*A curated collection of essential software, system tweaks, and power tools for Windows and macOS*
+*A curated collection of essential software, system tweaks, and power tools for Your Compiyutaah :3*
 
 [📥 Download Archive](https://github.com/risunCode/Windows-Portal/tree/main/Software_Ehem) • [🚀 Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
 
 </div>
 
 ---
-  
 
 ## 🚀 Quick Start
 
@@ -30,6 +28,40 @@ Start with Homebrew (if not installed):
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
+ 
+
+## ⚡ Windows Power Tools
+
+Transform your Windows experience with these one-command power tools:
+
+### 🔓 System Activators
+```powershell
+# Windows & Office Activator
+irm https://get.activated.win | iex
+```
+
+### 🏃‍♂️ System Optimizers
+```powershell
+# WinUtils by ChrisTitusTech
+irm "https://christitus.com/win" | iex
+
+# Winhance by Memory
+irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
+```
+
+> 💡 **Pro Tip:** Use Powershell Admin (Shortcut Windows + X)
+
+---
+
+## 🔧 Bypass OOBE New 24H2+
+
+### 🚫 Bypass Windows 11 OOBE (24H2+)
+When stuck at the Out-of-Box Experience screen:
+1. Press `Shift + F10` to open Command Prompt
+2. Run: `start ms-cxh:localonly`
+
+### 📶 TTL Hotspot Bypass
+ 
 
 ---
 
@@ -78,54 +110,6 @@ Start with Homebrew (if not installed):
 </tr>
 </table>
 
----
-
-## ⚡ Windows Power Tools
-
-Transform your Windows experience with these one-command power tools:
-
-### 🔓 System Activators
-```powershell
-# Windows & Office Activator
-irm https://get.activated.win | iex
-```
-
-### 🏃‍♂️ System Optimizers
-```powershell
-# WinUtils by ChrisTitusTech
-irm "https://christitus.com/win" | iex
-
-# Winhance by Memory
-irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
-```
-
-> 💡 **Pro Tip:** Always run PowerShell as Administrator (`Win + X` → Windows PowerShell (Admin))
-
----
-
-## 🔧 System Tweaks & Bypasses
-
-### 🚫 Bypass Windows 11 OOBE (24H2+)
-When stuck at the Out-of-Box Experience screen:
-1. Press `Shift + F10` to open Command Prompt
-2. Run: `start ms-cxh:localonly`
-
-### 📶 TTL Hotspot Bypass
-Circumvent carrier tethering restrictions:
-
-**Enable TTL Bypass:**
-```cmd
-netsh int ipv4 set glob defaultcurhoplimit=65
-netsh int ipv6 set glob defaultcurhoplimit=65
-```
-
-**Restore Default Settings:**
-```cmd
-netsh int ipv4 set glob defaultcurhoplimit=128
-netsh int ipv6 set glob defaultcurhoplimit=128
-```
-
----
 
 ## 🌐 Browser Extensions Collection
 

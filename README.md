@@ -38,17 +38,19 @@ irm "https://github.com/risunCode/WinPortal/raw/main/winScript/newLauncher.ps1" 
 Transform your Windows experience with these one-command power tools:
 
 ### 🔓 System Activators
+-  Windows & Office Activator
 ```powershell
-# Windows & Office Activator
 irm https://get.activated.win | iex
 ```
 
 ### 🏃‍♂️ System Optimizers
+- WinUtils by ChrisTitusTech
 ```powershell
-# WinUtils by ChrisTitusTech
 irm "https://christitus.com/win" | iex
+```
 
 # Winhance by Memory
+```
 irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex
 ```
 

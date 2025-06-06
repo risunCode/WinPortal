@@ -28,12 +28,7 @@
 
 ---
 
-## 🎮 Launcher & Emulator
-
-| Nama        | Deskripsi                                             | Link                                 |
-|-------------|------------------------------------------------------|--------------------------------------|
-| TLauncher   | Minecraft launcher modifikasi (ada isu spyware)      | [tlauncher.org](https://tlauncher.org/en/) |
-
+## 🎮  Emulator Android (end of support)
 <details>
 <summary>📱 <strong>Emulator Mod Android (EoL)</strong></summary>
 
@@ -60,7 +55,6 @@
 | Windows Update Blocker | [sordum.org](https://www.sordum.org/9470/windows-update-blocker-v1-8/) |
 | GetIntoPC              | [getintopc.com](https://getintopc.com/)                              |
 </details>
----
 
 ## ❌ Tidak Direkomendasikan
 <details>
@@ -70,4 +64,3 @@
 | Untrusted Uploaders    | [Telegraph](https://telegra.ph/Untrusted-uploaders-04-05)            |
 | Untrusted Sites        | [Telegraph](https://telegra.ph/Untrusted-sites-04-05)                |
 </details>
----

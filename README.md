@@ -10,8 +10,7 @@
 
 *A curated collection of essential software, system tweaks, and power tools for Your Compiyutaah :3*
 
-[🚀 Quick Start](#-quick-start) • [🛠️ Power Tools](#-windows-power-tools) • [💻 Essential Software](#-essential-software-for-pc) • [🌐 Browser Extensions](#-browser-extensions-collection) • [🤝 Contributing](#-contributing)
-
+[🛠️ Power Tools](#-windows-power-tools) • [💻 Essential Software](#-essential-software-for-pc) • [🌐 Browser Extensions](#-browser-extensions-collection)
 </div>
 
 ---

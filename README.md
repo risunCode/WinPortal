@@ -24,9 +24,9 @@
 
 | Category              | Tool                     | Description                          | Command/Link |
 |----------------------|--------------------------|--------------------------------------|---------------|
-| 🔓 Activator         | Windows & Office Activator | Quick Windows/Office Activation      | `irm https://get.activated.win | iex` |
-| 🏃 System Optimizer  | WinUtils by ChrisTitusTech | Optimize & Debloat Windows           | `irm "https://christitus.com/win" | iex` |
-| 🛠️ System Tweaks    | Winhance by Memory        | System Enhancer & Tweaker            | `irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex` |
+| 🔓 Activator         | Windows & Office Activator | Quick Windows/Office Activation      | irm https://get.activated.win | iex |
+| 🏃 System Optimizer  | WinUtils by ChrisTitusTech | Optimize & Debloat Windows           | irm "https://christitus.com/win" | iex |
+| 🛠️ System Tweaks    | Winhance by Memory        | System Enhancer & Tweaker            | irm "https://github.com/memstechtips/Winhance/raw/main/Winhance.ps1" | iex |
 
 💡 **Reminder:** Run these tools via **PowerShell Admin** for best results.
 

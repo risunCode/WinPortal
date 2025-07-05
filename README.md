@@ -22,24 +22,20 @@
 
 ## ⚡ Windows Power Tools 
 💡 **Reminder:** Run these tools via **PowerShell Admin** 
-Windows & Office Activator
+**Windows & Office Activator**
 ```cmd
 irm https://get.activated.win | iex
 ```
-WinUtils by ChrisTitusTech | Optimize & Debloat Windows
+**WinUtils by ChrisTitusTech | Optimize & Debloat Windows**
 ```cmd
 irm "https://christitus.com/win" | iex
 ```
 
 ---
 
-## 🚫 Bypass Windows 11 OOBE (24H2+)
-
-When stuck at the **Out-of-Box Experience (OOBE)** screen:
-
+### 🚫 Bypass Windows 11 OOBE (24H2+) 
 1. Press `Shift + F10` to open Command Prompt
 2. Run this command:
-
 ```cmd
 start ms-cxh:localonly
 ```

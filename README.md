@@ -30,8 +30,8 @@ irm https://get.activated.win | iex
 irm "https://christitus.com/win" | iex
 ```
 
-** Fix System Anomalies with DISM (i'd like to call it modern sfc/scannow hehe)
-``cmd
+** Fix System Anomalies with DISM (i'd like to call it modern sfc/scannow hehe) **
+```cmd
 DISM /Online /Cleanup-Image /RestoreHealth
 ```
 

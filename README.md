@@ -30,7 +30,10 @@ irm https://get.activated.win | iex
 irm "https://christitus.com/win" | iex
 ```
 
----
+** Fix System Anomalies with DISM (i'd like to call it modern sfc/scannow hehe)
+``cmd
+DISM /Online /Cleanup-Image /RestoreHealth
+```
 
 ### 🚫 Bypass Windows 11 OOBE (24H2+) 
 1. Press `Shift + F10` to open Command Prompt

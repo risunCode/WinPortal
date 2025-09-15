@@ -53,6 +53,7 @@ TIMEOUT /T 2 >NUL
 
 REM Set backup folder (relative to script location)
 SET BACKUP_FOLDER=SavedWifiBackups
+SET "FULL_BACKUP_PATH=%~dp0%BACKUP_FOLDER%"
 
 :MAIN_MENU
 CLS
@@ -73,9 +74,9 @@ IF EXIST "%BACKUP_FOLDER%" (
 ECHO Current WiFi Networks: %CURRENT_PROFILES%
 ECHO Saved WiFi Backups: %BACKUP_COUNT%
 IF EXIST "%BACKUP_FOLDER%" (
-    ECHO Backup Folder: %BACKUP_FOLDER%\ [EXISTS]
+    ECHO Backup Folder: %FULL_BACKUP_PATH%\ [EXISTS]
 ) ELSE (
-    ECHO Backup Folder: %BACKUP_FOLDER%\ [NOT CREATED]
+    ECHO Backup Folder: %FULL_BACKUP_PATH%\ [NOT CREATED]
 )
 ECHO.
 ECHO ===============================================
@@ -105,7 +106,7 @@ ECHO.
 
 IF NOT EXIST "%BACKUP_FOLDER%" (
     MKDIR "%BACKUP_FOLDER%"
-    ECHO Created backup folder: %BACKUP_FOLDER%\
+    ECHO Created backup folder: %FULL_BACKUP_PATH%\
     ECHO.
 )
 
@@ -118,7 +119,7 @@ FOR %%F IN ("%BACKUP_FOLDER%\*.xml") DO SET /A EXPORTED_COUNT+=1
 
 ECHO.
 ECHO Backup completed successfully!
-ECHO Exported %EXPORTED_COUNT% WiFi profiles to %BACKUP_FOLDER%\
+ECHO Exported %EXPORTED_COUNT% WiFi profiles to %FULL_BACKUP_PATH%\
 ECHO.
 ECHO ===============================================
 ECHO [1] Back to Main Menu
@@ -153,7 +154,7 @@ SET XML_COUNT=0
 FOR %%F IN ("%BACKUP_FOLDER%\*.xml") DO SET /A XML_COUNT+=1
 
 IF %XML_COUNT%==0 (
-    ECHO No WiFi backup files found in %BACKUP_FOLDER%\
+    ECHO No WiFi backup files found in %FULL_BACKUP_PATH%\
     ECHO Please backup WiFi profiles first.
     ECHO.
     ECHO ===============================================

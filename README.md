@@ -35,6 +35,8 @@ irm "https://christitus.com/win" | iex
 irm "https://raw.githubusercontent.com/risunCode/WinPortal/main/winScript/WinScriptLauncher.ps1" | iex
 ```
 
+---
+
 ** Fix System Anomalies with DISM (i'd like to call it modern sfc/scannow hehe) **
 ```cmd
 DISM /Online /Cleanup-Image /RestoreHealth

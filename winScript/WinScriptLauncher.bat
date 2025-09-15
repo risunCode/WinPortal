@@ -63,14 +63,16 @@ echo  [3] Power Management Suite    - Shutdown, restart, and power options
 echo  [4] Windows Update Controller - Delay or pause Windows updates
 echo  [5] WiFi Profile Manager      - Backup, restore, and manage WiFi profiles
 echo  [6] TTL Bypass Tool           - Modify TTL settings for tethering bypass
+echo  [7] OneDrive Switcher         - Enable/disable OneDrive startup and sync
 echo.
 echo  [R] Refresh Menu    [H] Help / About    [Q] Quit Launcher
 echo ===============================================================================
-choice /c 123456RHQ /n /m "Select option: "
+choice /c 1234567RHQ /n /m "Select option: "
 
-if errorlevel 9 goto exitLauncher
-if errorlevel 8 goto showHelp
-if errorlevel 7 goto mainMenu
+if errorlevel 10 goto exitLauncher
+if errorlevel 9 goto showHelp
+if errorlevel 8 goto mainMenu
+if errorlevel 7 goto runOneDriveSwitcher
 if errorlevel 6 goto runTTLBypass
 if errorlevel 5 goto runWiFiManager
 if errorlevel 4 goto runWindowsUpdate
@@ -130,38 +132,29 @@ goto mainMenu
 
 :runWindowsUpdate
 cls
+echo                            WINDOWS UPDATE CONTROLLER 
 echo ===============================================================================
-echo                            WINDOWS UPDATE CONTROLLER
-echo ===============================================================================
-echo.
-echo ===============================================================================
-echo [WARNING] [PERINGATAN]
-echo ===============================================================================
-echo.
+echo. 
+echo [BAHASA INDONESIA] =============================================
 echo Script ini memerlukan WORKAROUND MANUAL agar dapat berfungsi dengan benar.
-echo This script requires a MANUAL WORKAROUND to function properly.
-echo.
-echo -------------------------------------------------------------------------------
-echo [BAHASA INDONESIA]
-echo -------------------------------------------------------------------------------
 echo Sebelum melanjutkan, Anda HARUS menekan tombol
 echo "Pause updates for 1 week" secara manual di pengaturan Windows Update.
 echo.
 echo Langkah ini penting karena Windows tidak akan menghentikan proses update
 echo hanya dengan mengubah registry melalui script.
-echo.
-echo Setelah Anda menekan tombol tersebut, ketik: confirm
-echo.
-echo -------------------------------------------------------------------------------
-echo [ENGLISH]
-echo -------------------------------------------------------------------------------
+echo Setelah Anda selesai melakukan workaround manual, ketik: confirm
+echo. 
+echo. 
+echo. 
+echo [ENGLISH] ============================================= 
+echo This script requires a MANUAL WORKAROUND to function properly.
 echo Before proceeding, you MUST click "Pause updates for 1 week" manually
 echo in the Windows Update settings.
 echo.
 echo This step is crucial because Windows will not fully pause updates
 echo just by modifying the registry via script.
 echo.
-echo Once you've clicked the button, type: confirm
+echo Once you've clicked the pause update button, type: confirm
 echo ===============================================================================
 echo.
 
@@ -307,6 +300,90 @@ echo TTL Bypass Tool completed. Press any key to return to main menu...
 pause >nul
 goto mainMenu
 
+:runOneDriveSwitcher
+cls
+echo ===============================================================================
+echo                            ONEDRIVE SWITCHER
+echo ===============================================================================
+
+:: Check OneDrive policy status
+reg query "HKLM\Software\Policies\Microsoft\Windows\OneDrive" /v "DisableFileSyncNGSC" >nul 2>&1
+if %errorlevel%==0 (
+    echo Current OneDrive Status: DISABLED
+) else (
+    echo Current OneDrive Status: ENABLED
+)
+echo.
+
+echo ===============================================================================
+echo Select OneDrive Action:
+echo.
+echo  [1] Disable OneDrive
+echo  [2] Enable OneDrive
+echo  [0] Back to Main Menu
+echo.
+echo ===============================================================================
+echo.
+choice /c 120 /n /m "Select option: "
+
+if errorlevel 3 goto mainMenu
+if errorlevel 2 goto enableOneDrive
+if errorlevel 1 goto disableOneDrive
+
+goto runOneDriveSwitcher
+
+:disableOneDrive
+cls
+echo ===============================================================================
+echo                    DISABLING ONEDRIVE
+echo ===============================================================================
+echo.
+echo [DISABLE] Menonaktifkan OneDrive...
+
+:: Add policy to block synchronization
+reg add "HKLM\Software\Policies\Microsoft\Windows\OneDrive" /v "DisableFileSyncNGSC" /t REG_DWORD /d 1 /f >nul 2>&1
+
+:: Refresh policy
+echo Refreshing Group Policy...
+gpupdate /force
+
+echo.
+echo [SUCCESS] OneDrive dinonaktifkan. Reboot untuk efek penuh.
+echo ===============================================================================
+echo OneDrive Switcher completed. Press any key to return to main menu...
+pause >nul
+goto mainMenu
+
+:enableOneDrive
+cls
+echo ===============================================================================
+echo                     ENABLING ONEDRIVE
+echo ===============================================================================
+echo.
+echo [ENABLE] Mengaktifkan OneDrive...
+
+:: Remove policy that blocks synchronization
+reg delete "HKLM\Software\Policies\Microsoft\Windows\OneDrive" /v "DisableFileSyncNGSC" /f >nul 2>&1
+
+:: Optional: remove key if empty
+reg delete "HKLM\Software\Policies\Microsoft\Windows\OneDrive" /f >nul 2>&1
+
+:: Refresh policy
+echo Refreshing Group Policy...
+gpupdate /force
+
+:: Restart Explorer
+echo Restarting Explorer...
+taskkill /f /im explorer.exe >nul 2>&1
+start explorer.exe
+
+echo.
+echo [SUCCESS] OneDrive seharusnya aktif setelah reboot.
+echo ===============================================================================
+echo OneDrive Switcher completed. Press any key to return to main menu...
+pause >nul
+goto mainMenu
+
 :showHelp
 cls
 echo ==================================================================================================
@@ -370,6 +447,15 @@ echo      • Bypass tethering throttling restrictions
 echo      • Set TTL to common values (65, 128) or custom values
 echo      • Real-time TTL value display
 echo      • Supports values from 1-255 with input validation
+echo.
+echo --------------------------------------------------------------------------------------------------
+echo  [7] OneDrive Switcher (Built-in)
+echo --------------------------------------------------------------------------------------------------
+echo      • Simple OneDrive enable/disable functionality
+echo      • Uses Windows Group Policy for system-wide control
+echo      • Automatic policy refresh and Explorer restart
+echo      • Real-time OneDrive status monitoring
+echo      • Requires reboot for full effect
 echo.
 echo ==================================================================================================
 echo.

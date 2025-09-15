@@ -11,34 +11,12 @@ A comprehensive script-based launcher for managing and executing Windows system 
 - **Script Status Monitoring**: Shows availability status of all modules
 - **Detailed Help System**: Comprehensive information about each tool
 - **Error Handling**: Graceful handling of missing files and execution errors
-
-## 📁 Project Structure
-
+ 
+## risunCode winScript Online Launcher
+- or just download winscript from Releases tab!
+```cmd
+irm "https://raw.githubusercontent.com/risunCode/WinPortal/main/winScript/WinScriptLauncher.ps1" | iex
 ```
-winScript/
-├── WinScriptLauncher.bat          # Main launcher (START HERE)
-├── README.md                      # This file
-├── readme_stop.md                 # Task summary
-├── CacheCleaner/
-│   └── wintrace_cleaner.bat       # System cleanup tool
-├── ChromePolicy/
-│   └── Chrome_Policy_Remover.bat  # Chrome policy removal
-├── PowerManager/
-│   ├── NewShutdown.bat            # Power management suite
-│   ├── Shutdown-Jinhsi.txt        # Log files
-│   └── Shutdown-Jinxi.txt
-├── WindowsUpdate/
-│   └── UpdateDelay.ps1            # Windows Update controller
-├── WindowsWifiBackupRestore/
-│   ├── WinWifiManager.bat         # WiFi profile manager
-│   └── SavedWifiBackups/          # WiFi backup storage
-│       ├── Wi-Fi-*.xml            # Backed up WiFi profiles
-│       └── ...
-└── WinTTLBypass/
-    └── WinTTLBypass.bat           # TTL modification tool
-```
-
-## 🔧 Installation & Setup
 
 ### Prerequisites
 
@@ -235,3 +213,4 @@ If you encounter issues:
 **Last Updated**: September 2025  
 
 Happy scripting! 🚀
+

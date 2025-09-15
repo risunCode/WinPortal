@@ -21,20 +21,35 @@ if ($Host.Name -eq "ConsoleHost") {
 }
 
 # Global variables
-$script:LauncherPath = if ($Online) { $env:TEMP } else { $WorkingDirectory }
+$script:LauncherPath = if ($Online -and $env:TEMP) { $env:TEMP } elseif ($WorkingDirectory) { $WorkingDirectory } else { $PSScriptRoot }
 $script:IsOnlineMode = $Online
-$script:OutputFolder = "$env:PUBLIC\Desktop\winScriptOutput"
+
+# Set output folder with fallbacks
+$script:OutputFolder = if ($env:PUBLIC) { 
+    "$env:PUBLIC\Desktop\winScriptOutput" 
+} elseif ($env:USERPROFILE) { 
+    "$env:USERPROFILE\Desktop\winScriptOutput" 
+} else { 
+    "$env:TEMP\winScriptOutput" 
+}
 
 # Ensure output folder exists
 function Initialize-OutputFolder {
-    if (-not (Test-Path $script:OutputFolder)) {
-        try {
+    try {
+        if ([string]::IsNullOrEmpty($script:OutputFolder)) {
+            $script:OutputFolder = "$env:TEMP\winScriptOutput"
+        }
+        
+        if (-not (Test-Path $script:OutputFolder)) {
             New-Item -ItemType Directory -Path $script:OutputFolder -Force | Out-Null
             Write-Host "✓ Created output folder: $script:OutputFolder" -ForegroundColor Green
-        } catch {
-            Write-Host "✗ Error creating output folder: $($_.Exception.Message)" -ForegroundColor Red
-            $script:OutputFolder = $env:TEMP
+        } else {
+            Write-Host "✓ Using output folder: $script:OutputFolder" -ForegroundColor Green
         }
+    } catch {
+        Write-Host "✗ Error with output folder: $($_.Exception.Message)" -ForegroundColor Red
+        $script:OutputFolder = $env:TEMP
+        Write-Host "✓ Fallback to: $script:OutputFolder" -ForegroundColor Yellow
     }
 }
 
@@ -137,13 +152,25 @@ function Invoke-CacheCleaner {
         Initialize-OutputFolder
         
         # Create log file
-        $logFile = Join-Path $script:OutputFolder "CacheClean_$(Get-Date -Format 'yyyyMMdd_HHmmss').txt"
-        $logContent = @()
-        $logContent += "==============================================="
-        $logContent += "           Windows System Cleanup Log"
-        $logContent += "           Date: $(Get-Date)"
-        $logContent += "==============================================="
-        $logContent += ""
+        try {
+            $timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+            $logFileName = "CacheClean_$timestamp.txt"
+            
+            if ([string]::IsNullOrEmpty($script:OutputFolder)) {
+                $script:OutputFolder = $env:TEMP
+            }
+            
+            $logFile = Join-Path $script:OutputFolder $logFileName
+            $logContent = @()
+            $logContent += "==============================================="
+            $logContent += "           Windows System Cleanup Log"
+            $logContent += "           Date: $(Get-Date)"
+            $logContent += "==============================================="
+            $logContent += ""
+        } catch {
+            Write-Host "✗ Error creating log file path: $($_.Exception.Message)" -ForegroundColor Red
+            $logFile = "$env:TEMP\CacheClean_$(Get-Date -Format 'yyyyMMdd_HHmmss').txt"
+        }
         
         # Direct PowerShell implementation of cache cleaning
         Write-Host "Cleaning User temp files..." -ForegroundColor White
@@ -192,11 +219,20 @@ function Invoke-CacheCleaner {
         Write-Host "✓ Log file saved: $logFile" -ForegroundColor Cyan
         
     } else {
-        $scriptPath = Join-Path $script:LauncherPath "CacheCleaner\wintrace_cleaner.bat"
-        if (Test-Path $scriptPath) {
-            & cmd.exe /c $scriptPath
-        } else {
-            Write-Host "ERROR: Script file not found - CacheCleaner\wintrace_cleaner.bat" -ForegroundColor Red
+        try {
+            if ([string]::IsNullOrEmpty($script:LauncherPath)) {
+                $script:LauncherPath = $PSScriptRoot
+            }
+            
+            $scriptPath = Join-Path $script:LauncherPath "CacheCleaner\wintrace_cleaner.bat"
+            if (Test-Path $scriptPath) {
+                & cmd.exe /c "`"$scriptPath`""
+            } else {
+                Write-Host "ERROR: Script file not found - CacheCleaner\wintrace_cleaner.bat" -ForegroundColor Red
+                Write-Host "Searched in: $script:LauncherPath" -ForegroundColor Gray
+            }
+        } catch {
+            Write-Host "ERROR: Failed to execute cache cleaner - $($_.Exception.Message)" -ForegroundColor Red
         }
     }
     
@@ -263,11 +299,20 @@ function Invoke-ChromePolicyRemover {
             }
         }
     } else {
-        $scriptPath = Join-Path $script:LauncherPath "ChromePolicy\Chrome_Policy_Remover.bat"
-        if (Test-Path $scriptPath) {
-            & cmd.exe /c $scriptPath
-        } else {
-            Write-Host "ERROR: Script file not found - ChromePolicy\Chrome_Policy_Remover.bat" -ForegroundColor Red
+        try {
+            if ([string]::IsNullOrEmpty($script:LauncherPath)) {
+                $script:LauncherPath = $PSScriptRoot
+            }
+            
+            $scriptPath = Join-Path $script:LauncherPath "ChromePolicy\Chrome_Policy_Remover.bat"
+            if (Test-Path $scriptPath) {
+                & cmd.exe /c "`"$scriptPath`""
+            } else {
+                Write-Host "ERROR: Script file not found - ChromePolicy\Chrome_Policy_Remover.bat" -ForegroundColor Red
+                Write-Host "Searched in: $script:LauncherPath" -ForegroundColor Gray
+            }
+        } catch {
+            Write-Host "ERROR: Failed to execute Chrome policy remover - $($_.Exception.Message)" -ForegroundColor Red
         }
     }
     
@@ -334,11 +379,20 @@ function Invoke-PowerManager {
             }
         }
     } else {
-        $scriptPath = Join-Path $script:LauncherPath "PowerManager\NewShutdown.bat"
-        if (Test-Path $scriptPath) {
-            & cmd.exe /c $scriptPath
-        } else {
-            Write-Host "ERROR: Script file not found - PowerManager\NewShutdown.bat" -ForegroundColor Red
+        try {
+            if ([string]::IsNullOrEmpty($script:LauncherPath)) {
+                $script:LauncherPath = $PSScriptRoot
+            }
+            
+            $scriptPath = Join-Path $script:LauncherPath "PowerManager\NewShutdown.bat"
+            if (Test-Path $scriptPath) {
+                & cmd.exe /c "`"$scriptPath`""
+            } else {
+                Write-Host "ERROR: Script file not found - PowerManager\NewShutdown.bat" -ForegroundColor Red
+                Write-Host "Searched in: $script:LauncherPath" -ForegroundColor Gray
+            }
+        } catch {
+            Write-Host "ERROR: Failed to execute power manager - $($_.Exception.Message)" -ForegroundColor Red
         }
     }
     
@@ -476,13 +530,22 @@ function Set-WindowsUpdatePause {
     
     try {
         $registryPath = 'HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings'
+        
+        # Ensure the registry path exists
         if (-not (Test-Path $registryPath)) {
-            New-Item -Path $registryPath -Force | Out-Null
+            Write-Host "Creating registry path: $registryPath" -ForegroundColor White
+            New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null
         }
         
-        Set-ItemProperty -Path $registryPath -Name 'PauseUpdatesExpiryTime' -Value $targetDate -Force
-        Set-ItemProperty -Path $registryPath -Name 'PauseFeatureUpdatesEndTime' -Value $targetDate -Force
-        Set-ItemProperty -Path $registryPath -Name 'PauseQualityUpdatesEndTime' -Value $targetDate -Force
+        # Validate target date format
+        if ([string]::IsNullOrEmpty($targetDate)) {
+            throw "Target date is empty or null"
+        }
+        
+        Write-Host "Setting registry values..." -ForegroundColor White
+        Set-ItemProperty -Path $registryPath -Name 'PauseUpdatesExpiryTime' -Value $targetDate -Force -ErrorAction Stop
+        Set-ItemProperty -Path $registryPath -Name 'PauseFeatureUpdatesEndTime' -Value $targetDate -Force -ErrorAction Stop
+        Set-ItemProperty -Path $registryPath -Name 'PauseQualityUpdatesEndTime' -Value $targetDate -Force -ErrorAction Stop
         
         if ($Days) {
             Write-Host "Windows Updates successfully paused for $Days days" -ForegroundColor Green
@@ -492,7 +555,8 @@ function Set-WindowsUpdatePause {
         Write-Host "Check Windows Settings > Update & Security to verify the pause status" -ForegroundColor Cyan
     } catch {
         Write-Host "Error: Failed to configure registry settings" -ForegroundColor Red
-        Write-Host $_.Exception.Message -ForegroundColor Red
+        Write-Host "Details: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "Please ensure you are running as Administrator and have registry access." -ForegroundColor Yellow
     }
     
     Write-Host "Press any key to continue..." -ForegroundColor White
@@ -525,8 +589,21 @@ function Invoke-WiFiManager {
                 # Initialize output folder
                 Initialize-OutputFolder
                 
-                $backupPath = Join-Path $script:OutputFolder "WiFiBackup_$(Get-Date -Format 'yyyyMMdd_HHmmss')"
-                New-Item -ItemType Directory -Path $backupPath -Force | Out-Null
+                try {
+                    $timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+                    $backupFolderName = "WiFiBackup_$timestamp"
+                    
+                    if ([string]::IsNullOrEmpty($script:OutputFolder)) {
+                        $script:OutputFolder = $env:TEMP
+                    }
+                    
+                    $backupPath = Join-Path $script:OutputFolder $backupFolderName
+                    New-Item -ItemType Directory -Path $backupPath -Force | Out-Null
+                } catch {
+                    Write-Host "✗ Error creating backup path: $($_.Exception.Message)" -ForegroundColor Red
+                    $backupPath = "$env:TEMP\WiFiBackup_$(Get-Date -Format 'yyyyMMdd_HHmmss')"
+                    New-Item -ItemType Directory -Path $backupPath -Force -ErrorAction SilentlyContinue | Out-Null
+                }
                 
                 try {
                     netsh wlan export profile folder="$backupPath" key=clear
@@ -538,7 +615,14 @@ function Invoke-WiFiManager {
                     Write-Host "✓ Total profiles backed up: $backedUpProfiles" -ForegroundColor Green
                     
                     # Create a summary file
-                    $summaryFile = Join-Path $backupPath "BackupSummary.txt"
+                    try {
+                        if ([string]::IsNullOrEmpty($backupPath)) {
+                            $backupPath = $env:TEMP
+                        }
+                        $summaryFile = Join-Path $backupPath "BackupSummary.txt"
+                    } catch {
+                        $summaryFile = "$backupPath\BackupSummary.txt"
+                    }
                     $summaryContent = @()
                     $summaryContent += "WiFi Profile Backup Summary"
                     $summaryContent += "=========================="
@@ -569,7 +653,19 @@ function Invoke-WiFiManager {
                     $_.Line.Split(':')[1].Trim()
                 }
                 
-                $passwordsFile = Join-Path $script:OutputFolder "WiFiPasswords_$(Get-Date -Format 'yyyyMMdd_HHmmss').txt"
+                try {
+                    $timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+                    $passwordFileName = "WiFiPasswords_$timestamp.txt"
+                    
+                    if ([string]::IsNullOrEmpty($script:OutputFolder)) {
+                        $script:OutputFolder = $env:TEMP
+                    }
+                    
+                    $passwordsFile = Join-Path $script:OutputFolder $passwordFileName
+                } catch {
+                    Write-Host "✗ Error creating password file path: $($_.Exception.Message)" -ForegroundColor Red
+                    $passwordsFile = "$env:TEMP\WiFiPasswords_$(Get-Date -Format 'yyyyMMdd_HHmmss').txt"
+                }
                 $passwordContent = @()
                 $passwordContent += "WiFi Passwords Export"
                 $passwordContent += "===================="
@@ -625,11 +721,20 @@ function Invoke-WiFiManager {
             }
         }
     } else {
-        $scriptPath = Join-Path $script:LauncherPath "WindowsWifiBackupRestore\WinWifiManager.bat"
-        if (Test-Path $scriptPath) {
-            & cmd.exe /c $scriptPath
-        } else {
-            Write-Host "ERROR: Script file not found - WindowsWifiBackupRestore\WinWifiManager.bat" -ForegroundColor Red
+        try {
+            if ([string]::IsNullOrEmpty($script:LauncherPath)) {
+                $script:LauncherPath = $PSScriptRoot
+            }
+            
+            $scriptPath = Join-Path $script:LauncherPath "WindowsWifiBackupRestore\WinWifiManager.bat"
+            if (Test-Path $scriptPath) {
+                & cmd.exe /c "`"$scriptPath`""
+            } else {
+                Write-Host "ERROR: Script file not found - WindowsWifiBackupRestore\WinWifiManager.bat" -ForegroundColor Red
+                Write-Host "Searched in: $script:LauncherPath" -ForegroundColor Gray
+            }
+        } catch {
+            Write-Host "ERROR: Failed to execute WiFi manager - $($_.Exception.Message)" -ForegroundColor Red
         }
     }
     
@@ -693,11 +798,20 @@ function Invoke-TTLBypass {
             }
         }
     } else {
-        $scriptPath = Join-Path $script:LauncherPath "WinTTLBypass\WinTTLBypass.bat"
-        if (Test-Path $scriptPath) {
-            & cmd.exe /c $scriptPath
-        } else {
-            Write-Host "ERROR: Script file not found - WinTTLBypass\WinTTLBypass.bat" -ForegroundColor Red
+        try {
+            if ([string]::IsNullOrEmpty($script:LauncherPath)) {
+                $script:LauncherPath = $PSScriptRoot
+            }
+            
+            $scriptPath = Join-Path $script:LauncherPath "WinTTLBypass\WinTTLBypass.bat"
+            if (Test-Path $scriptPath) {
+                & cmd.exe /c "`"$scriptPath`""
+            } else {
+                Write-Host "ERROR: Script file not found - WinTTLBypass\WinTTLBypass.bat" -ForegroundColor Red
+                Write-Host "Searched in: $script:LauncherPath" -ForegroundColor Gray
+            }
+        } catch {
+            Write-Host "ERROR: Failed to execute TTL bypass tool - $($_.Exception.Message)" -ForegroundColor Red
         }
     }
     
@@ -715,13 +829,23 @@ function Set-TTLValue {
     Write-Host "Setting TTL values to $Value..." -ForegroundColor Yellow
     
     try {
-        # Set IPv4 TTL
-        Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" -Name DefaultTTL -Value $Value -Type DWord
-        Write-Host "✓ IPv4 TTL set to $Value" -ForegroundColor Green
+        # Ensure registry paths exist
+        $ipv4Path = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters"
+        $ipv6Path = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
         
-        # Set IPv6 TTL
-        Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" -Name DefaultHopLimit -Value $Value -Type DWord
-        Write-Host "✓ IPv6 TTL set to $Value" -ForegroundColor Green
+        if (-not (Test-Path $ipv4Path)) {
+            Write-Host "✗ IPv4 registry path not found: $ipv4Path" -ForegroundColor Red
+        } else {
+            Set-ItemProperty -Path $ipv4Path -Name DefaultTTL -Value $Value -Type DWord -ErrorAction Stop
+            Write-Host "✓ IPv4 TTL set to $Value" -ForegroundColor Green
+        }
+        
+        if (-not (Test-Path $ipv6Path)) {
+            Write-Host "✗ IPv6 registry path not found: $ipv6Path" -ForegroundColor Red
+        } else {
+            Set-ItemProperty -Path $ipv6Path -Name DefaultHopLimit -Value $Value -Type DWord -ErrorAction Stop
+            Write-Host "✓ IPv6 TTL set to $Value" -ForegroundColor Green
+        }
         
         Write-Host ""
         Write-Host "TTL values successfully updated!" -ForegroundColor Green
@@ -729,6 +853,7 @@ function Set-TTLValue {
         
     } catch {
         Write-Host "✗ Error setting TTL values: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "Please ensure you are running as Administrator." -ForegroundColor Yellow
     }
     
     Write-Host "Press any key to continue..." -ForegroundColor White

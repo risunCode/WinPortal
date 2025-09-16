@@ -37,6 +37,8 @@ irm "https://christitus.com/win" | iex
 irm "https://raw.githubusercontent.com/risunCode/WinPortal/main/winScript/WinScriptLauncher.ps1" | iex
 ```
 
+---
+
 - **Bypass Windows 11 24H2+ internet setup requirement**
 > This will creating local account for faster setup.
 1. Press `Shift + F10` to open Command Prompt
@@ -44,6 +46,8 @@ irm "https://raw.githubusercontent.com/risunCode/WinPortal/main/winScript/WinScr
 ```cmd
 start ms-cxh:localonly
 ```
+
+---
 
 - **Perbaiki anomali sistem dengan DISM (modern sfc /scannow)**
 > Fix system anomalies using DISM method, most efficient than sfc scannow

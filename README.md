@@ -33,6 +33,8 @@ irm "https://christitus.com/win" | iex
   
 ## 🆕 Another Scripts
 ### winScript Online Launcher By risunCode**
+- Run by Windows Terminal/Powershell Admin (Win+X)
+- Features: [read here](https://github.com/risunCode/WinPortal/tree/main/winScript)
 ```powershell
 irm "https://raw.githubusercontent.com/risunCode/WinPortal/main/winScript/WinScriptLauncher.ps1" | iex
 ```

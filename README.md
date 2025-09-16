@@ -32,14 +32,14 @@ irm "https://christitus.com/win" | iex
 ```
   
 ## 🆕 Another Scripts
-- **winScript Online Launcher By risunCode**
+### winScript Online Launcher By risunCode**
 ```powershell
 irm "https://raw.githubusercontent.com/risunCode/WinPortal/main/winScript/WinScriptLauncher.ps1" | iex
 ```
 
 ---
 
-- **Bypass Windows 11 24H2+ internet setup requirement**
+### **Bypass Windows 11 24H2+ internet setup requirement**
 > This will creating local account for faster setup.
 1. Press `Shift + F10` to open Command Prompt
 2. Run this command:
@@ -49,7 +49,7 @@ start ms-cxh:localonly
 
 ---
 
-- **Perbaiki anomali sistem dengan DISM (modern sfc /scannow)**
+### Perbaiki anomali sistem dengan DISM (modern sfc /scannow)
 > Fix system anomalies using DISM method, most efficient than sfc scannow
 ```powershell
 DISM /Online /Cleanup-Image /RestoreHealth

@@ -60,6 +60,7 @@ DISM /Online /Cleanup-Image /RestoreHealth
 ---
 
 ## 🖥️ Essential Software for PC
+** [Chrome Standalone (offline installer x64) ](https://www.google.com/chrome/?system=true&standalone=1&platform=win64)
 
 | Category   | Software                    | Description                      | Link |
 |------------|-----------------------------|-----------------------------------|------|

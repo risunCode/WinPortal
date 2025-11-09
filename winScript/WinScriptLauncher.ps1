@@ -79,12 +79,14 @@ function Show-MainMenu {
     Write-Host "  [5] WiFi Profile Manager      - Backup, restore, and manage WiFi profiles" -ForegroundColor White
     Write-Host "  [6] TTL Bypass Tool           - Modify TTL settings for tethering bypass" -ForegroundColor White
     Write-Host "  [7] OneDrive Switcher         - Enable/disable OneDrive startup and sync" -ForegroundColor White
+    Write-Host "  [8] Windows Activator         - Activate Windows and Office" -ForegroundColor White
+    Write-Host "  [9] WinUtils (ChrisTitusTech) - Optimize and debloat Windows" -ForegroundColor White
     Write-Host ""
     Write-Host "  [R] Refresh Menu    [H] Help / About    [Q] Quit Launcher" -ForegroundColor Yellow
     Write-Host "===============================================================================" -ForegroundColor Cyan
     Write-Host ""
     
-    $choice = Read-Host "Select option (1-7, R, H, Q)"
+    $choice = Read-Host "Select option (1-9, R, H, Q)"
     
     switch ($choice.ToUpper()) {
         "1" { Invoke-CacheCleaner }
@@ -94,6 +96,8 @@ function Show-MainMenu {
         "5" { Invoke-WiFiManager }
         "6" { Invoke-TTLBypass }
         "7" { Invoke-OneDriveSwitcher }
+        "8" { Invoke-WindowsActivator }
+        "9" { Invoke-WinUtils }
         "R" { Show-MainMenu }
         "H" { Show-Help }
         "Q" { Exit-Launcher }
@@ -1703,6 +1707,98 @@ function Invoke-OneDriveSwitcher {
     Show-MainMenu
 }
 
+# Windows Activator function
+function Invoke-WindowsActivator {
+    Clear-Host
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host "                        WINDOWS & OFFICE ACTIVATOR" -ForegroundColor Cyan
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host ""
+    
+    Write-Host "This tool will activate Windows and Microsoft Office using the" -ForegroundColor White
+    Write-Host "Microsoft Activation Scripts (MAS) by massgravel." -ForegroundColor White
+    Write-Host "" 
+    Write-Host "WARNING: This will download and execute a remote PowerShell script." -ForegroundColor Yellow
+    Write-Host "Make sure you understand the risks before proceeding." -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Source: https://github.com/massgravel/Microsoft-Activation-Scripts" -ForegroundColor Cyan
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host ""
+    
+    $confirm = Read-Host "Continue? (Y/N)"
+    
+    if ($confirm.ToUpper() -ne "Y") {
+        Show-MainMenu
+        return
+    }
+    
+    Write-Host ""
+    Write-Host "Launching Windows Activator..." -ForegroundColor Green
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    
+    try {
+        Invoke-Expression (Invoke-RestMethod -Uri "https://get.activated.win")
+    } catch {
+        Write-Host "" 
+        Write-Host "Error launching Windows Activator: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    
+    Write-Host ""
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host "Windows Activator process completed. Press any key to return to main menu..." -ForegroundColor White
+    Read-Host
+    Show-MainMenu
+}
+
+# WinUtils by ChrisTitusTech function
+function Invoke-WinUtils {
+    Clear-Host
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host "                   WINUTILS BY CHRISTITUSTECH" -ForegroundColor Cyan
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host ""
+    
+    Write-Host "This tool provides various Windows optimization and debloating utilities" -ForegroundColor White
+    Write-Host "created by Chris Titus Tech." -ForegroundColor White
+    Write-Host ""
+    Write-Host "Features:" -ForegroundColor Yellow
+    Write-Host "  - Install/Remove Windows features and applications" -ForegroundColor White
+    Write-Host "  - Windows optimization tweaks" -ForegroundColor White
+    Write-Host "  - System debloating and cleanup" -ForegroundColor White
+    Write-Host "  - Privacy settings configuration" -ForegroundColor White
+    Write-Host ""
+    Write-Host "WARNING: This will download and execute a remote PowerShell script." -ForegroundColor Yellow
+    Write-Host "Make sure you understand the risks before proceeding." -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Source: https://github.com/ChrisTitusTech/winutil" -ForegroundColor Cyan
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host ""
+    
+    $confirm = Read-Host "Continue? (Y/N)"
+    
+    if ($confirm.ToUpper() -ne "Y") {
+        Show-MainMenu
+        return
+    }
+    
+    Write-Host ""
+    Write-Host "Launching WinUtils..." -ForegroundColor Green
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    
+    try {
+        Invoke-Expression (Invoke-RestMethod -Uri "https://christitus.com/win")
+    } catch {
+        Write-Host ""
+        Write-Host "Error launching WinUtils: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    
+    Write-Host ""
+    Write-Host "===============================================================================" -ForegroundColor Cyan
+    Write-Host "WinUtils process completed. Press any key to return to main menu..." -ForegroundColor White
+    Read-Host
+    Show-MainMenu
+}
+
 # Help function
 function Show-Help {
     Clear-Host
@@ -1775,6 +1871,25 @@ function Show-Help {
     Write-Host "      • Automatic policy refresh and Explorer restart" -ForegroundColor White
     Write-Host "      • Real-time OneDrive status monitoring" -ForegroundColor White
     Write-Host "      • Requires reboot for full effect" -ForegroundColor White
+    Write-Host ""
+    Write-Host "-------------------------------------------------------------------------------" -ForegroundColor Gray
+    Write-Host "  [8] Windows Activator (Microsoft Activation Scripts)" -ForegroundColor Cyan
+    Write-Host "-------------------------------------------------------------------------------" -ForegroundColor Gray
+    Write-Host "      • Activate Windows and Microsoft Office products" -ForegroundColor White
+    Write-Host "      • Uses Microsoft Activation Scripts (MAS) by massgravel" -ForegroundColor White
+    Write-Host "      • Supports multiple activation methods" -ForegroundColor White
+    Write-Host "      • Open-source and regularly maintained" -ForegroundColor White
+    Write-Host "      • Source: https://github.com/massgravel/Microsoft-Activation-Scripts" -ForegroundColor White
+    Write-Host ""
+    Write-Host "-------------------------------------------------------------------------------" -ForegroundColor Gray
+    Write-Host "  [9] WinUtils by ChrisTitusTech" -ForegroundColor Cyan
+    Write-Host "-------------------------------------------------------------------------------" -ForegroundColor Gray
+    Write-Host "      • Comprehensive Windows optimization utility" -ForegroundColor White
+    Write-Host "      • Install/Remove Windows features and applications" -ForegroundColor White
+    Write-Host "      • System debloating and cleanup tools" -ForegroundColor White
+    Write-Host "      • Privacy settings configuration" -ForegroundColor White
+    Write-Host "      • Performance optimization tweaks" -ForegroundColor White
+    Write-Host "      • Source: https://github.com/ChrisTitusTech/winutil" -ForegroundColor White
     Write-Host ""
     Write-Host "===============================================================================" -ForegroundColor Cyan
     Write-Host ""

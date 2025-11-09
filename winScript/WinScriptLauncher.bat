@@ -64,14 +64,18 @@ echo  [4] Windows Update Controller - Delay or pause Windows updates
 echo  [5] WiFi Profile Manager      - Backup, restore, and manage WiFi profiles
 echo  [6] TTL Bypass Tool           - Modify TTL settings for tethering bypass
 echo  [7] OneDrive Switcher         - Enable/disable OneDrive startup and sync
+echo  [8] Windows Activator         - Activate Windows and Office
+echo  [9] WinUtils (ChrisTitusTech) - Optimize and debloat Windows
 echo.
 echo  [R] Refresh Menu    [H] Help / About    [Q] Quit Launcher
 echo ===============================================================================
-choice /c 1234567RHQ /n /m "Select option: "
+choice /c 123456789RHQ /n /m "Select option: "
 
-if errorlevel 10 goto exitLauncher
-if errorlevel 9 goto showHelp
-if errorlevel 8 goto mainMenu
+if errorlevel 12 goto exitLauncher
+if errorlevel 11 goto showHelp
+if errorlevel 10 goto mainMenu
+if errorlevel 9 goto runWinUtils
+if errorlevel 8 goto runWindowsActivator
 if errorlevel 7 goto runOneDriveSwitcher
 if errorlevel 6 goto runTTLBypass
 if errorlevel 5 goto runWiFiManager
@@ -384,6 +388,64 @@ echo OneDrive Switcher completed. Press any key to return to main menu...
 pause >nul
 goto mainMenu
 
+:runWindowsActivator
+cls
+echo ===============================================================================
+echo                        WINDOWS & OFFICE ACTIVATOR
+echo ===============================================================================
+echo.
+echo This tool will activate Windows and Microsoft Office using the
+echo Microsoft Activation Scripts (MAS) by massgravel.
+echo.
+echo WARNING: This will download and execute a remote PowerShell script.
+echo Make sure you understand the risks before proceeding.
+echo.
+echo Source: https://github.com/massgravel/Microsoft-Activation-Scripts
+echo ===============================================================================
+echo.
+pause
+echo.
+echo Launching Windows Activator...
+echo ===============================================================================
+powershell -Command "irm https://get.activated.win | iex"
+echo.
+echo ===============================================================================
+echo Windows Activator process completed. Press any key to return to main menu...
+pause >nul
+goto mainMenu
+
+:runWinUtils
+cls
+echo ===============================================================================
+echo                   WINUTILS BY CHRISTITUSTECH
+echo ===============================================================================
+echo.
+echo This tool provides various Windows optimization and debloating utilities
+echo created by Chris Titus Tech.
+echo.
+echo Features:
+echo   - Install/Remove Windows features and applications
+echo   - Windows optimization tweaks
+echo   - System debloating and cleanup
+echo   - Privacy settings configuration
+echo.
+echo WARNING: This will download and execute a remote PowerShell script.
+echo Make sure you understand the risks before proceeding.
+echo.
+echo Source: https://github.com/ChrisTitusTech/winutil
+echo ===============================================================================
+echo.
+pause
+echo.
+echo Launching WinUtils...
+echo ===============================================================================
+powershell -Command "irm 'https://christitus.com/win' | iex"
+echo.
+echo ===============================================================================
+echo WinUtils process completed. Press any key to return to main menu...
+pause >nul
+goto mainMenu
+
 :showHelp
 cls
 echo ==================================================================================================
@@ -456,6 +518,25 @@ echo      • Uses Windows Group Policy for system-wide control
 echo      • Automatic policy refresh and Explorer restart
 echo      • Real-time OneDrive status monitoring
 echo      • Requires reboot for full effect
+echo.
+echo --------------------------------------------------------------------------------------------------
+echo  [8] Windows Activator (Microsoft Activation Scripts)
+echo --------------------------------------------------------------------------------------------------
+echo      • Activate Windows and Microsoft Office products
+echo      • Uses Microsoft Activation Scripts (MAS) by massgravel
+echo      • Supports multiple activation methods
+echo      • Open-source and regularly maintained
+echo      • Source: https://github.com/massgravel/Microsoft-Activation-Scripts
+echo.
+echo --------------------------------------------------------------------------------------------------
+echo  [9] WinUtils by ChrisTitusTech
+echo --------------------------------------------------------------------------------------------------
+echo      • Comprehensive Windows optimization utility
+echo      • Install/Remove Windows features and applications
+echo      • System debloating and cleanup tools
+echo      • Privacy settings configuration
+echo      • Performance optimization tweaks
+echo      • Source: https://github.com/ChrisTitusTech/winutil
 echo.
 echo ==================================================================================================
 echo.

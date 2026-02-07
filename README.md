@@ -49,7 +49,7 @@ irm "https://raw.githubusercontent.com/risunCode/WinPortal/main/winScript/WinScr
 start ms-cxh:localonly
 ```
 ## Bypass W11 26000+ (25h5)
-1. Press `CTRL+SHIFT+J` to open Developer console
+1. Press `CTRL+SHIFT+J` to open Developer console (Spam if not shows)
 2. Run this command:
 ```cmd
 WinJS.Application.restart("start ms-cxh:localonly")
